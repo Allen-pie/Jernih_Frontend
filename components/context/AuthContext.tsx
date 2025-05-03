@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Session, User } from "@supabase/supabase-js";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { supabase } from "@/supabase";
 
 interface AuthContextType {
@@ -18,14 +18,20 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
     const [user, setUser] = useState<User | null>(null);
     const [session, setSession] = useState<Session | null>(null);
     const [loading, isLoading] = useState<boolean>(true);
-
+    const router = useRouter();
     useEffect(() => {
         const getSession = async () => {
             const {data, error} = await supabase.auth.getSession();
             if (data.session){
                 setUser(data.session.user);
                 setSession(data.session);
+
+                console.log('session', session);
             }
+            else{
+                console.log('errorw', error);
+            }
+
             isLoading(false);
         }
 
@@ -47,6 +53,7 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
         await supabase.auth.signOut();
         setUser(null);
         setSession(null);
+        router.push('/login');
     }   
 
     return (
