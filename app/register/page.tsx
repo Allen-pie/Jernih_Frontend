@@ -20,6 +20,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/supabase";
 import { useForm } from "react-hook-form";
 import { Eye, EyeClosed } from "lucide-react";
+import WEB_URL from "@/url/web_url";
 
 const schema = z
   .object({
@@ -59,6 +60,7 @@ export default function RegisterPage() {
     defaultValues,
   });
 
+  const { setRegEmail, setRegPassword } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -73,6 +75,9 @@ export default function RegisterPage() {
       const { data, error: reg_error } = await supabase.auth.signUp({
         email: value.email,
         password: value.password,
+        options: {
+          emailRedirectTo: `${WEB_URL}/login`,
+        },
       });
 
       if (reg_error) {
@@ -84,6 +89,9 @@ export default function RegisterPage() {
         console.error("Sign up error:", reg_error);
         return;
       }
+
+      setRegEmail(value.email);
+      setRegPassword(value.password);
 
       if (data.user?.id) {
         const { error: db_error } = await supabase.from("profiles").insert({
@@ -100,13 +108,13 @@ export default function RegisterPage() {
           console.error("Updating profile error:", reg_error);
           return;
         }
+
+        toast({
+          title: "Register successful",
+        });
+
+        router.push("/verification-sent");
       }
-
-      toast({
-        title: "Register successful",
-      });
-
-      router.push("/login");
     } catch (error) {
       if (error instanceof Error) {
         toast({
@@ -219,19 +227,18 @@ export default function RegisterPage() {
               )}
             </div>
           </CardContent>
-        
 
-        <CardFooter className="flex flex-col space-y-4">
-          <Button className="w-full" type="submit" disabled={isLoading}>
-            {isLoading ? "Loading..." : "Create Account"}
-          </Button>
-          <div className="text-center text-sm">
-            Already have an account?{" "}
-            <Link href="/login" className="text-primary hover:underline">
-              Login
-            </Link>
-          </div>
-        </CardFooter>
+          <CardFooter className="flex flex-col space-y-4">
+            <Button className="w-full" type="submit" disabled={isLoading}>
+              {isLoading ? "Loading..." : "Create Account"}
+            </Button>
+            <div className="text-center text-sm">
+              Already have an account?{" "}
+              <Link href="/login" className="text-primary hover:underline">
+                Login
+              </Link>
+            </div>
+          </CardFooter>
         </form>
       </Card>
     </div>
