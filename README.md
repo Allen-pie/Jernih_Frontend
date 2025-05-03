@@ -11,7 +11,7 @@ Step 1: **Create and Activate Virtual Environment**
 To set up the backend, create and activate a Python virtual environment.
 
 - For **Windows**:
-  ```bash
+```bash
   python -m venv venv
   venv\Scripts\activate
 ```
