@@ -9,6 +9,10 @@ interface AuthContextType {
     session : Session | null;
     loading : boolean;
     signOut : () => Promise<void>;
+    regPassword : string;
+    setRegPassword : (password : string) => void;
+    setRegEmail: (email : string) => void;
+    regEmail : string;
 }
 
 
@@ -18,6 +22,9 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
     const [user, setUser] = useState<User | null>(null);
     const [session, setSession] = useState<Session | null>(null);
     const [loading, isLoading] = useState<boolean>(true);
+    const [regPassword, setRegPassword] = useState<string>("");
+    const [regEmail, setRegEmail] = useState<string>("");
+
     const router = useRouter();
     useEffect(() => {
         const getSession = async () => {
@@ -57,7 +64,7 @@ export const AuthProvider = ({children} : {children : React.ReactNode}) => {
     }   
 
     return (
-        <AuthContext.Provider value={{user, session, loading, signOut}}>
+        <AuthContext.Provider value={{user, session, loading, regEmail, setRegEmail, regPassword, setRegPassword, signOut}}>
             {children}
         </AuthContext.Provider>
     )
