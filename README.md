@@ -1,9 +1,33 @@
+# Jernih
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
-First, run the development server:
+### Setting Up Backend (Python)
 
+Step 1: **Create and Activate Virtual Environment**
+
+To set up the backend, create and activate a Python virtual environment.
+
+- For **Windows**:
+  ```bash
+  python -m venv venv
+  venv\Scripts\activate
+```
+
+Step 2: **Install Python Dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+### Run the Water Prediction Model (Backend)
+```bash
+cd server
+python server.py
+```
+
+### Run the Development Server (Frontend)
 ```bash
 npm run dev
 # or
@@ -35,8 +59,5 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Run Water Prediction Model
-```bash
-cd server
-python server.py
-```
+
+
