@@ -19,6 +19,7 @@ To set up the backend, create and activate a Python virtual environment.
 Step 2: **Install Python Dependencies**
 ```bash
 pip install -r requirements.txt
+npm install
 ```
 
 ### Run the Water Prediction Model (Backend)
