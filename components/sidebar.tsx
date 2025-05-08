@@ -34,7 +34,7 @@ export function Sidebar({ className }: SidebarProps) {
             Communities
           </Button>
         </Link>
-        <Link href="/settings">
+        <Link href="/conservation">
           <Button variant="ghost" className="w-full justify-start gap-2">
             <Settings className="h-5 w-5" />
             Conservation
