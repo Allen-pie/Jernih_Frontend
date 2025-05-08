@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image'
 import { FacebookIcon, TwitterIcon, InstagramIcon } from 'lucide-react';
 import { supabase } from "@/supabase";
 
-export const Footer: React.FC = () => {
+export default function Footer() {
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -35,16 +36,20 @@ export const Footer: React.FC = () => {
   return (
     <footer className="bg-blue-800 text-white">
       <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-4">
           <div className="flex items-center mb-4 md:mb-0">
             {logoUrl ? (
-              <img src={logoUrl} alt="Logo" className="h-8 mr-2" />
+              <Image 
+                src={logoUrl}
+                width={150}
+                height={100}
+                alt='Jernih Logo'
+              />
             ) : (
               <span className="h-8 w-8 mr-2 bg-white text-blue-800 font-bold flex items-center justify-center rounded">
-                J
+                Jernih
               </span>
             )}
-            <h2 className="text-xl font-bold">Jernih</h2>
           </div>
           <div className="flex space-x-4">
             <a href="#" className="hover:text-blue-300 transition-colors">
