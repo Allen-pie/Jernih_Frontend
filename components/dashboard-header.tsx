@@ -1,36 +1,72 @@
 "use client";
 import Link from "next/link";
-import { Menu, Search, Bell, User, LogOut } from "lucide-react";
+import { Search, Bell, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Sidebar } from "@/components/sidebar";
+import { usePathname } from "next/navigation";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useAuth } from "./context/AuthContext";
+import { useSidebar } from "@/components/ui/sidebar";
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { supabase } from "@/supabase";
 
 export function DashboardHeader() {
   const { signOut, session } = useAuth();
 
+  const { setOpen, setOpenMobile } = useSidebar();
+  const pathname = usePathname();
+  const isAuthPage = ["/login", "/register"].includes(pathname);
+
+  const closeSidebar = () => {
+    setOpen(false);
+    setOpenMobile(false);
+  };
+
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchLogo = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("assets")
+          .select("path")
+          .limit(1)
+          .single();
+
+        if (error) throw error;
+
+        if (data && data.path) {
+          const { data: publicUrlData, error: publicUrlError } =
+            supabase.storage.from("jernih").getPublicUrl(data.path);
+
+          if (publicUrlError) throw publicUrlError;
+
+          setLogoUrl(publicUrlData.publicUrl);
+        }
+      } catch (error: any) {
+        console.error("Error fetching logo:", error.message);
+      }
+    };
+
+    fetchLogo();
+  }, []);
+
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-6">
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="outline" size="icon" className="md:hidden">
-            <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle Menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="p-0">
-          <Sidebar />
-        </SheetContent>
-      </Sheet>
-      <Link href="/" className="flex items-center gap-2">
-        <span className="font-bold text-xl">Jernih Water</span>
-      </Link>
+      {!isAuthPage && <SidebarTrigger />}
+      {logoUrl ? (
+        <Image src={logoUrl} width={150} height={100} alt="Jernih Logo" />
+      ) : (
+        <span className="h-8 w-8 mr-2 bg-white text-blue-800 font-bold flex items-center justify-center rounded">
+          Jernih
+        </span>
+      )}
       <div className="ml-auto flex items-center gap-4">
         <div className="relative hidden md:flex">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -66,10 +102,12 @@ export function DashboardHeader() {
         ) : (
           <div className="flex items-center gap-2">
             <Link href="/login">
-              <Button variant="ghost">Login</Button>
+              <Button variant="ghost" onClick={closeSidebar}>
+                Login
+              </Button>
             </Link>
             <Link href="/register">
-              <Button>Register</Button>
+              <Button onClick={closeSidebar}>Register</Button>
             </Link>
           </div>
         )}

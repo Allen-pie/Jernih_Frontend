@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image'
-import { FacebookIcon, TwitterIcon, InstagramIcon } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { FacebookIcon, TwitterIcon, InstagramIcon } from "lucide-react";
 import { supabase } from "@/supabase";
 
 export default function Footer() {
@@ -11,22 +11,24 @@ export default function Footer() {
   useEffect(() => {
     const fetchLogo = async () => {
       try {
-        const { data, error } = await supabase.from('assets').select('path').limit(1).single();
+        const { data, error } = await supabase
+          .from("assets")
+          .select("path")
+          .limit(1)
+          .single();
 
         if (error) throw error;
 
         if (data && data.path) {
-          const { data: publicUrlData, error: publicUrlError } = supabase
-            .storage
-            .from('jernih')
-            .getPublicUrl(data.path);
+          const { data: publicUrlData, error: publicUrlError } =
+            supabase.storage.from("jernih").getPublicUrl(data.path);
 
           if (publicUrlError) throw publicUrlError;
 
           setLogoUrl(publicUrlData.publicUrl);
         }
       } catch (error: any) {
-        console.error('Error fetching logo:', error.message);
+        console.error("Error fetching logo:", error.message);
       }
     };
 
@@ -39,12 +41,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center mb-4">
           <div className="flex items-center mb-4 md:mb-0">
             {logoUrl ? (
-              <Image 
-                src={logoUrl}
-                width={150}
-                height={100}
-                alt='Jernih Logo'
-              />
+              <Image src={logoUrl} width={150} height={100} alt="Jernih Logo" />
             ) : (
               <span className="h-8 w-8 mr-2 bg-white text-blue-800 font-bold flex items-center justify-center rounded">
                 Jernih
@@ -69,7 +66,7 @@ export default function Footer() {
             <a href="#" className="hover:text-white transition-colors">
               Privacy Policy
             </a>
-            {' • '}
+            {" • "}
             <a href="#" className="hover:text-white transition-colors">
               Terms of Service
             </a>
@@ -78,4 +75,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-};
+}

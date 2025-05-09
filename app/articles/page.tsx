@@ -1,9 +1,9 @@
-import React from "react"
-import { ArticleCard } from "@/components/article-card"
-import { articles } from "@/utils/tempArticleData"
-import { Footer } from "@/components/footer"
+import React from "react";
+import { ArticleCard } from "@/components/article-card";
+import { articles } from "@/utils/tempArticleData";
+import { Footer } from "@/components/footer";
 
-export default function ArticlesPage () {
+export default function ArticlesPage() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-white">
       <div className="bg-gradient-to-b from-blue-500 to-blue-600 text-white py-16">
@@ -12,7 +12,8 @@ export default function ArticlesPage () {
             Explore Articles
           </h1>
           <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-            Dive into our collection of articles related to water pollution and more
+            Dive into our collection of articles related to water pollution and
+            more
           </p>
         </div>
       </div>
@@ -40,5 +41,5 @@ export default function ArticlesPage () {
       </div>
       <Footer />
     </div>
-  )
+  );
 }

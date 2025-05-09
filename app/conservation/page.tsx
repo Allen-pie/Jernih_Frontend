@@ -1,51 +1,48 @@
 "use client";
-import React, { useState, useEffect } from "react";  // Import useState from React
+import React, { useState, useEffect } from "react"; // Import useState from React
 import { DashboardHeader } from "@/components/dashboard-header";
-import { Sidebar } from "@/components/sidebar";
 import { Button } from "@radix-ui/themes";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Search } from "lucide-react";
 import { fetchVolunteerOpportunitiesWithAssets } from "@/supabase/index"; // Import function to fetch data
 import { DropdownMenu, Theme } from "@radix-ui/themes";
-import { supabase } from '@/supabase/index'; // Import Supabase client
+import { supabase } from "@/supabase/index"; // Import Supabase client
 
 // Helper function to fetch image URL from Supabase Storage
 const fetchImageUrl = async (path: string) => {
   try {
-    const { data: publicUrlData, error: publicUrlError } = supabase
-      .storage
-      .from('jernih')  // Bucket name (make sure it's correct)
-      .getPublicUrl(`${path}`);  // Path to the image in the 'locations' folder
+    const { data: publicUrlData, error: publicUrlError } = supabase.storage
+      .from("jernih") // Bucket name (make sure it's correct)
+      .getPublicUrl(`${path}`); // Path to the image in the 'locations' folder
 
     if (publicUrlError) {
-      console.error('Error fetching public URL:', publicUrlError);
-      return '';  // Return an empty string if there's an error
+      console.error("Error fetching public URL:", publicUrlError);
+      return ""; // Return an empty string if there's an error
     }
 
-    return publicUrlData?.publicUrl || '';  // Return the public URL
+    return publicUrlData?.publicUrl || ""; // Return the public URL
   } catch (error: any) {
-    console.error('Error fetching image:', error.message);
-    return '';  // Return an empty string if there's an error
+    console.error("Error fetching image:", error.message);
+    return ""; // Return an empty string if there's an error
   }
 };
 
 // Helper function to fetch the default image URL
 const fetchDefaultImageUrl = async () => {
   try {
-    const { data: publicUrlData, error: publicUrlError } = supabase
-      .storage
-      .from('jernih')  // Bucket name (make sure it's correct)
-      .getPublicUrl('locations/default-image.jpg');  // Path to the default image
+    const { data: publicUrlData, error: publicUrlError } = supabase.storage
+      .from("jernih") // Bucket name (make sure it's correct)
+      .getPublicUrl("locations/default-image.jpg"); // Path to the default image
 
     if (publicUrlError) {
-      console.error('Error fetching default image URL:', publicUrlError);
-      return '';  // Return an empty string if there's an error
+      console.error("Error fetching default image URL:", publicUrlError);
+      return ""; // Return an empty string if there's an error
     }
 
-    return publicUrlData?.publicUrl || '';  // Return the public URL
+    return publicUrlData?.publicUrl || ""; // Return the public URL
   } catch (error: any) {
-    console.error('Error fetching default image:', error.message);
-    return '';  // Return an empty string if there's an error
+    console.error("Error fetching default image:", error.message);
+    return ""; // Return an empty string if there's an error
   }
 };
 
@@ -106,9 +103,10 @@ const VolunteerOpportunityListing = () => {
     let filtered = filteredOpportunities;
 
     if (search) {
-      filtered = filtered.filter((opp) =>
-        opp.title.toLowerCase().includes(search.toLowerCase()) ||
-        opp.description.toLowerCase().includes(search.toLowerCase())
+      filtered = filtered.filter(
+        (opp) =>
+          opp.title.toLowerCase().includes(search.toLowerCase()) ||
+          opp.description.toLowerCase().includes(search.toLowerCase())
       );
     }
 
@@ -123,10 +121,14 @@ const VolunteerOpportunityListing = () => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold tracking-tight">Volunteer Opportunities</h1>
+      <h1 className="text-3xl font-bold tracking-tight">
+        Volunteer Opportunities
+      </h1>
 
       {/* Search Input with Lucide Search Icon */}
-      <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
+      <div
+        style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}
+      >
         <Search style={{ marginRight: "8px" }} /> {/* Search Icon */}
         <input
           type="text"
@@ -150,9 +152,15 @@ const VolunteerOpportunityListing = () => {
           <Button>Filter by Location</Button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
-          <DropdownMenu.Item onSelect={() => handleFilter("Bali")}>Bali</DropdownMenu.Item>
-          <DropdownMenu.Item onSelect={() => handleFilter("Jakarta")}>Jakarta</DropdownMenu.Item>
-          <DropdownMenu.Item onSelect={() => handleFilter("Kalimantan")}>Kalimantan</DropdownMenu.Item>
+          <DropdownMenu.Item onSelect={() => handleFilter("Bali")}>
+            Bali
+          </DropdownMenu.Item>
+          <DropdownMenu.Item onSelect={() => handleFilter("Jakarta")}>
+            Jakarta
+          </DropdownMenu.Item>
+          <DropdownMenu.Item onSelect={() => handleFilter("Kalimantan")}>
+            Kalimantan
+          </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>
 
@@ -164,16 +172,19 @@ const VolunteerOpportunityListing = () => {
               key={opportunity.id}
               className="col-span-full bg-white shadow-lg rounded-xl flex p-3"
               style={{
-                backgroundImage: `linear-gradient(to right, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%), url(${imageUrls[opportunity.id] || defaultImageUrl})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                height: '300px',  // Set a fixed height for the card
-
+                backgroundImage: `linear-gradient(to right, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%), url(${
+                  imageUrls[opportunity.id] || defaultImageUrl
+                })`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                height: "300px", // Set a fixed height for the card
               }}
             >
               <div className="flex-1 p-4 ">
                 <CardHeader>
-                  <CardTitle className="text-2xl font-bold">{opportunity.title}</CardTitle>
+                  <CardTitle className="text-2xl font-bold">
+                    {opportunity.title}
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p>
@@ -201,9 +212,9 @@ export default function HomePage() {
       <div className="flex min-h-screen flex-col">
         <DashboardHeader />
         <div className="flex flex-1">
-          <Sidebar className="hidden md:flex" />
           <main className="flex-1 p-6 md:p-8">
-            <VolunteerOpportunityListing /> {/* Include VolunteerOpportunityListing component here */}
+            <VolunteerOpportunityListing />{" "}
+            {/* Include VolunteerOpportunityListing component here */}
           </main>
         </div>
       </div>
