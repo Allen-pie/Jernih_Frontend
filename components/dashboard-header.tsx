@@ -14,7 +14,7 @@ import { useAuth } from "./context/AuthContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { supabase } from "@/supabase";
+import { useLogoImage } from "@/hooks/useLogoImage";
 
 export function DashboardHeader() {
   const { signOut, session } = useAuth();
@@ -28,34 +28,7 @@ export function DashboardHeader() {
     setOpenMobile(false);
   };
 
-  const [logoUrl, setLogoUrl] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchLogo = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("assets")
-          .select("path")
-          .limit(1)
-          .single();
-
-        if (error) throw error;
-
-        if (data && data.path) {
-          const { data: publicUrlData, error: publicUrlError } =
-            supabase.storage.from("jernih").getPublicUrl(data.path);
-
-          if (publicUrlError) throw publicUrlError;
-
-          setLogoUrl(publicUrlData.publicUrl);
-        }
-      } catch (error: any) {
-        console.error("Error fetching logo:", error.message);
-      }
-    };
-
-    fetchLogo();
-  }, []);
+  const logoUrl = useLogoImage("jernih-logo.svg");
 
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-6">

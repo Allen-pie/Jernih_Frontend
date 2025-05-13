@@ -36,7 +36,9 @@ const mainNav = [
 
 export function AppSidebar() {
   const pathname = usePathname();
-  const isAuthPage = ["/login", "/register"].includes(pathname);
+  const isAuthPage = ["/login", "/register", "/landing-page"].includes(
+    pathname
+  );
 
   if (isAuthPage) {
     return null;

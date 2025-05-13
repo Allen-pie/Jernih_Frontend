@@ -11,7 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Footer from "@/components/footer";
 
 export default function HomePage() {
   return (
