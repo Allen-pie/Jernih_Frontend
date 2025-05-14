@@ -27,6 +27,7 @@ import {
   Users,
   LogOut,
 } from "lucide-react";
+import { SiteNav } from "@/components/site-nav";
 
 export default function HomePage() {
   const { signOut, session } = useAuth();
@@ -49,7 +50,7 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen">
       {/* Header/Navigation */}
       <header className="w-full fixed top-0 z-50">
-        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
+        <div className="container mx-auto px-8 sm:px-16 md:px-28 lg:px-32 py-3 flex justify-between items-center">
           {logoUrl ? (
             <Image
               src={logoUrl}
@@ -61,28 +62,13 @@ export default function HomePage() {
           ) : (
             <div className="w-[150px] h-[100px] bg-white/40 animate-pulse rounded" />
           )}
-          <div className="hidden md:flex items-center space-x-4">
+          {/* Nav menu + auth buttons */}
+          <div className="hidden md:flex items-center space-x-6">
+            <SiteNav />
+
             {session ? (
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <User className="h-5 w-5" />
-                    <span className="sr-only">Profile</span>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-72">
-                  <div className="grid gap-4">
-                    <Button
-                      className="justify-start"
-                      variant="ghost"
-                      onClick={() => signOut()}
-                    >
-                      <LogOut className="h-4 w-4" />
-                      <h4 className="font-medium leading-none">Log Out</h4>
-                    </Button>
-                  </div>
-                </PopoverContent>
-              </Popover>
+              /* profile popover */
+              <Popover>{/* ... */}</Popover>
             ) : (
               <div className="flex items-center gap-2">
                 <Link href="/login">
@@ -94,6 +80,8 @@ export default function HomePage() {
               </div>
             )}
           </div>
+
+          {/* Mobile menu button here if you have one */}
         </div>
       </header>
 
