@@ -58,7 +58,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await supabase.auth.signOut();
     setUser(null);
     setSession(null);
-    router.push("/");
+
+    // ✅ Delay routing by 10–50ms to avoid race condition with useRequireAuth
+    setTimeout(() => {
+      router.push("/");
+    }, 50);
   };
 
   return (
