@@ -34,11 +34,15 @@ export function DashboardHeader() {
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-6">
       {!isAuthPage && <SidebarTrigger />}
       {logoUrl ? (
-        <Image src={logoUrl} width={150} height={100} alt="Jernih Logo" />
+        <Image
+          src={logoUrl}
+          width={150}
+          height={100}
+          alt="Jernih Logo"
+          className="transition-opacity duration-300 opacity-100"
+        />
       ) : (
-        <span className="h-8 w-8 mr-2 bg-white text-blue-800 font-bold flex items-center justify-center rounded">
-          Jernih
-        </span>
+        <div className="w-[150px] h-[100px] bg-white/40 animate-pulse rounded" />
       )}
       <div className="ml-auto flex items-center gap-4">
         <div className="relative hidden md:flex">

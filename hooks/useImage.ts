@@ -1,8 +1,8 @@
-// hooks/useHeroImage.ts
+// hooks/useImage.ts
 import { useEffect, useState } from "react";
 import { supabase } from "@/supabase";
 
-export function useHeroImage(path: string) {
+export function useImage(path: string) {
   const [url, setUrl] = useState<string | null>(null);
 
   useEffect(() => {

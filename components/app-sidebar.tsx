@@ -27,7 +27,7 @@ import { usePathname } from "next/navigation";
 
 // 1) Your nav items
 const mainNav = [
-  { title: "Dashboard", href: "/", icon: LayoutDashboard },
+  { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { title: "Water Quality", href: "/analytics", icon: BarChart },
   { title: "Report Pollution", href: "/report-form", icon: FileText },
   { title: "Communities", href: "/users", icon: Users },
@@ -36,9 +36,12 @@ const mainNav = [
 
 export function AppSidebar() {
   const pathname = usePathname();
-  const isAuthPage = ["/login", "/register", "/landing-page"].includes(
-    pathname
-  );
+  const isAuthPage = [
+    "/login",
+    "/register",
+    "/",
+    "/verification-sent",
+  ].includes(pathname);
 
   if (isAuthPage) {
     return null;
@@ -52,14 +55,7 @@ export function AppSidebar() {
       <SidebarContent>
         {/* 2) one group for your “main” nav */}
         <SidebarGroup>
-          <SidebarGroupLabel
-            className="
-              flex items-center px-4 py-2
-              text-xs font-semibold uppercase tracking-wider
-              text-muted-foreground border-b border-sidebar-border
-            "
-          >
-            <Compass className="mr-2 h-4 w-4" />
+          <SidebarGroupLabel className="px-4 py-2 text-sm text-gray-500 mb-2 border-b border-gray-300">
             Navigation
           </SidebarGroupLabel>
           <SidebarGroupContent>

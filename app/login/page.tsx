@@ -72,7 +72,7 @@ export default function LoginPage() {
         title: "Login successful",
       });
 
-      router.push("/");
+      router.push("/dashboard");
     } catch (error) {
       if (error instanceof Error) {
         toast({

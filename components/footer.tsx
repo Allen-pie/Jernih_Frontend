@@ -41,11 +41,15 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center mb-4">
           <div className="flex items-center mb-4 md:mb-0">
             {logoUrl ? (
-              <Image src={logoUrl} width={150} height={100} alt="Jernih Logo" />
+              <Image
+                src={logoUrl}
+                width={150}
+                height={100}
+                alt="Jernih Logo"
+                className="transition-opacity duration-300 opacity-100"
+              />
             ) : (
-              <span className="h-8 w-8 mr-2 bg-white text-blue-800 font-bold flex items-center justify-center rounded">
-                Jernih
-              </span>
+              <div className="w-[150px] h-[100px] bg-white/40 animate-pulse rounded" />
             )}
           </div>
           <div className="flex space-x-4">
