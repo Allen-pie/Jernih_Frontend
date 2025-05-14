@@ -1,7 +1,7 @@
 import React from "react";
 import { ArticleCard } from "@/components/article-card";
 import { articles } from "@/utils/tempArticleData";
-import { Footer } from "@/components/footer";
+import Footer  from "@/components/footer";
 
 export default function ArticlesPage() {
   return (
