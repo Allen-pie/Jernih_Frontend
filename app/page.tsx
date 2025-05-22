@@ -28,6 +28,20 @@ import {
   LogOut,
 } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
+import { motion } from "framer-motion";
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.2, when: "beforeChildren" },
+  },
+};
 
 export default function HomePage() {
   const { signOut, session } = useAuth();
@@ -49,85 +63,98 @@ export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header/Navigation */}
-      <header className="w-full fixed top-0 z-50">
+      <motion.header
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="w-full fixed top-0 z-50"
+      >
         <div className="container mx-auto px-8 sm:px-16 md:px-28 lg:px-32 py-3 flex justify-between items-center">
           {logoUrl ? (
-            <Image
-              src={logoUrl}
-              width={150}
-              height={100}
-              alt="Jernih Logo"
-              className="transition-opacity duration-300 opacity-100"
-            />
+            <Image src={logoUrl} width={150} height={100} alt="Jernih Logo" />
           ) : (
             <div className="w-[150px] h-[100px] bg-white/40 animate-pulse rounded" />
           )}
-          {/* Nav menu + auth buttons */}
           <div className="hidden md:flex items-center space-x-6">
             <SiteNav />
-
-            {session ? (
-              /* profile popover */
-              <Popover>{/* ... */}</Popover>
-            ) : (
-              <div className="flex items-center gap-2">
-                <Link href="/login">
-                  <Button variant="ghost">Login</Button>
-                </Link>
-                <Link href="/register">
-                  <Button>Register</Button>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Mobile menu button here if you have one */}
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="relative w-full min-h-screen flex items-center pt-16">
-        <div className="absolute inset-0 z-0">
-          {heroUrl && (
-            <Image
-              src={heroUrl}
-              alt="Clean water background"
-              fill
-              className="object-cover"
-              priority
-            />
-          )}
-        </div>
-        <div className="absolute inset-0 bg-cyan-900/10 z-10"></div>
-        <div className="container mx-auto px-4 relative z-20">
-          <div className="max-w-2xl">
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-              Monitor Water Quality in Real-Time. Take Action Today
-            </h1>
-            <p className="text-lg text-gray-900 mb-8">
-              Join thousands protecting our waters. Report pollution, track
-              clean-up efforts, and access vital data to preserve our most
-              precious resource.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Link href="/register">
-                <Button className="px-6 py-6">Get Started</Button>
+            <div className="flex items-center gap-2">
+              <Link href="/login">
+                <Button variant="ghost">Login</Button>
               </Link>
-              <Link href="/login?redirect=/dashboard">
-                <Button
-                  variant="ghost"
-                  className="px-6 py-6 rounded-md hover:bg-cyan-50 hover:text-cyan-600"
-                >
-                  <span className="underline ml-2">Explore Our Data→</span>
-                </Button>
+              <Link href="/register">
+                <Button>Register</Button>
               </Link>
             </div>
           </div>
         </div>
-      </section>
+      </motion.header>
+
+      {/* Hero Section */}
+      <motion.section
+        className="relative w-full min-h-screen flex items-center justify-start text-left pt-16"
+        initial="hidden"
+        animate="visible"
+        variants={staggerContainer}
+      >
+        <div className="absolute inset-0 z-0">
+          <motion.div
+            className="absolute inset-0 z-0"
+            initial={{ scale: 1.1, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1, transition: { duration: 1 } }}
+          >
+            {heroUrl && (
+              <Image
+                src={heroUrl}
+                alt="Clean water background"
+                fill
+                className="object-cover"
+                priority
+              />
+            )}
+          </motion.div>
+        </div>
+        <div className="absolute inset-0 bg-cyan-900/10 z-10"></div>
+        <div className="container mx-auto px-4 relative z-20">
+          <div className="max-w-2xl">
+            <motion.h1
+              variants={fadeInUp}
+              className="text-4xl md:text-5xl font-bold mb-6"
+            >
+              Monitor Water Quality in Real-Time. Take Action Today
+            </motion.h1>
+            <motion.p variants={fadeInUp} className="text-lg mb-8">
+              Join thousands protecting our waters. Report pollution, track
+              clean-up efforts, and access vital data.
+            </motion.p>
+            <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
+              <Link href="/register">
+                <motion.div whileHover={{ scale: 1.05 }}>
+                  <Button className="px-6 py-6">Get Started</Button>
+                </motion.div>
+              </Link>
+              <Link href="/login?redirect=/dashboard">
+                <motion.div whileHover={{ scale: 1.05 }}>
+                  <Button
+                    variant="ghost"
+                    className="px-6 py-6 rounded-md hover:bg-cyan-50 hover:text-cyan-600"
+                  >
+                    Explore Our Data→
+                  </Button>
+                </motion.div>
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </motion.section>
 
       {/* The Problem Section */}
-      <section id="problem" className="py-20 bg-white">
+      <motion.section
+        className="py-20 bg-white"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeInUp}
+      >
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="grid grid-cols-2 gap-4">
@@ -175,12 +202,15 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* How You Can Make a Difference */}
-      <section
-        id="solution"
+      <motion.section
         className="py-20 bg-gray-50 border-t border-b border-gray-200"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeInUp}
       >
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-cyan-600 text-center mb-16">
@@ -245,10 +275,16 @@ export default function HomePage() {
             </Link>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Our Mission & Impact */}
-      <section id="impact" className="py-20 bg-white">
+      <motion.section
+        className="py-20 bg-white"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeInUp}
+      >
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -310,10 +346,16 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-50">
+      <motion.section
+        className="py-20 bg-gray-50"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeInUp}
+      >
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-cyan-600 text-center mb-16">
             Our Key Features
@@ -372,10 +414,16 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-white">
+      <motion.section
+        className="py-20 bg-white"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeInUp}
+      >
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-cyan-600 text-center mb-16">
             Voices from Our Community
@@ -418,7 +466,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Subscribe Section */}
       <section className="py-16 bg-cyan-700 text-white">
