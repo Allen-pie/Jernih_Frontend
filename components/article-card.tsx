@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from "next/link"
+import Image from "next/image";
 import { MessageSquareIcon, CalendarIcon, UserIcon } from 'lucide-react'
 
 interface ArticleCardProps {
@@ -11,6 +12,7 @@ interface ArticleCardProps {
   date: string
   commentCount: number
 }
+
 export const ArticleCard: React.FC<ArticleCardProps> = ({
   id,
   title,
@@ -22,13 +24,14 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
 }) => {
   return (
     <Link
-      href={`/article/${id}`}
+      href={`/articles/${id}`}
       className="group flex flex-col h-full overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl bg-white hover:translate-y-[-5px]"
     >
       <div className="relative h-48 overflow-hidden">
-        <img
+        <Image
           src={imageUrl}
           alt={title}
+          fill
           className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-70"></div>
