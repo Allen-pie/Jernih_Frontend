@@ -4,10 +4,13 @@ import joblib
 import numpy as np
 from flask_cors import CORS  
 import pandas as pd
+import os
 
 # Load the trained model and threshold
-model = joblib.load('water_potability_model.pkl')
-threshold = np.load('best_threshold.npy')
+model_path = os.path.join(os.path.dirname(__file__), 'water_potability_model.pkl')
+model = joblib.load(model_path)
+threshold_path = os.path.join(os.path.dirname(__file__), 'best_threshold.npy')
+threshold = np.load(threshold_path)
 
 app = Flask(__name__)
 
@@ -21,6 +24,9 @@ def home():
 def predict():
     data = request.get_json()
     
+    # Read coordinates (optional, for future database logging)
+    latitude = data.get("latitude")
+    longitude = data.get("longitude")
 
     # Expected input: JSON with keys matching your features
     features = [
@@ -43,11 +49,21 @@ def predict():
 
     # Apply dynamic threshold
     prediction = int(prob >= threshold)
+    # Compute severity
+    if prob >= 0.8:
+        severity = "High"
+    elif prob >= 0.5:
+        severity = "Medium"
+    else:
+        severity = "Low"
 
     return jsonify({
         'potability_prediction': prediction,
         'probability': float(prob),
-        'threshold_used': float(threshold)
+        'threshold_used': float(threshold),
+        'severity': severity,
+        'latitude': latitude,
+        'longitude': longitude
     })
 
 if __name__ == '__main__':
