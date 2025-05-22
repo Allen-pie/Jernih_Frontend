@@ -41,4 +41,72 @@ export const fetchVolunteerOpportunitiesWithAssets = async () => {
   
     return opportunitiesWithAssets;
   };
-  
+
+export async function fetchArticles() {
+  const { data, error } = await supabase
+    .from('articles')
+    .select(`
+      id,
+      created_at,
+      title,
+      excerpt,
+      content,
+      author,
+      image_id,
+      assets:assets!articles_image_id_fkey (
+        path
+      )
+    `)
+    // .select('*');
+
+  if (error) {
+    console.error('Error fetching articles:', error)
+    return []
+  }
+  console.log('Articles obtained: ', data.length);
+
+  return data.map(article => ({
+    id: article.id,
+    title: article.title,
+    excerpt: article.excerpt,
+    imageUrl: `${supabaseUrl}/storage/v1/object/public/jernih/article-images/${article.assets.path}` || '',
+    author: article.author,
+    date: new Date(article.created_at).toLocaleDateString(),
+    comments: Math.floor(Math.random() * 10),
+  }))
+}
+
+export async function fetchArticleById(id: number | string) {
+  const { data, error } = await supabase
+    .from('articles')
+    .select(`
+      id,
+      created_at,
+      title,
+      excerpt,
+      content,
+      author,
+      image_id,
+      assets:assets!articles_image_id_fkey (
+        path
+      )
+    `)
+    .eq('id', id)  
+    .single();
+
+  if (error) {
+    console.error(`Error fetching article with id ${id}:`, error);
+    return null;
+  }
+
+  return {
+    id: data.id,
+    title: data.title,
+    excerpt: data.excerpt,
+    content: data.content,
+    imageUrl: `${supabaseUrl}/storage/v1/object/public/jernih/article-images/${data.assets.path}` || '',
+    author: data.author,
+    date: new Date(data.created_at).toLocaleDateString(),
+    commentCount: Math.floor(Math.random() * 10),
+  };
+}
