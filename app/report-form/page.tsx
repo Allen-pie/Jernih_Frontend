@@ -111,7 +111,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             <CardContent>
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="space-y-2">
-                  <Label htmlFor="location">Location Name</Label>
+                  <Label htmlFor="location">Location Name*</Label>
                   <Input
                     id="location"
                     placeholder="Enter the name of the water body or area"
