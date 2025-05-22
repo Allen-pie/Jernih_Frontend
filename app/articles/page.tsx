@@ -1,9 +1,12 @@
 import React from "react";
 import { ArticleCard } from "@/components/article-card";
-import { articles } from "@/utils/tempArticleData";
+// import { articles } from "@/utils/tempArticleData";
+import { fetchArticles } from "@/supabase";
 import Footer  from "@/components/footer";
 
-export default function ArticlesPage() {
+export default async function ArticlesPage() {
+  const articles = await fetchArticles();
+
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-white">
       <div className="bg-gradient-to-b from-blue-500 to-blue-600 text-white py-16">
@@ -34,7 +37,7 @@ export default function ArticlesPage() {
               imageUrl={article.imageUrl}
               author={article.author}
               date={article.date}
-              commentCount={article.comments.length}
+              commentCount={article.comments }
             />
           ))}
         </div>
