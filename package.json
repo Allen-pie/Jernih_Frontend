@@ -55,6 +55,8 @@
     "react-leaflet-heatmap-layer-v3": "^3.0.3-beta-1",
     "react-router-dom": "^7.6.0",
     "recharts": "^2.15.3",
+    "scikit-learn": "^0.1.0",
+    "sklearn": "^1.0.0",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
