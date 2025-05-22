@@ -9,6 +9,7 @@ import {
   Settings,
   HelpCircle,
   Compass,
+  Newspaper,
 } from "lucide-react";
 import {
   Sidebar,
@@ -30,7 +31,7 @@ const mainNav = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { title: "Water Quality", href: "/analytics", icon: BarChart },
   { title: "Report Pollution", href: "/report-form", icon: FileText },
-  { title: "Communities", href: "/users", icon: Users },
+  { title: "Articles", href: "/articles", icon: Newspaper },
   { title: "Conservation", href: "/conservation", icon: Settings },
 ];
 
