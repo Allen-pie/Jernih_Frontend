@@ -1,6 +1,6 @@
 // hooks/useImage.ts
 import { useEffect, useState } from "react";
-import { supabase } from "@/supabase";
+import { supabase } from '@/utils/supabase/client'
 
 export function useImage(path: string) {
   const [url, setUrl] = useState<string | null>(null);

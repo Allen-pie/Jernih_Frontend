@@ -14,9 +14,9 @@ export function useRequireAuth() {
   const [ready, setReady] = useState(false);
   const [timerDone, setTimerDone] = useState(false);
 
+  // tambahin routes lain
   const publicRoutes = ["/", "/login", "/register", "/verification-sent"];
 
-  // ⏳ Always start a minimum delay to allow loading screen to appear
   useEffect(() => {
     const t = setTimeout(() => setTimerDone(true), MIN_LOADING_TIME);
     return () => clearTimeout(t);
@@ -36,6 +36,5 @@ export function useRequireAuth() {
     }
   }, [loading, user, pathname, router, timerDone]);
 
-  // 🧠 This means: block layout until timer & auth check are both ready
   return !ready;
 }

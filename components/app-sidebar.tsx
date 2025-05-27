@@ -90,6 +90,8 @@ export function AppSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
+
+      
     </Sidebar>
   );
 }

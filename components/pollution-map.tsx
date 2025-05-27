@@ -1,12 +1,10 @@
 "use client";
-
 import { useState, useEffect, useRef } from "react";
 import {
   MapContainer,
   TileLayer,
   Marker,
   Popup,
-  CircleMarker,
   useMap,
   useMapEvents,
 } from "react-leaflet";
@@ -14,7 +12,7 @@ import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import type { CSSProperties } from "react";
-import { supabase } from "@/supabase";
+import { supabase } from '@/utils/supabase/client'
 
 // --- 1) Types
 export type Severity = "Low" | "Medium" | "High";

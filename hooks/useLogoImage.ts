@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/supabase";
+import { supabase } from '@/utils/supabase/client'
 
 export function useLogoImage(path: string) {
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
@@ -16,10 +16,8 @@ export function useLogoImage(path: string) {
         if (error) throw error;
 
         if (data?.path) {
-          const { data: publicUrlData, error: publicUrlError } =
+          const { data: publicUrlData } =
             supabase.storage.from("jernih").getPublicUrl(data.path);
-
-          if (publicUrlError) throw publicUrlError;
 
           setLogoUrl(publicUrlData.publicUrl);
         }

@@ -1,5 +1,5 @@
-import { fetchVolunteerById } from '@/supabase';
-import { fetchImageUrl, fetchDefaultImageUrl } from '@/lib/utils';
+import { fetchVolunteerById } from '@/utils/supabase/conservation';
+import { fetchImageUrl, fetchDefaultImageUrl } from '@/utils/supabase/client';
 import OpportunityClientView from '@/components/OpportunityClientView';
 
 interface Props {

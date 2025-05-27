@@ -3,15 +3,12 @@ import "@radix-ui/themes/styles.css";
 import React, { useState, useEffect} from "react";  // Import useState from React
 import { DashboardHeader } from "@/components/dashboard-header";
 import { Button , TextField, Flex , Text, Card} from "@radix-ui/themes";
-// import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-// import { Search } from "lucide-react";
-import { fetchVolunteerOpportunitiesWithAssets } from "@/supabase/index"; // Import function to fetch data
+import { fetchVolunteerOpportunitiesWithAssets } from "@/utils/supabase/conservation";
 import { DropdownMenu, Theme } from "@radix-ui/themes";
 import { useRouter } from 'next/navigation';
 import { BrowserRouter } from 'react-router-dom';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
-
-import { fetchImageUrl, fetchDefaultImageUrl } from "@/lib/utils"
+import { fetchImageUrl, fetchDefaultImageUrl } from "@/utils/supabase/client"
 
 const VolunteerOpportunityListing = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -145,7 +142,6 @@ const VolunteerOpportunityListing = () => {
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 height: '300px',  // Set a fixed height for the card
-
               }}
             >
 

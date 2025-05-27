@@ -14,7 +14,7 @@ import {
 import { CheckCircle, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/components/context/AuthContext";
-import { supabase } from "@/supabase";
+import { supabase } from '@/utils/supabase/client'
 import WEB_URL from "@/url/web_url";
 
 export default function VerificationSentPage() {

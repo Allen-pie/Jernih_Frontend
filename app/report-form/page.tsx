@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from '@/utils/supabase/client'
 import { DashboardHeader } from "@/components/dashboard-header";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,9 +24,6 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast"; 
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function FormPage() {
   const { toast } = useToast();
