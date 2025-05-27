@@ -1,56 +1,22 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { FacebookIcon, TwitterIcon, InstagramIcon } from "lucide-react";
-import { supabase } from "@/supabase";
 
 export default function Footer() {
-  const [logoUrl, setLogoUrl] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchLogo = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("assets")
-          .select("path")
-          .limit(1)
-          .single();
-
-        if (error) throw error;
-
-        if (data && data.path) {
-          const { data: publicUrlData, error: publicUrlError } =
-            supabase.storage.from("jernih").getPublicUrl(data.path);
-
-          if (publicUrlError) throw publicUrlError;
-
-          setLogoUrl(publicUrlData.publicUrl);
-        }
-      } catch (error: any) {
-        console.error("Error fetching logo:", error.message);
-      }
-    };
-
-    fetchLogo();
-  }, []);
-
   return (
     <footer className="bg-blue-800 text-white">
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row justify-between items-center mb-4">
           <div className="flex items-center mb-4 md:mb-0">
-            {logoUrl ? (
+           
               <Image
-                src={logoUrl}
+                src={'/assets/jernihLogo.svg'}
                 width={150}
                 height={100}
                 alt="Jernih Logo"
                 className="transition-opacity duration-300 opacity-100"
               />
-            ) : (
-              <div className="w-[150px] h-[100px] bg-white/40 animate-pulse rounded" />
-            )}
+            
           </div>
           <div className="flex space-x-4">
             <a href="#" className="hover:text-blue-300 transition-colors">
@@ -78,5 +44,7 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+
+
   );
 }

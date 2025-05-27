@@ -1,8 +1,7 @@
 "use client";
 import Link from "next/link";
-import { Search, Bell, User, LogOut } from "lucide-react";
+import { Bell, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { usePathname } from "next/navigation";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
@@ -14,7 +13,6 @@ import { useAuth } from "./context/AuthContext";
 import { useSidebar } from "@/components/ui/sidebar";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useLogoImage } from "@/hooks/useLogoImage";
 
 export function DashboardHeader() {
   const { signOut, session } = useAuth();
@@ -28,22 +26,17 @@ export function DashboardHeader() {
     setOpenMobile(false);
   };
 
-  const logoUrl = useLogoImage("jernih-logo.svg");
 
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-6">
       {!isAuthPage && <SidebarTrigger />}
-      {logoUrl ? (
         <Image
-          src={logoUrl}
+          src={'/assets/jernihLogo.svg'}
           width={150}
           height={100}
           alt="Jernih Logo"
           className="transition-opacity duration-300 opacity-100"
         />
-      ) : (
-        <div className="w-[150px] h-[100px] bg-white/40 animate-pulse rounded" />
-      )}
       <div className="ml-auto flex items-center gap-4">
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
