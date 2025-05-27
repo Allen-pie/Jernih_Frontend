@@ -88,6 +88,20 @@
   border: none;
 }
 
+.background {
+  aspect-ratio: 1920/1080;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.waves {
+  background-image: url('../public/assets/layered-waves-haikei.svg');
+}
+
+
+
 html {
   scroll-behavior: smooth;
 }
