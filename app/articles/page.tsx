@@ -1,11 +1,12 @@
 import React from "react";
 import { ArticleCard } from "@/components/article-card";
 // import { articles } from "@/utils/tempArticleData";
-import { fetchArticles } from "@/supabase";
+import { fetchArticles } from "@/utils/supabase/article";
 import Footer  from "@/components/footer";
+import { Article } from "../interfaces";
 
 export default async function ArticlesPage() {
-  const articles = await fetchArticles();
+  const articles : Article[] = await fetchArticles();
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-white">
@@ -28,16 +29,16 @@ export default async function ArticlesPage() {
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {articles.map((article) => (
+          {articles.map((article, idx) => (
             <ArticleCard
-              key={article.id}
+              key={idx}
               id={article.id}
               title={article.title}
               excerpt={article.excerpt}
-              imageUrl={article.imageUrl}
+              imageUrl={article.image_url}
               author={article.author}
               date={article.date}
-              commentCount={article.comments }
+              commentCount={article.comment_count}
             />
           ))}
         </div>

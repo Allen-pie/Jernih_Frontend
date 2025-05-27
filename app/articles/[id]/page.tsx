@@ -2,7 +2,7 @@ import React from 'react'
 import Link from "next/link"
 import Image from "next/image";
 // import { articles } from '@/utils/tempArticleData'
-import { fetchArticleById } from '@/supabase';
+import { fetchArticleById } from '@/utils/supabase/article';
 import { ArrowLeftIcon, CalendarIcon, UserIcon, ClockIcon } from 'lucide-react'
 
 interface Props {
@@ -43,8 +43,8 @@ const ArticleDetailPage = async ({ params }: Props) => {
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-white">
       <div className="relative h-72 md:h-96 overflow-hidden">
         <Image
-          src={article.imageUrl}
-          alt={article.title}
+          src={article.image_url}
+          alt={article.title ?? ""}
           fill
           className="w-full h-full object-cover"
         />
@@ -71,7 +71,7 @@ const ArticleDetailPage = async ({ params }: Props) => {
             </div>
             <div className="flex items-center">
               <ClockIcon size={16} className="mr-1" />
-              <span>{Math.ceil(article.content.split(' ').length / 200)} min read</span>
+              <span>{Math.ceil((article.content ?? "").split(' ').length / 200)} min read</span>
             </div>
           </div>
         </div>
@@ -82,7 +82,7 @@ const ArticleDetailPage = async ({ params }: Props) => {
             <p className="text-xl text-gray-700 mb-6 font-medium italic">
               {article.excerpt}
             </p>
-            {article.content.split('\n\n').map((paragraph, index) => (
+            {(article.content ?? "").split('\n\n').map((paragraph, index) => (
               <p key={index} className="mb-6">
                 {paragraph}
               </p>

@@ -4,13 +4,13 @@ import Image from "next/image";
 import { MessageSquareIcon, CalendarIcon, UserIcon } from 'lucide-react'
 
 interface ArticleCardProps {
-  id: number
-  title: string
-  excerpt: string
-  imageUrl: string
-  author: string
-  date: string
-  commentCount: number
+  id?: number
+  title?: string
+  excerpt?: string
+  imageUrl?: string
+  author?: string
+  date?: string
+  commentCount?: number
 }
 
 export const ArticleCard: React.FC<ArticleCardProps> = ({
@@ -29,9 +29,10 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
     >
       <div className="relative h-48 overflow-hidden">
         <Image
-          src={imageUrl}
-          alt={title}
+          src={imageUrl ?? ""}
+          alt={title ?? "card-image"}
           fill
+          priority
           className="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-70"></div>
@@ -47,9 +48,11 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
             <span>{author}</span>
           </div>
           <div className="flex justify-between items-center text-sm text-gray-500">
-            <div className="flex items-center">
+            <div className="flex items-center"> 
               <CalendarIcon size={14} className="mr-1" />
-              <span>{date}</span>
+              <span>
+                {date ? new Date(date).toLocaleDateString() : ('unknown')}
+              </span>
             </div>
             <div className="flex items-center">
               <MessageSquareIcon size={14} className="mr-1" />
