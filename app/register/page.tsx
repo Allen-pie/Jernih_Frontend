@@ -17,10 +17,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/context/AuthContext";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/supabase";
+import { supabase } from "@/utils/supabase/client";
 import { useForm } from "react-hook-form";
 import { Eye, EyeClosed } from "lucide-react";
 import WEB_URL from "@/url/web_url";
+import { TransparentHeader } from "@/components/transparent-header";
+import Google from "@/components/icons/google";
 
 const schema = z
   .object({
@@ -60,7 +62,18 @@ export default function RegisterPage() {
     defaultValues,
   });
 
-  const { setRegEmail, setRegPassword } = useAuth();
+  const loginByGoogle = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${WEB_URL}/dashboard`,
+        queryParams: {
+          prompt: "select_account",
+        },
+      },
+    });
+  };
+
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -69,15 +82,11 @@ export default function RegisterPage() {
     useState<boolean>(false);
 
   const onSubmit = async (value: RegisterData) => {
-    // console.log('alamak')
     try {
       setIsLoading(true);
       const { data, error: reg_error } = await supabase.auth.signUp({
         email: value.email,
         password: value.password,
-        options: {
-          emailRedirectTo: `${WEB_URL}/login`,
-        },
       });
 
       if (reg_error) {
@@ -89,9 +98,6 @@ export default function RegisterPage() {
         console.error("Sign up error:", reg_error);
         return;
       }
-
-      setRegEmail(value.email);
-      setRegPassword(value.password);
 
       if (data.user?.id) {
         const { error: db_error } = await supabase.from("profiles").insert({
@@ -113,7 +119,7 @@ export default function RegisterPage() {
           title: "Register successful",
         });
 
-        router.push("/verification-sent");
+        router.push("/login");
       }
     } catch (error) {
       if (error instanceof Error) {
@@ -129,118 +135,166 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-2xl font-bold text-primary">
-            Create an account
-          </CardTitle>
-          <CardDescription>
-            Enter your information to create an account
-          </CardDescription>
-        </CardHeader>
+    <div>
+      <main className="waves bg-cover flex min-h-screen bg-background flex-col xl:flex-row  items-center xl:items-stretch p-2 xl:p-0 ">
+        <TransparentHeader />
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
-              <Input placeholder="Enter Full Name" {...register("full_name")} />
-              {errors.full_name && (
-                <p className="text-red-500 text-sm">
-                  {errors.full_name.message}
-                </p>
-              )}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                type="email"
-                placeholder="m@example.com"
-                {...register("email")}
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm">{errors.email.message}</p>
-              )}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+        <Card className="w-full max-w-xl py-20 px-20 space-y-0 bg-background mb-0 bottom-0 rounded-md xl:rounded-none">
+          <div className="">
+            <CardHeader className="space-y-2 ">
+              <CardTitle className="text-4xl font-medium text-primary">
+                Ayo Mulai
+              </CardTitle>
+              <CardDescription>Buat akun Anda sekarang</CardDescription>
+            </CardHeader>
 
-              <div className="h-fit relative">
-                <Input
-                  type={showPassword ? "text" : "password"}
-                  {...register("password")}
-                  placeholder="Enter Password"
-                />
-                <div className="absolute inset-y-0 right-0 flex items-center mr-3">
-                  <button
-                    tabIndex={-1}
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    <span className="text-gray-400">
-                      {showPassword ? (
-                        <Eye className="h-4 w-4" />
-                      ) : (
-                        <EyeClosed className="h-4 w-4" />
-                      )}
-                    </span>
-                  </button>
+            <CardContent className="mb-5 space-x-0 space-y-4 justify-center items-center py-2 ">
+              <Button
+                className="w-full py-[21px] text-sm border"
+                variant={"ghost"}
+                onClick={loginByGoogle}
+              >
+                <Google size={20} />
+                Masuk / Daftar dengan Google
+              </Button>
+
+              <div className="relative my-6">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-700"></div>
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className=" px-4 text-gray-500 bg-background">
+                    atau
+                  </span>
                 </div>
               </div>
+            </CardContent>
 
-              {errors.password && (
-                <p className="text-red-500 text-sm">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+            <form onSubmit={handleSubmit(onSubmit)} className=" ">
+              <CardContent className="space-y-4">
 
-              <div className="relative h-fit">
-                <Input
-                  type={showConfirmPassword ? "text" : "password"}
-                  {...register("confirm_password")}
-                  placeholder="Confirm Password"
-                />
-                <div className="absolute inset-y-0 right-0 flex items-center mr-3">
-                  <button
-                    tabIndex={-1}
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    <span className="text-gray-400">
-                      {showConfirmPassword ? (
-                        <Eye className="h-4 w-4" />
-                      ) : (
-                        <EyeClosed className="h-4 w-4" />
-                      )}
-                    </span>
-                  </button>
+                <div className="space-y-2">
+                  <Label htmlFor="name">Nama</Label>
+                  <Input
+                    placeholder="Masukkan Nama"
+                    {...register("full_name")}
+                  />
+                  {errors.full_name && (
+                    <p className="text-red-500 text-sm">
+                      {errors.full_name.message}
+                    </p>
+                  )}
                 </div>
-              </div>
 
-              {errors.confirm_password && (
-                <p className="text-red-500 text-sm">
-                  {errors.confirm_password.message}
-                </p>
-              )}
-            </div>
-          </CardContent>
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    type="email"
+                    {...register("email")}
+                    placeholder="Masukkan Email"
+                    className="py-5"
+                  />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm">
+                      {errors.email.message}
+                    </p>
+                  )}
+                </div>
 
-          <CardFooter className="flex flex-col space-y-4">
-            <Button className="w-full" type="submit" disabled={isLoading}>
-              {isLoading ? "Loading..." : "Create Account"}
-            </Button>
-            <div className="text-center text-sm">
-              Already have an account?{" "}
-              <Link href="/login" className="text-primary hover:underline">
-                Login
-              </Link>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="password">Kata Sandi</Label>
+                  </div>
+                  <div className="relative h-fit">
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      {...register("password")}
+                      placeholder="Masukkan Kata Sandi"
+                      className="py-5"
+                    />
+                    <div className="absolute inset-y-0 right-0 flex items-center mr-3">
+                      <button
+                        tabIndex={-1}
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        <span className="text-gray-400">
+                          {showPassword ? (
+                            <Eye className="h-4 w-4" />
+                          ) : (
+                            <EyeClosed className="h-4 w-4" />
+                          )}
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {errors.password && (
+                    <p className="text-red-500 text-sm">
+                      {errors.password.message}
+                    </p>
+                  )}
+
+                  <div className="space-y-2">
+                    <Label htmlFor="confirmPassword">Konfirmasi Kata Sandi</Label>
+
+                    <div className="relative h-fit">
+                      <Input
+                        type={showConfirmPassword ? "text" : "password"}
+                        {...register("confirm_password")}
+                        placeholder="Konfirmasi Kata Sandi"
+                      />
+                      <div className="absolute inset-y-0 right-0 flex items-center mr-3">
+                        <button
+                          tabIndex={-1}
+                          type="button"
+                          onClick={() =>
+                            setShowConfirmPassword(!showConfirmPassword)
+                          }
+                        >
+                          <span className="text-gray-400">
+                            {showConfirmPassword ? (
+                              <Eye className="h-4 w-4" />
+                            ) : (
+                              <EyeClosed className="h-4 w-4" />
+                            )}
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+
+                    {errors.confirm_password && (
+                      <p className="text-red-500 text-sm">
+                        {errors.confirm_password.message}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter className="flex flex-col space-y-4">
+                <Button
+                  className="w-full py-[21px] text-base"
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  {isLoading ? "Sedang Daftar..." : "Daftar"}
+                </Button>
+              </CardFooter>
+            </form>
+          </div>
+        </Card>
+
+        <div className="background waves items-center justify-center hidden xl:flex">
+          <div className="relative max-w-lg text-center">
+            <div className="absolute text-8xl font-bold text-background opacity-80 md:-left-16 md:-top-12 md:text-9xl font-serif">
+              &ldquo;
             </div>
-          </CardFooter>
-        </form>
-      </Card>
+            <blockquote className="relative z-10 text-3xl font-medium  leading-relaxed text-background  md:leading-loose">
+              Dari Pencemaran ke Perubahan.
+            </blockquote>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
