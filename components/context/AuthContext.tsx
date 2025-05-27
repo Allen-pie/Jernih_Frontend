@@ -2,17 +2,13 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Session, User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/supabase";
+import { supabase } from '@/utils/supabase/client'
 
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
   signOut: () => Promise<void>;
-  regPassword: string;
-  setRegPassword: (password: string) => void;
-  setRegEmail: (email: string) => void;
-  regEmail: string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,8 +17,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, isLoading] = useState<boolean>(true);
-  const [regPassword, setRegPassword] = useState<string>("");
-  const [regEmail, setRegEmail] = useState<string>("");
 
   const router = useRouter();
   useEffect(() => {
@@ -31,10 +25,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (data.session) {
         setUser(data.session.user);
         setSession(data.session);
-
-        console.log("session", session);
       } else {
-        console.log("errorw", error);
+        console.error(error);
       }
 
       isLoading(false);
@@ -44,6 +36,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
+        console.log('Session change')
         setSession(session);
         setUser(session?.user || null);
       }
@@ -71,10 +64,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         user,
         session,
         loading,
-        regEmail,
-        setRegEmail,
-        regPassword,
-        setRegPassword,
         signOut,
       }}
     >
