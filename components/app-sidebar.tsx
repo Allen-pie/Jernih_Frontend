@@ -6,7 +6,7 @@ import {
   BarChart,
   FileText,
   Users,
-  Settings,
+  Waves,
   HelpCircle,
   Compass,
   Newspaper,
@@ -32,7 +32,7 @@ const mainNav = [
   { title: "Water Quality", href: "/analytics", icon: BarChart },
   { title: "Report Pollution", href: "/report-form", icon: FileText },
   { title: "Articles", href: "/articles", icon: Newspaper },
-  { title: "Conservation", href: "/conservation", icon: Settings },
+  { title: "Conservation", href: "/conservation", icon: Waves },
 ];
 
 export function AppSidebar() {

@@ -16,7 +16,8 @@ import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 import { ToastProvider, ToastViewport } from "@/components/ui/toast";
 // Supabase client
-import { supabase } from "@/supabase";
+import { supabase } from "@/utils/supabase/client";
+
 
 const WaterQualityForm = () => {
   // Toast hook
