@@ -8,6 +8,7 @@ export interface ArticleGuest {
     assets? : Asset;
     content? : string;
     image_url? : string;
+    status?: string;
 }
 
 export interface ArticleAdmin {

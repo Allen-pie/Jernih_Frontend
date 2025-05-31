@@ -107,6 +107,7 @@ export async function fetchArticleById(id: number | string) {
     .from('articles')
     .select(`
       id,
+      created_at,
       published_at,
       title,
       excerpt,
@@ -115,7 +116,8 @@ export async function fetchArticleById(id: number | string) {
       image_id,
       assets:assets!articles_image_id_fkey (
         path
-      )
+      ),
+      status
     `)
     .eq('id', id)
     .single<ArticleGuest>();
@@ -133,7 +135,8 @@ export async function fetchArticleById(id: number | string) {
     image_url: article.assets ? `${BUCKET_URLS.main}/${article.assets.path}` : "",
     author: article.author,
     published_at: (article.published_at)?.replace('T', ' ').substring(0, 19),
-    content: article.content
+    content: article.content,
+    status: article.status
   };
 }
 
