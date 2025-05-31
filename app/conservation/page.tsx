@@ -103,10 +103,10 @@ const VolunteerOpportunityListing = () => {
 
   return (
     <Flex direction="column" gap="3">
-      <h1 className="text-3xl font-bold tracking-tight">Volunteer Opportunities</h1>
-      {/* Search Input with Lucide Search Icon */}
+      <h1 className="text-3xl font-bold tracking-tight">Peluang Relawan</h1>
+      {/* Kolom Pencarian dengan Ikon Lucide Search */}
       <Flex direction="row" gap="3">
-        <TextField.Root placeholder="Search for volunnteers" value={searchQuery}
+        <TextField.Root placeholder="Cari relawan" value={searchQuery}
           onChange={(e) => handleSearch(e.target.value)}>
           <TextField.Slot >
             <MagnifyingGlassIcon height="16" width="16" />
@@ -114,15 +114,15 @@ const VolunteerOpportunityListing = () => {
         </TextField.Root>
         <DropdownMenu.Root>
           <DropdownMenu.Trigger>
-            <Button variant="outline" size="2" color = "sky">
-              Filter location
+            <Button variant="outline" size="2" color="sky">
+              Filter lokasi
               <DropdownMenu.TriggerIcon />
             </Button>
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content size = "2" variant="solid" color = "tomato">
-            <DropdownMenu.Item onSelect={() => resetLocationFilter()}>None</DropdownMenu.Item>
+          <DropdownMenu.Content size="2" variant="solid" color="tomato">
+            <DropdownMenu.Item onSelect={() => resetLocationFilter()}>Semua</DropdownMenu.Item>
             {locations.map((location, index) => (
-              <DropdownMenu.Item color = "sky" key={index} onSelect={() => handleFilter(location)}>
+              <DropdownMenu.Item color="sky" key={index} onSelect={() => handleFilter(location)}>
                 {location}
               </DropdownMenu.Item>
             ))}
@@ -155,10 +155,10 @@ const VolunteerOpportunityListing = () => {
                     {opportunity.title}
                   </Text>
                   <Text as="div" color="gray" size="2">
-                    <strong>Location:</strong> {opportunity.location}
+                    <strong>Lokasi:</strong> {opportunity.location}
                   </Text>
                   <Text as="div" color="gray" size="2">
-                    <strong>Date:</strong> {opportunity.created_at}
+                    <strong>Tanggal:</strong> {opportunity.created_at}
                   </Text>
                   <Text as="div" color="gray" size="2" className="line-clamp-3">
                     {opportunity.description}
@@ -168,7 +168,7 @@ const VolunteerOpportunityListing = () => {
             </Card>
           ))
         ) : (
-          <p>No volunteer opportunities found.</p>
+          <p>Tidak ada peluang relawan yang ditemukan.</p>
         )}
       </div>
     </Flex>
