@@ -15,7 +15,7 @@ export function useRequireAuth() {
   const [timerDone, setTimerDone] = useState(false);
 
   // tambahin routes lain
-  const publicRoutes = ["/", "/login", "/register", "/verification-sent", "/reset-password"];
+  const publicRoutes = ["/", "/login", "/register", "/verification-sent", "/reset-password", "/dashboard", "/analytics", "/report-form", "/articles", "/conservation"];
 
   useEffect(() => {
     const t = setTimeout(() => setTimerDone(true), MIN_LOADING_TIME);
