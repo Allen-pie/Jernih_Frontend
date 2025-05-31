@@ -20,7 +20,7 @@ export default async function ArticlesPage() {
                                 Manage and create educational content about water conservation
                             </p>
                         </div>
-                        <Link href="/articles/create">
+                        <Link href="admin/create">
                             <Button>
                                 <Plus className="mr-2 h-4 w-4" />
                                 Create Article
@@ -57,9 +57,11 @@ export default async function ArticlesPage() {
                                         </div>
                                     </div>
                                     <div className="flex gap-2">
-                                        <Button variant="outline" size="sm">
-                                            Edit
-                                        </Button>
+                                        <Link href={`admin/edit/${article.id}`}>
+                                            <Button variant="outline" size="sm">
+                                                Edit
+                                            </Button>
+                                        </Link>
                                         <Button variant="outline" size="sm">
                                             View
                                         </Button>
