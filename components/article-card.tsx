@@ -56,7 +56,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
             </div>
             <div className="flex items-center">
               <MessageSquareIcon size={14} className="mr-1" />
-              <span>{commentCount} comments</span>
+              <span>{commentCount} komentar</span>
             </div>
           </div>
         </div>
