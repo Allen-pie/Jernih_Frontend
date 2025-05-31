@@ -30,7 +30,7 @@ export default function FormPage() {
 
   const [location, setLocation] = useState("");
   const [pollutionType, setPollutionType] = useState("");
-  const [severity, setSeverity] = useState(5);
+  const [severity, setSeverity] = useState("Rendah");
   const [description, setDescription] = useState("");
   const [contact, setContact] = useState("");
 
@@ -77,7 +77,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     // Reset form
     setLocation("");
     setPollutionType("");
-    setSeverity(5);
+    setSeverity("Rendah");
     setDescription("");
     setContact("");
   }
@@ -138,15 +138,21 @@ const handleSubmit = async (e: React.FormEvent) => {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="severity">Tingkat Keparahan (1-10)</Label>
-                    <Input
+                    <Label htmlFor="severity">Tingkat Keparahan</Label>
+                    <Select
                       id="severity"
-                      type="number"
-                      min="1"
-                      max="10"
                       value={severity}
-                      onChange={(e) => setSeverity(Number(e.target.value))}
-                    />
+                      onValueChange={setSeverity}
+                    >
+                      <SelectTrigger id="severity">
+                        <SelectValue placeholder="Pilih tingkat keparahan" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="low">Rendah</SelectItem>
+                        <SelectItem value="medium">Sedang</SelectItem>
+                        <SelectItem value="high">Tinggi</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
                 <div className="space-y-2">
