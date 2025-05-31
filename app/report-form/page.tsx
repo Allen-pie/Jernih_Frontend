@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { supabase } from '@/utils/supabase/client'
-import { DashboardHeader } from "@/components/dashboard-header";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -86,7 +85,6 @@ const handleSubmit = async (e: React.FormEvent) => {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <DashboardHeader />
       <div className="flex flex-1">
         <main className="flex-1 p-6 md:p-8">
           <div className="flex items-center justify-between mb-6">

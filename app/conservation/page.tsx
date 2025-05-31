@@ -1,7 +1,6 @@
 "use client";
 import "@radix-ui/themes/styles.css";
 import React, { useState, useEffect} from "react";  // Import useState from React
-import { DashboardHeader } from "@/components/dashboard-header";
 import { Button , TextField, Flex , Text, Card} from "@radix-ui/themes";
 import { fetchVolunteerOpportunitiesWithAssets } from "@/utils/supabase/conservation";
 import { DropdownMenu, Theme } from "@radix-ui/themes";
@@ -180,7 +179,6 @@ export default function HomePage() {
     <BrowserRouter> 
       <Theme>
         <div className="flex min-h-screen flex-col">
-          <DashboardHeader />
           <div className="flex flex-1">
             <main className="flex-1 p-6 md:p-8">
               <VolunteerOpportunityListing />{" "}

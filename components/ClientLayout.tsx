@@ -2,6 +2,7 @@
 
 import { useRequireAuth } from "@/hooks/use-require-auth";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { DashboardHeader } from "./dashboard-header";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -24,9 +25,9 @@ export default function ClientLayout({
     <SidebarProvider defaultOpen={false}>
       <AppSidebar />
       <SidebarInset>
-        <main>{children}</main>
+        <DashboardHeader />
+          <main>{children}</main>
       </SidebarInset>
-
       <Toaster />
     </SidebarProvider>
   );

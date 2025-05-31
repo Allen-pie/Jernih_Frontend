@@ -4,8 +4,6 @@ import Image from "next/image";
 import { CommentSection } from '@/components/comment-section';
 import { fetchArticleById } from '@/utils/supabase/article';
 import { ArrowLeftIcon, CalendarIcon, UserIcon, ClockIcon } from 'lucide-react'
-import { DashboardHeader } from "@/components/dashboard-header";
-
 interface Props {
   params: {
     id: string;
@@ -41,7 +39,6 @@ const ArticleDetailPage = async ({ params }: Props) => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-white">
-      <DashboardHeader />
       <div className="relative h-72 md:h-96 overflow-hidden">
         <Image
           src={article.image_url}
