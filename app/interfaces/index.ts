@@ -1,14 +1,27 @@
-export interface Article {
+export interface ArticleGuest {
+    id? : number;
+    published_at?: string;
+    title?: string;
+    excerpt?: string;
+    author?: string;
+    comment_count ?:number;
+    assets? : Asset;
+    content? : string;
+    image_url? : string;
+}
+
+export interface ArticleAdmin {
     id? : number;
     title?: string;
     excerpt?: string;
     author?: string;
-    date?: string;
+    created_at?: string;
+    published_at?: string;
     comment_count ?:number;
     assets? : Asset;
-    created_at?: string;
     content? : string;
     image_url? : string;
+    status?: string;
 }
 
 export interface Comment {

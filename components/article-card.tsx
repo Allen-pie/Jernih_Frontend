@@ -7,20 +7,20 @@ interface ArticleCardProps {
   id?: number
   title?: string
   excerpt?: string
-  imageUrl?: string
+  image_url?: string
   author?: string
-  date?: string
-  commentCount?: number
+  publish_date?: string
+  comment_count?: number
 }
 
 export const ArticleCard: React.FC<ArticleCardProps> = ({
   id,
   title,
   excerpt,
-  imageUrl,
+  image_url,
   author,
-  date,
-  commentCount,
+  publish_date,
+  comment_count,
 }) => {
   return (
     <Link
@@ -29,7 +29,7 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
     >
       <div className="relative h-48 overflow-hidden">
         <Image
-          src={imageUrl ?? ""}
+          src={image_url ?? ""}
           alt={title ?? "card-image"}
           fill
           priority
@@ -51,12 +51,12 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({
             <div className="flex items-center"> 
               <CalendarIcon size={14} className="mr-1" />
               <span>
-                {date ? new Date(date).toLocaleDateString() : ('unknown')}
+                {publish_date ? new Date(publish_date).toLocaleDateString() : ('unknown')}
               </span>
             </div>
             <div className="flex items-center">
               <MessageSquareIcon size={14} className="mr-1" />
-              <span>{commentCount} komentar</span>
+              <span>{comment_count} komentar</span>
             </div>
           </div>
         </div>

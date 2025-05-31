@@ -4,6 +4,8 @@ import Image from "next/image";
 import { CommentSection } from '@/components/comment-section';
 import { fetchArticleById } from '@/utils/supabase/article';
 import { ArrowLeftIcon, CalendarIcon, UserIcon, ClockIcon } from 'lucide-react'
+import { ArticleGuest } from '@/app/interfaces';
+
 interface Props {
   params: {
     id: string;
@@ -13,7 +15,7 @@ interface Props {
 const ArticleDetailPage = async ({ params }: Props) => {
   const { id } = await params;
   const articleId = parseInt(id);
-  const article = await fetchArticleById(articleId);
+  const article : ArticleGuest = await fetchArticleById(articleId);
 
   if (!article) {
     return (
@@ -65,7 +67,7 @@ const ArticleDetailPage = async ({ params }: Props) => {
             </div>
             <div className="flex items-center">
               <CalendarIcon size={16} className="mr-1" />
-              <span>{article.date}</span>
+              <span>{article.published_at}</span>
             </div>
             <div className="flex items-center">
               <ClockIcon size={16} className="mr-1" />

@@ -1,12 +1,12 @@
 import React from "react";
 import { ArticleCard } from "@/components/article-card";
 // import { articles } from "@/utils/tempArticleData";
-import { fetchArticles } from "@/utils/supabase/article";
+import { fetchArticlesGuest } from "@/utils/supabase/article";
 import Footer  from "@/components/footer";
-import { Article } from "../interfaces";
+import { ArticleGuest } from "../interfaces";
 
 export default async function ArticlesPage() {
-  const articles : Article[] = await fetchArticles();
+  const articles : ArticleGuest[] = await fetchArticlesGuest();
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-white">
@@ -34,10 +34,10 @@ export default async function ArticlesPage() {
               id={article.id}
               title={article.title}
               excerpt={article.excerpt}
-              imageUrl={article.image_url}
+              image_url={article.image_url}
               author={article.author}
-              date={article.date}
-              commentCount={article.comment_count}
+              publish_date={article.published_at}
+              comment_count={article.comment_count}
             />
           ))}
         </div>

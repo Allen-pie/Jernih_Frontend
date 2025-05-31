@@ -63,7 +63,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => 
             })
             return
         }
-
+        console.log(user)
         const newPostedComment = await postComment(articleId, user.id, newComment)
 
         toast({
