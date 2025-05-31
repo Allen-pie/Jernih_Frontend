@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from "next/link"
 import Image from "next/image";
-// import { articles } from '@/utils/tempArticleData'
+import { CommentSection } from '@/components/comment-section';
 import { fetchArticleById } from '@/utils/supabase/article';
 import { ArrowLeftIcon, CalendarIcon, UserIcon, ClockIcon } from 'lucide-react'
 
@@ -87,6 +87,12 @@ const ArticleDetailPage = async ({ params }: Props) => {
                 {paragraph}
               </p>
             ))}
+          </div>
+          <div className="border-t border-gray-200 pt-10">
+            <CommentSection
+              articleId={article.id}
+              comments={article.comments}
+            />
           </div>
         </div>
       </div>
