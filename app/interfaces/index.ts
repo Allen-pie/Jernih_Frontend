@@ -11,6 +11,16 @@ export interface Article {
     image_url? : string;
 }
 
+export interface Comment {
+    id? : number;
+    article_id? : number;
+    user_id? : number;
+    created_at? : string;
+    text? : string;
+    profiles? : {
+        full_name?: string;
+    }
+}
 
 export interface Asset {   
     path : string;
