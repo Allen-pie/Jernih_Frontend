@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { CheckCircle, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useAuth } from "@/components/context/AuthContext";
+import { useAuth } from "@/components/context/auth-context";
 import { supabase } from '@/utils/supabase/client'
 import WEB_URL from "@/url/web_url";
 

@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/components/context/AuthContext";
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
-import { Toaster } from "@/components/ui/toaster";
+import { AuthProvider } from "@/components/context/auth-context";
 import ClientLayout from "@/components/ClientLayout";
 
 const geistSans = Geist({
@@ -42,7 +39,9 @@ export default function RootLayout({
             <div className="hidden xl:block 2xl:hidden bg-purple-600 px-2 py-1 rounded">xl</div>
             <div className="hidden 2xl:block bg-pink-600 px-2 py-1 rounded">2xl</div>
           </div>
-          <ClientLayout>{children}</ClientLayout>
+          <ClientLayout>
+            {children}
+            </ClientLayout>
         </AuthProvider>
       </body>
     </html>

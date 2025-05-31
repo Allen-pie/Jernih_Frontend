@@ -2,8 +2,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useImage } from "@/hooks/useImage";
-import { useLogoImage } from "@/hooks/useLogoImage";
+import { useImage } from "@/hooks/use-image";
+import { useLogoImage } from "@/hooks/use-logo-image";
 import {
   Popover,
   PopoverContent,
@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { useAuth } from "@/components/context/AuthContext";
+import { useAuth } from "@/components/context/auth-context";
 import { SubscribeForm } from "@/components/subscribe-form";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

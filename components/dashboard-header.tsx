@@ -9,7 +9,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useAuth } from "./context/AuthContext";
+import { useAuth } from "./context/auth-context";
 import { useSidebar } from "@/components/ui/sidebar";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";

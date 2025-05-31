@@ -15,7 +15,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/components/context/AuthContext";
+import { useAuth } from "@/components/context/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/utils/supabase/client";
 import { useForm } from "react-hook-form";
