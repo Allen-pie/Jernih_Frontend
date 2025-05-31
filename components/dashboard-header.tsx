@@ -21,6 +21,11 @@ export function DashboardHeader() {
   const pathname = usePathname();
   const isAuthPage = ["/login", "/register"].includes(pathname);
 
+  const isLandingPage = pathname === "/";
+
+  if (isLandingPage) {
+    return null;
+  }
   const closeSidebar = () => {
     setOpen(false);
     setOpenMobile(false);
