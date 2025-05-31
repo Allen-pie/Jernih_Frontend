@@ -6,6 +6,28 @@ import { useAuth } from "@/components/context/auth-context";
 
 const MIN_LOADING_TIME = 400;
 
+const publicRoutes = [
+  "/",
+  "/login",
+  "/register",
+  "/verification-sent",
+  "/reset-password",
+  "/dashboard",
+  "/analytics",
+  "/report-form",
+  "/articles",
+  "/conservation",
+  "",
+];
+
+// Tambahkan pengecekan prefix untuk dynamic route seperti /articles/[id]
+function isPublicRoute(pathname: string) {
+  return (
+    publicRoutes.includes(pathname) ||
+    pathname.startsWith("/articles/")
+  );
+}
+
 export function useRequireAuth() {
   const { user, loading } = useAuth();
   const router = useRouter();
@@ -14,9 +36,6 @@ export function useRequireAuth() {
   const [ready, setReady] = useState(false);
   const [timerDone, setTimerDone] = useState(false);
 
-  // tambahin routes lain
-  const publicRoutes = ["/", "/login", "/register", "/verification-sent", "/reset-password", "/dashboard", "/analytics", "/report-form", "/articles", "/conservation"];
-
   useEffect(() => {
     const t = setTimeout(() => setTimerDone(true), MIN_LOADING_TIME);
     return () => clearTimeout(t);
@@ -24,7 +43,7 @@ export function useRequireAuth() {
 
   useEffect(() => {
     if (!loading && timerDone) {
-      if (publicRoutes.includes(pathname) ) {
+      if (isPublicRoute(pathname)) {
         setReady(true);
       } else {
         if (!user) {
