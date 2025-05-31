@@ -42,7 +42,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     location.trim() === "" ||
     pollutionType.trim() === "" ||
     description.trim() === "" ||
-    severity < 1 || severity > 10
+    severity.trim() === ""
   ) {
     toast({
       title: "Missing Required Fields",
