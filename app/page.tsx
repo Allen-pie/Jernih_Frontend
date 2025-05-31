@@ -74,7 +74,15 @@ export default function HomePage() {
       >
         <div className="container mx-auto px-8 sm:px-16 md:px-28 lg:px-32 py-3 flex justify-between items-center">
           {logoUrl ? (
-            <Image src={logoUrl} width={150} height={100} alt="Jernih Logo" />
+            <Link href="/">
+              <Image
+                src={logoUrl}
+                width={150}
+                height={100}
+                alt="Jernih Logo"
+                className="cursor-pointer"
+              />
+            </Link>
           ) : (
             <div className="w-[150px] h-[100px] bg-white/40 animate-pulse rounded" />
           )}
