@@ -25,8 +25,8 @@ export function DashboardChart() {
               return (
                 <Card className="p-3 border shadow-sm">
                   <p className="font-medium">{label}</p>
-                  <p className="text-sm text-primary">Water Clarity: {payload[0].value}%</p>
-                  <p className="text-sm text-secondary">Pollutants (ppm): {payload[1].value}</p>
+                  <p className="text-sm text-primary">Kejernihan Air: {payload[0].value}%</p>
+                  <p className="text-sm text-secondary">Polutan (ppm): {payload[1].value}</p>
                 </Card>
               )
             }
@@ -39,4 +39,3 @@ export function DashboardChart() {
     </ResponsiveContainer>
   )
 }
-

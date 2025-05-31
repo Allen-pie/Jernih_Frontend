@@ -29,10 +29,10 @@ import { usePathname } from "next/navigation";
 // 1) Your nav items
 const mainNav = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { title: "Water Quality", href: "/analytics", icon: BarChart },
-  { title: "Report Pollution", href: "/report-form", icon: FileText },
-  { title: "Articles", href: "/articles", icon: Newspaper },
-  { title: "Conservation", href: "/conservation", icon: Waves },
+  { title: "Kualitas Air", href: "/analytics", icon: BarChart },
+  { title: "Laporkan Pencemaran", href: "/report-form", icon: FileText },
+  { title: "Artikel", href: "/articles", icon: Newspaper },
+  { title: "Konservasi", href: "/conservation", icon: Waves },
 ];
 
 export function AppSidebar() {
@@ -87,7 +87,7 @@ export function AppSidebar() {
             <SidebarMenuButton asChild>
               <Link href="/resources" className="flex items-center gap-2">
                 <HelpCircle className="size-4" />
-                <span>Education & Resources</span>
+                <span>Edukasi & Sumber Daya</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>

@@ -20,18 +20,18 @@ export default function Dashboard() {
         <main className="flex-1 p-6 md:p-8">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-3xl font-bold tracking-tight">
-              Water Quality Dashboard
+              Dashboard Kualitas Air
             </h1>
             <Link href="/form">
-              <Button>Report Pollution</Button>
+              <Button>Laporkan Pencemaran</Button>
             </Link>
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <Card className="col-span-full">
               <CardHeader>
-                <CardTitle>Water Quality Monitoring</CardTitle>
+                <CardTitle>Monitoring Kualitas Air</CardTitle>
                 <CardDescription>
-                  Track water quality indicators over the past 6 months
+                  Pantau indikator kualitas air selama 6 bulan terakhir
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -42,9 +42,9 @@ export default function Dashboard() {
             </Card>
             <Card className="col-span-full md:col-span-2 lg:col-span-2">
               <CardHeader>
-                <CardTitle>Polluted Water Areas</CardTitle>
+                <CardTitle>Area Air Tercemar</CardTitle>
                 <CardDescription>
-                  Interactive map of reported pollution incidents
+                  Peta interaktif insiden pencemaran yang dilaporkan
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -55,56 +55,53 @@ export default function Dashboard() {
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Clean Water Sites</CardTitle>
+                <CardTitle>Lokasi Air Bersih</CardTitle>
                 <CardDescription>
-                  Monitored locations this month
+                  Lokasi yang dipantau bulan ini
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold">2,853</div>
+                <div className="text-4xl font-bold">2.853</div>
                 <p className="text-sm text-muted-foreground mt-2">
-                  <span className="text-emerald-500">↑ 12%</span> from last
-                  month
+                  <span className="text-emerald-500">↑ 12%</span> dari bulan lalu
                 </p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Water Quality Index</CardTitle>
-                <CardDescription>Average quality score (0-100)</CardDescription>
+                <CardTitle>Indeks Kualitas Air</CardTitle>
+                <CardDescription>Skor rata-rata kualitas (0-100)</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold">24.5%</div>
+                <div className="text-4xl font-bold">24,5%</div>
                 <p className="text-sm text-muted-foreground mt-2">
-                  <span className="text-emerald-500">↑ 3.2%</span> from last
-                  month
+                  <span className="text-emerald-500">↑ 3,2%</span> dari bulan lalu
                 </p>
               </CardContent>
             </Card>
             <Card>
               <CardHeader>
-                <CardTitle>Pollutants Removed</CardTitle>
-                <CardDescription>Kilograms removed this month</CardDescription>
+                <CardTitle>Polutan yang Dihilangkan</CardTitle>
+                <CardDescription>Kilogram polutan yang dibersihkan bulan ini</CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-4xl font-bold">$48,294</div>
+                <div className="text-4xl font-bold">48.294 kg</div>
                 <p className="text-sm text-muted-foreground mt-2">
-                  <span className="text-rose-500">↓ 4.3%</span> from last month
+                  <span className="text-rose-500">↓ 4,3%</span> dari bulan lalu
                 </p>
               </CardContent>
             </Card>
           </div>
           <div className="mt-8 text-center">
             <h2 className="text-2xl font-bold mb-4">
-              See pollution in your area?
+              Melihat pencemaran di daerah Anda?
             </h2>
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-              Report water pollution incidents in your community to help us keep
-              our waters clean.
+              Laporkan insiden pencemaran air di lingkungan Anda untuk membantu menjaga kebersihan air bersama.
             </p>
             <Link href="/report-form">
               <Button size="lg" className="px-8">
-                Report Pollution
+                Laporkan Pencemaran
               </Button>
             </Link>
           </div>

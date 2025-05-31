@@ -223,13 +223,13 @@ function UserLocation() {
   return position === null ? null : (
     <Marker position={[position.lat, position.lng]} icon={userIcon}>
       <Popup>
-        <strong>Your Location</strong>
+        <strong>Lokasi Anda</strong>
         <br />
         Lat: {position.lat.toFixed(6)}, Lng: {position.lng.toFixed(6)}
         <br />
-        {accuracy ? <>Accuracy: &plusmn;{Math.round(accuracy)} m</> : null}
+        {accuracy ? <>Akurasi: &plusmn;{Math.round(accuracy)} m</> : null}
       </Popup>
-      {/* Location button */}
+      {/* Tombol lokasi */}
       <LocationButton onClick={centerOnUser} />
     </Marker>
   );
