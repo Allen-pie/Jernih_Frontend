@@ -274,14 +274,21 @@ export function PollutionMap(): JSX.Element {
   }, []);
 
   // build heatmap points [lat, lng, intensity]
-  const heatmapPoints = areas.map(
-    (area) =>
-      [area.lat, area.lng, severityWeights[area.severity]] as [
-        number,
-        number,
-        number
-      ]
-  );
+const heatmapPoints = areas
+  .map((area) => {
+    const lat = area.lat;
+    const lng = area.lng;
+    const intensity = severityWeights[area.severity];
+    if (
+      typeof lat === 'number' &&
+      typeof lng === 'number' &&
+      typeof intensity === 'number'
+    ) {
+      return [lat, lng, intensity] as [number, number, number];
+    }
+    return null;
+  })
+  .filter((pt): pt is [number, number, number] => pt !== null);
 
   // Default center position (fallback if geolocation fails)
   const defaultCenter: [number, number] = [3.139, 101.6869]; // Malaysia
@@ -309,7 +316,6 @@ export function PollutionMap(): JSX.Element {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="&copy; OpenStreetMap contributors"
         />
-
         <HeatmapLayer
           points={heatmapPoints}
           longitudeExtractor={(pt) => pt[1]}
@@ -320,19 +326,26 @@ export function PollutionMap(): JSX.Element {
           blur={20}
         />
 
-        {areas.map((area) => (
-          <Marker
-            key={area.id}
-            position={[area.lat, area.lng]}
-            icon={getSeverityIcon(area.severity)}
-          >
-            <Popup>
-              <strong>Prediction ID:</strong> {area.id}
-              <br />
-              <strong>Severity:</strong> {area.severity}
-            </Popup>
-          </Marker>
+        {areas
+          .filter(
+            (area) =>
+              typeof area.lat === 'number' &&
+              typeof area.lng === 'number'
+          )
+          .map((area) => (
+            <Marker
+              key={area.id}
+              position={[area.lat, area.lng]}
+              icon={getSeverityIcon(area.severity)}
+            >
+              <Popup>
+                <strong>Prediction ID:</strong> {area.id}
+                <br />
+                <strong>Severity:</strong> {area.severity}
+              </Popup>
+            </Marker>
         ))}
+
 
         {/* User location component */}
         <UserLocation />

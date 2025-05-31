@@ -152,10 +152,10 @@ const WaterQualityForm = () => {
               </CardHeader>
               <CardContent>
                 <form className="space-y-6" onSubmit={handleSubmit}>
-                  {/* <div className="space-y-2">
+                  <div className="space-y-2">
                   <Label htmlFor="location">Location Name</Label>
                   <Input id="location" placeholder="Enter the name of the water body or area" />
-                </div> */}
+                </div>
                   <div className="space-y-6">
                     {/* pH level */}
                     <div className="grid grid-cols-2 gap-4">
