@@ -24,17 +24,28 @@ export async function fetchArticles() {
     return [];
   }
 
+  
   // @ts-ignore
   const articles = data as Article[];
+  
+  const articlesWithComments = await Promise.all(
+    articles.map(async (article) => {
+      const commentCount = await countCommentsByArticleId(article.id)
+      return {
+        ...article,
+        commentCount
+      }
+    })
+  )
 
-  return articles.map((article) => ({
+  return articlesWithComments.map((article) => ({
     id: article.id,
     title: article.title,
     excerpt: article.excerpt, 
     image_url: article.assets ? `${BUCKET_URLS.main}/article-images/${article.assets.path}` : "",
     author: article.author,
     date: article.created_at,
-    comment_count: Math.floor(Math.random() * 10),
+    comment_count: article.commentCount,
   }));
 
 
@@ -71,7 +82,20 @@ export async function fetchArticleById(id: number | string) {
     image_url: article.assets ? `${BUCKET_URLS.main}/article-images/${article.assets.path}` : "",
     author: article.author,
     date: article.created_at,
-    comment_count: Math.floor(Math.random() * 10),
     content: data.content,
   };
+}
+
+export const countCommentsByArticleId = async (articleId: number): Promise<number> => {
+  const { data, error, count } = await supabase
+    .from('comments')
+    .select('*', { count: 'exact', head: true })
+    .eq('article_id', articleId)
+
+  if (error) {
+    console.error('Error counting comments:', error)
+    return 0
+  }
+
+  return count || 0
 }
