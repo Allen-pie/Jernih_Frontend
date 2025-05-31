@@ -5,6 +5,7 @@ import { UserIcon, SendIcon, MessageCircleIcon } from 'lucide-react'
 import { fetchCommentById, postComment } from '@/utils/supabase/comment'
 import { supabase } from '@/utils/supabase/client'
 import { toast } from '@/hooks/use-toast'
+import Link from 'next/link'
 
 interface Comments {
     id? : number;
@@ -22,6 +23,7 @@ interface CommentSectionProps {
 export const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => {
   const [comments, setComments] = useState<Comments[]>([])
   const [newComment, setNewComment] = useState('')
+  const [user, setUser] = useState<any>(null)
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -29,7 +31,16 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => 
       setComments(fetchedComments)
     }
 
+    const fetchUser = async () => {
+        const {
+        data: { user },
+        error
+        } = await supabase.auth.getUser()
+        if (!error) setUser(user)
+    }
+
     fetchComments()
+    fetchUser()
   }, [articleId])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -105,32 +116,38 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => 
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label
-            htmlFor="comment"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Komentar Anda
-          </label>
-          <textarea
-            id="comment"
-            rows={4}
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
-            placeholder="Bagikan pemikiran Anda..."
-            required
-          />
+      {user ? (
+        <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+            <label
+                htmlFor="comment"
+                className="block text-sm font-medium text-gray-700 mb-1"
+            >
+                Komentar Anda
+            </label>
+            <textarea
+                id="comment"
+                rows={4}
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                placeholder="Bagikan pemikiran Anda..."
+                required
+            />
+            </div>
+            <button
+            type="submit"
+            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+            >
+            <SendIcon size={18} className="mr-2" />
+            Buat Komentar
+            </button>
+        </form>
+        ) : (
+        <div className="text-center text-sm text-gray-600">
+            <p>Anda harus <Link href={`/login`} className="text-blue-600 underline">login</Link> untuk menulis komentar.</p>
         </div>
-        <button
-          type="submit"
-          className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
-        >
-          <SendIcon size={18} className="mr-2" />
-          Buat Komentar
-        </button>
-      </form>
+        )}
     </div>
   )
 }
