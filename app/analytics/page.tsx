@@ -86,12 +86,12 @@ const WaterQualityForm = () => {
       );
 
       const { potability_prediction, severity, probability } = response.data;
-      const label = potability_prediction === 1 ? "Safe to Drink" : "Unsafe";
+      const label = potability_prediction === 1 ? "Layak Minum" : "Tidak Layak";
 
       // Show toast with result
       toast({
-        title: "Water Quality Prediction",
-        description: `${label} — Severity: ${severity}`,
+        title: "Prediksi Kualitas Air",
+        description: `${label} — Tingkat Keparahan: ${severity}`,
       });
 
       // Save to Supabase
@@ -121,8 +121,8 @@ const WaterQualityForm = () => {
     } catch (error) {
       console.error("Error while predicting:", error);
       toast({
-        title: "Prediction Error",
-        description: "Could not predict water potability.",
+        title: "Kesalahan Prediksi",
+        description: "Tidak dapat memprediksi kelayakan air.",
       });
     } finally {
       setLoading(false);
@@ -137,36 +137,36 @@ const WaterQualityForm = () => {
           <main className="flex-1 p-6 md:p-8">
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-3xl font-bold tracking-tight">
-                Water Quality Prediction
+                Prediksi Kualitas Air
               </h1>
               <Link href="/">
-                <Button variant="outline">Back to Dashboard</Button>
+                <Button variant="outline">Kembali ke Dasbor</Button>
               </Link>
             </div>
             <Card className="max-w-2xl mx-auto p-6 ">
               <CardHeader className="space-y-2 text-lg">
-                <CardTitle>Sample Data</CardTitle>
+                <CardTitle>Data Sampel</CardTitle>
                 <CardDescription>
-                  Enter the data from the water sample
+                  Masukkan data dari sampel air
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="space-y-2">
-                  <Label htmlFor="location">Location Name</Label>
-                  <Input id="location" placeholder="Enter the name of the water body or area" />
+                  <Label htmlFor="location">Nama Lokasi</Label>
+                  <Input id="location" placeholder="Masukkan nama badan air atau area" />
                 </div>
                   <div className="space-y-6">
                     {/* pH level */}
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="ph">pH level (0-14)</Label>
+                        <Label htmlFor="ph">Tingkat pH (0-14)</Label>
                         <Input
                           id="ph"
                           type="number"
                           min="0"
                           max="14"
-                          placeholder="Enter pH level"
+                          placeholder="Masukkan tingkat pH"
                           value={ph}
                           onChange={(e) => handleChange(e, setPh)}
                         />
@@ -174,13 +174,13 @@ const WaterQualityForm = () => {
 
                       {/* Hardness */}
                       <div className="space-y-2">
-                        <Label htmlFor="Hardness">Hardness (0-1000 mg/L)</Label>
+                        <Label htmlFor="Hardness">Kesadahan (0-1000 mg/L)</Label>
                         <Input
                           id="Hardness"
                           type="number"
                           min="0"
                           max="1000"
-                          placeholder="Enter in mg/L"
+                          placeholder="Masukkan dalam mg/L"
                           value={hardness}
                           onChange={(e) => handleChange(e, setHardness)}
                         />
@@ -191,14 +191,14 @@ const WaterQualityForm = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="Solids">
-                          Total Dissolved Solids (0-100,000 mg/L)
+                          Total Zat Terlarut (0-100.000 mg/L)
                         </Label>
                         <Input
                           id="Solids"
                           type="number"
                           min="0"
                           max="100000"
-                          placeholder="Enter in mg/L"
+                          placeholder="Masukkan dalam mg/L"
                           value={solids}
                           onChange={(e) => handleChange(e, setSolids)}
                         />
@@ -206,14 +206,14 @@ const WaterQualityForm = () => {
 
                       <div className="space-y-2">
                         <Label htmlFor="Chloramines">
-                          Chloramines (0-10 mg/L)
+                          Kloramin (0-10 mg/L)
                         </Label>
                         <Input
                           id="Chloramines"
                           type="number"
                           min="0"
                           max="10"
-                          placeholder="Enter in mg/L"
+                          placeholder="Masukkan dalam mg/L"
                           value={chloramines}
                           onChange={(e) => handleChange(e, setChloramines)}
                         />
@@ -223,13 +223,13 @@ const WaterQualityForm = () => {
                     {/* Sulfate and Conductivity */}
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="Sulfate">Sulfate (0-1000 mg/L)</Label>
+                        <Label htmlFor="Sulfate">Sulfat (0-1000 mg/L)</Label>
                         <Input
                           id="Sulfate"
                           type="number"
                           min="0"
                           max="1000"
-                          placeholder="Enter in mg/L"
+                          placeholder="Masukkan dalam mg/L"
                           value={sulfate}
                           onChange={(e) => handleChange(e, setSulfate)}
                         />
@@ -237,14 +237,14 @@ const WaterQualityForm = () => {
 
                       <div className="space-y-2">
                         <Label htmlFor="Conductivity">
-                          Conductivity (0-100,000 µS/cm)
+                          Konduktivitas (0-100.000 µS/cm)
                         </Label>
                         <Input
                           id="Conductivity"
                           type="number"
                           min="0"
                           max="100000"
-                          placeholder="Enter in µS/cm"
+                          placeholder="Masukkan dalam µS/cm"
                           value={conductivity}
                           onChange={(e) => handleChange(e, setConductivity)}
                         />
@@ -255,14 +255,14 @@ const WaterQualityForm = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="Organic_carbon">
-                          Organic Carbon (0-100 mg/L)
+                          Karbon Organik (0-100 mg/L)
                         </Label>
                         <Input
                           id="Organic_carbon"
                           type="number"
                           min="0"
                           max="100"
-                          placeholder="Enter in mg/L"
+                          placeholder="Masukkan dalam mg/L"
                           value={organicCarbon}
                           onChange={(e) => handleChange(e, setOrganicCarbon)}
                         />
@@ -270,14 +270,14 @@ const WaterQualityForm = () => {
 
                       <div className="space-y-2">
                         <Label htmlFor="Trihalomethanes">
-                          Trihalomethanes (0-300 µg/L)
+                          Trihalometana (0-300 µg/L)
                         </Label>
                         <Input
                           id="Trihalomethanes"
                           type="number"
                           min="0"
                           max="300"
-                          placeholder="Enter in µg/L"
+                          placeholder="Masukkan dalam µg/L"
                           value={trihalomethanes}
                           onChange={(e) => handleChange(e, setTrihalomethanes)}
                         />
@@ -286,13 +286,13 @@ const WaterQualityForm = () => {
 
                     {/* Turbidity */}
                     <div className="space-y-2">
-                      <Label htmlFor="Turbidity">Turbidity (0-1000 NTU)</Label>
+                      <Label htmlFor="Turbidity">Kekeruhan (0-1000 NTU)</Label>
                       <Input
                         id="Turbidity"
                         type="number"
                         min="0"
                         max="1000"
-                        placeholder="Enter in NTU"
+                        placeholder="Masukkan dalam NTU"
                         value={turbidity}
                         onChange={(e) => handleChange(e, setTurbidity)}
                       />
@@ -300,14 +300,14 @@ const WaterQualityForm = () => {
                   </div>
                   <div className="flex justify-end gap-4">
                     <Button type="submit" disabled={loading}>
-                      {loading ? "Predicting..." : "Predict"}
+                      {loading ? "Memproses..." : "Prediksi"}
                     </Button>
                     <Button
                       variant="outline"
                       type="button"
                       onClick={() => window.location.reload()}
                     >
-                      Clear
+                      Bersihkan
                     </Button>
                   </div>
                 </form>
