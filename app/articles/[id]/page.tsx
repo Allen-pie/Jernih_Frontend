@@ -13,8 +13,7 @@ interface Props {
 
 const ArticleDetailPage = async ({ params }: Props) => {
   const { id } = await params;
-  const articleId = parseInt(id || '1', 10);
-  // const article = articles.find((article) => article.id === articleId);
+  const articleId = parseInt(id);
   const article = await fetchArticleById(articleId);
 
   if (!article) {
@@ -22,17 +21,17 @@ const ArticleDetailPage = async ({ params }: Props) => {
       <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-white">
         <div className="container mx-auto px-4 py-16 text-center">
           <h1 className="text-3xl font-bold text-gray-800 mb-4">
-            Article Not Found
+            Artikel tidak ditemukan
           </h1>
           <p className="mb-8">
-            The article you`&apos;`re looking for doesn`&apos;`t exist or has been removed.
+            Artikel yang kamu cari tidak ada atau sudah dihapus.
           </p>
           <Link
             href="/articles"
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
           >
             <ArrowLeftIcon size={18} className="mr-2" />
-            Back to Articles
+            Kembali
           </Link>
         </div>
       </div>
@@ -55,7 +54,7 @@ const ArticleDetailPage = async ({ params }: Props) => {
             className="inline-flex items-center text-blue-200 hover:text-white mb-4 transition-colors"
           >
             <ArrowLeftIcon size={18} className="mr-2" />
-            Back to Articles
+            Kembali
           </Link>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {article.title}
@@ -71,7 +70,7 @@ const ArticleDetailPage = async ({ params }: Props) => {
             </div>
             <div className="flex items-center">
               <ClockIcon size={16} className="mr-1" />
-              <span>{Math.ceil((article.content ?? "").split(' ').length / 200)} min read</span>
+              <span>{Math.ceil((article.content ?? "").split(' ').length / 200)} menit baca</span>
             </div>
           </div>
         </div>
@@ -91,7 +90,6 @@ const ArticleDetailPage = async ({ params }: Props) => {
           <div className="border-t border-gray-200 pt-10">
             <CommentSection
               articleId={article.id}
-              comments={article.comments}
             />
           </div>
         </div>
