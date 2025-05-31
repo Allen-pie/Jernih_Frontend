@@ -329,18 +329,24 @@ const heatmapPoints = areas
           blur={20}
         />
 
-        {areas.map((area) => (
-          <Marker
-            key={area.id}
-            position={[area.lat, area.lng]}
-            icon={getSeverityIcon(area.severity)}
-          >
-            <Popup>
-              <strong>Prediction ID:</strong> {area.id}
-              <br />
-              <strong>Severity:</strong> {area.severity}
-            </Popup>
-          </Marker>
+        {areas
+          .filter(
+            (area) =>
+              typeof area.lat === 'number' &&
+              typeof area.lng === 'number'
+          )
+          .map((area) => (
+            <Marker
+              key={area.id}
+              position={[area.lat, area.lng]}
+              icon={getSeverityIcon(area.severity)}
+            >
+              <Popup>
+                <strong>Prediction ID:</strong> {area.id}
+                <br />
+                <strong>Severity:</strong> {area.severity}
+              </Popup>
+            </Marker>
         ))}
 
         {/* User location component */}
