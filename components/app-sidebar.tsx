@@ -37,11 +37,14 @@ const mainNav = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  // kalo page ini g ada sidebarnya
   const isAuthPage = [
     "/login",
     "/register",
     "/",
     "/verification-sent",
+    "/reset-password",
+    '/update-password'
   ].includes(pathname);
 
   if (isAuthPage) {
