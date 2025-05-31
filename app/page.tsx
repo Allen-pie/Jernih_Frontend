@@ -117,22 +117,22 @@ export default function HomePage() {
           </motion.div>
         </div>
         <div className="absolute inset-0 bg-cyan-900/10 z-10"></div>
-        <div className="container mx-auto px-4 relative z-20">
+        <div className="container mx-auto px-16 relative z-20">
           <div className="max-w-2xl">
             <motion.h1
               variants={fadeInUp}
               className="text-4xl md:text-5xl font-bold mb-6"
             >
-              Monitor Water Quality in Real-Time. Take Action Today
+              Pantau Kualitas Air Secara Real-Time. Bertindak Sekarang
             </motion.h1>
             <motion.p variants={fadeInUp} className="text-lg mb-8">
-              Join thousands protecting our waters. Report pollution, track
-              clean-up efforts, and access vital data.
+              Bergabunglah dengan ribuan orang yang melindungi perairan kita.
+              Laporkan polusi, pantau upaya pembersihan, dan akses data penting.
             </motion.p>
             <motion.div variants={fadeInUp} className="flex flex-wrap gap-4">
               <Link href="/register">
                 <motion.div whileHover={{ scale: 1.05 }}>
-                  <Button className="px-6 py-6">Get Started</Button>
+                  <Button className="px-6 py-6">Mulai Sekarang</Button>
                 </motion.div>
               </Link>
               <Link href="/login?redirect=/dashboard">
@@ -141,7 +141,7 @@ export default function HomePage() {
                     variant="ghost"
                     className="px-6 py-6 rounded-md hover:bg-cyan-50 hover:text-cyan-600"
                   >
-                    Explore Our Data→
+                    Jelajahi Data Kami→
                   </Button>
                 </motion.div>
               </Link>
@@ -186,21 +186,18 @@ export default function HomePage() {
             </div>
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-cyan-600 mb-6">
-                Water Pollution Is Killing Millions. Act Now.
+                Polusi Air Membunuh Jutaan Jiwa. Saatnya Bertindak.
               </h2>
               <p className="text-gray-700 mb-6 text-lg">
-                Unsafe water causes 3.4 million deaths annually — World Health
-                Organization
+                Setiap tahun, air yang tercemar menyebabkan lebih dari 3,4 juta kematian — WHO
               </p>
               <p className="text-gray-600 mb-8">
-                Every day, millions of people worldwide face the devastating
-                consequences of water pollution. Contaminated water sources lead
-                to disease, ecosystem destruction, and loss of biodiversity.
-                Children are especially vulnerable, with thousands dying daily
-                from preventable water-related illnesses.
+                Setiap harinya, jutaan orang di seluruh dunia menghadapi dampak buruk dari polusi air. 
+                Sumber air yang terkontaminasi menjadi penyebab utama penyakit, kerusakan ekosistem, dan hilangnya keanekaragaman hayati. 
+                Anak-anak adalah yang paling rentan — ribuan di antaranya meninggal setiap hari akibat penyakit yang seharusnya dapat dicegah.
               </p>
               <Link href="#impact">
-                <Button>Learn more</Button>
+                <Button>Pelajari Lebih Lanjut</Button>
               </Link>
             </div>
           </div>
@@ -217,7 +214,7 @@ export default function HomePage() {
       >
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-cyan-600 text-center mb-16">
-            How You Can Make a Difference
+            Bagaimana Kamu Bisa Berkontribusi
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -227,12 +224,11 @@ export default function HomePage() {
                   <BarChart2 className="h-10 w-10 text-cyan-600" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  Step 1<br />
+                  Langkah 1<br />
                   <span className="text-cyan-600">Monitor</span>
                 </h3>
                 <p className="text-gray-600">
-                  Use our app to check water quality in your local area and
-                  identify potential issues.
+                  Gunakan aplikasi kami untuk memantau kualitas air di sekitarmu dan identifikasi potensi masalah lebih awal.
                 </p>
               </CardContent>
             </Card>
@@ -243,12 +239,11 @@ export default function HomePage() {
                   <Clock className="h-10 w-10 text-cyan-600" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  Step 2<br />
+                  Langkah 2<br />
                   <span className="text-cyan-600">Report</span>
                 </h3>
                 <p className="text-gray-600">
-                  Report environmental concerns and water quality issues through
-                  our easy-to-use platform.
+                  Laporkan permasalahan lingkungan dan kualitas air melalui platform kami yang mudah digunakan.
                 </p>
               </CardContent>
             </Card>
@@ -259,12 +254,11 @@ export default function HomePage() {
                   <Droplet className="h-10 w-10 text-cyan-600" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-2">
-                  Step 3<br />
-                  <span className="text-cyan-600">Take Action</span>
+                  Langkah 3<br />
+                  <span className="text-cyan-600">Bertindak</span>
                 </h3>
                 <p className="text-gray-600">
-                  Join community clean-up efforts, advocate for policy change,
-                  and spread awareness.
+                  Ikut serta dalam aksi bersih-bersih, advokasi kebijakan, dan kampanye kesadaran publik.
                 </p>
               </CardContent>
             </Card>
@@ -273,7 +267,7 @@ export default function HomePage() {
           <div className="mt-12 text-center">
             <Link href="/register">
               <Button className="bg-cyan-500 text-white px-8">
-                Join the Movement
+                Bergabung Sekarang
               </Button>
             </Link>
           </div>
@@ -292,32 +286,30 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl font-bold text-cyan-600 mb-4">
-                Supporting Sustainable Development Goal 6
+                Mendukung Tujuan Pembangunan Berkelanjutan ke-6
               </h2>
               <p className="text-gray-600 mb-8">
-                Our mission aligns with SDG 6: Ensure availability and
-                sustainable management of water and sanitation for all. We're
-                committed to improving water quality, increasing water-use
-                efficiency, and protecting water-related ecosystems.
+                Misi kami sejalan dengan SDG 6: Menjamin ketersediaan dan pengelolaan air bersih serta sanitasi yang berkelanjutan untuk semua. 
+                Kami berkomitmen meningkatkan kualitas air, efisiensi penggunaan air, dan melindungi ekosistem terkait air.
               </p>
 
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <div className="text-cyan-600">→</div>
                   <p className="text-gray-700">
-                    Improve water quality by reducing pollution
+                    Meningkatkan kualitas air dengan mengurangi pencemaran
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="text-cyan-600">→</div>
                   <p className="text-gray-700">
-                    Increase water-use efficiency across all sectors
+                    Meningkatkan efisiensi penggunaan air di semua sektor
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="text-cyan-600">→</div>
                   <p className="text-gray-700">
-                    Protect and restore water-related ecosystems
+                    Melindungi dan memulihkan ekosistem air
                   </p>
                 </div>
               </div>
@@ -325,25 +317,25 @@ export default function HomePage() {
 
             <div className="bg-cyan-50 rounded-xl p-8">
               <h3 className="text-2xl font-bold text-cyan-600 text-center mb-8">
-                Our Impact So Far
+                Dampak Nyata Kami
               </h3>
 
               <div className="grid grid-cols-2 gap-6">
                 <div className="text-center">
                   <p className="text-3xl font-bold text-cyan-600">500+</p>
-                  <p className="text-gray-600">Water Sources Monitored</p>
+                  <p className="text-gray-600">Sumber Air Dipantau</p>
                 </div>
                 <div className="text-center">
                   <p className="text-3xl font-bold text-cyan-600">10K+</p>
-                  <p className="text-gray-600">Community Members</p>
+                  <p className="text-gray-600">Anggota Komunitas</p>
                 </div>
                 <div className="text-center">
                   <p className="text-3xl font-bold text-cyan-600">200+</p>
-                  <p className="text-gray-600">Clean-up Events</p>
+                  <p className="text-gray-600">Aksi Bersih-Bersih</p>
                 </div>
                 <div className="text-center">
                   <p className="text-3xl font-bold text-cyan-600">50+</p>
-                  <p className="text-gray-600">Partner Organizations</p>
+                  <p className="text-gray-600">Organisasi Mitra</p>
                 </div>
               </div>
             </div>
@@ -361,46 +353,46 @@ export default function HomePage() {
       >
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-cyan-600 text-center mb-16">
-            Our Key Features
+            Fitur-Fitur Kami
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 icon: <Droplet className="h-10 w-10 text-cyan-600" />,
-                title: "Water Quality Testing",
+                title: "Uji Kualitas Air",
                 description:
-                  "Access real-time data on water quality parameters including pH, dissolved oxygen, turbidity, and contaminants.",
+                  "Akses data real-time tentang parameter kualitas air seperti pH, oksigen terlarut, kekeruhan, dan kontaminan.",
               },
               {
                 icon: <MapPin className="h-10 w-10 text-cyan-600" />,
-                title: "Interactive Mapping",
+                title: "Pemetaan Interaktif",
                 description:
-                  "Visualize water quality data across different regions and identify pollution hotspots in your community.",
+                  "Visualisasikan data kualitas air di berbagai wilayah dan identifikasi titik rawan pencemaran di sekitarmu.",
               },
               {
                 icon: <Users className="h-10 w-10 text-cyan-600" />,
-                title: "Community Engagement",
+                title: "Keterlibatan Komunitas",
                 description:
-                  "Connect with local volunteers, organize clean-up events, and collaborate on water conservation projects.",
+                 "Terhubung dengan relawan lokal, selenggarakan kegiatan bersih-bersih, dan kolaborasi dalam proyek pelestarian air.",
               },
               {
                 icon: <BarChart2 className="h-10 w-10 text-cyan-600" />,
-                title: "Data Analytics",
+                title: "Analisis Data",
                 description:
-                  "Track water quality trends over time and measure the impact of conservation efforts in your area.",
+                  "Pantau tren kualitas air dari waktu ke waktu dan ukur dampak dari upaya konservasi yang dilakukan.",
               },
               {
                 icon: <Globe className="h-10 w-10 text-cyan-600" />,
-                title: "Educational Resources",
+                title: "Sumber Edukasi",
                 description:
-                  "Access comprehensive learning materials about water conservation, pollution prevention, and sustainable practices.",
+                  "Dapatkan materi pembelajaran lengkap tentang konservasi air, pencegahan polusi, dan praktik berkelanjutan.",
               },
               {
                 icon: <MessageSquare className="h-10 w-10 text-cyan-600" />,
-                title: "Advocacy Tools",
+                title: "Alat Advokasi",
                 description:
-                  "Get resources to contact local officials, create petitions, and advocate for stronger water protection policies.",
+                  "Gunakan sumber daya untuk menghubungi pejabat lokal, membuat petisi, dan memperjuangkan kebijakan perlindungan air yang lebih kuat.",
               },
             ].map((feature, index) => (
               <Card key={index} className="bg-white shadow-sm border-none">
@@ -429,28 +421,28 @@ export default function HomePage() {
       >
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-cyan-600 text-center mb-16">
-            Voices from Our Community
+            Suara dari Komunitas Kami
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 quote:
-                  "The water monitoring tools provided by JERNIH have transformed how our community approaches conservation. We've seen measurable improvements in our local river quality.",
+                  "Alat pemantauan air dari JERNIH benar-benar mengubah cara komunitas kami menjaga lingkungan. Kualitas sungai lokal kami kini menunjukkan peningkatan yang nyata.",
                 name: "Sarah Johnson",
-                role: "Community Leader",
+                role: "Pemimpin Komunitas",
               },
               {
                 quote:
-                  "As a teacher, I've used JERNIH's educational resources to inspire my students about water conservation. The interactive tools make learning engaging and impactful.",
+                  "Sebagai guru, saya memanfaatkan materi edukasi dari JERNIH untuk menginspirasi murid saya tentang pentingnya konservasi air. Alat interaktifnya membuat belajar jadi lebih menarik.",
                 name: "Michael Chen",
-                role: "Environmental Educator",
+                role: "Pendidik Lingkungan",
               },
               {
                 quote:
-                  "The data collected through JERNIH's platform helped us secure funding for a major clean-up project. Their advocacy support was instrumental in our success.",
+                  "Data dari platform JERNIH membantu kami mendapatkan pendanaan untuk proyek bersih-bersih besar. Dukungan advokasinya sangat membantu keberhasilan kami.",
                 name: "Amara Okafor",
-                role: "Environmental Activist",
+                role: "Aktivis Lingkungan",
               },
             ].map((testimonial, index) => (
               <Card key={index} className="bg-cyan-50 shadow-sm border-none">
@@ -476,12 +468,11 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-4">
-              Join Our Mission for Clean Water
+              Bergabunglah dalam Misi Air Bersih
             </h2>
             <p className="mb-8 text-cyan-50">
-              Together, we can ensure clean water for all. Sign up today to
-              receive updates, volunteer opportunities, and ways to get involved
-              in your community.
+            Bersama, kita bisa memastikan akses air bersih untuk semua. 
+            Daftarkan dirimu untuk menerima update, kesempatan menjadi relawan, dan berbagai cara untuk berkontribusi di komunitasmu.
             </p>
             <SubscribeForm />
           </div>

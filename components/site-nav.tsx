@@ -17,23 +17,23 @@ import {
 } from "@/components/ui/navigation-menu";
 
 const items = [
-  { title: "Dashboard", href: "/dashboard", description: "Your home base" },
-  { title: "Water Quality", href: "/water-quality", description: "Live data" },
+  { title: "Dashboard", href: "/dashboard", description: "Pusat kendali Anda"},
+  { title: "Kualitas Air", href: "/water-quality", description: "Data real-time"},
   {
-    title: "Report Pollution",
+    title: "Laporkan Polusi",
     href: "/report-pollution",
     description: "Log an issue",
   },
-  { title: "Communities", href: "/communities", description: "Join locals" },
+  { title: "Komunitas", href: "/communities", description: "Bergabung dengan warga sekitar"},
   {
-    title: "Conservation",
+    title: "Konservasi",
     href: "/conservation",
-    description: "Our initiatives",
+    description: "Inisiatif kami",
   },
   {
-    title: "Education & Resources",
+    title: "Edukasi & Sumber Daya",
     href: "/resources",
-    description: "Learn more",
+    description: "Pelajari lebih lanjut",
   },
 ];
 
@@ -60,7 +60,7 @@ export function SiteNav() {
           <NavigationMenuContent
             className={cn(
               "absolute right-0 mt-2 rounded-lg shadow-lg z-50",
-              "bg-white/20 backdrop-blur-lg border border-white/20",
+              "bg-white backdrop-blur-lg border border-white/20",
               "w-[320px] md:w-[440px] max-w-[90vw] max-h-[80vh] overflow-auto",
               "p-4 sm:p-6"
             )}
@@ -69,17 +69,17 @@ export function SiteNav() {
               {items.map((item) => (
                 <li key={item.href}>
                   <NavigationMenuLink asChild>
-                    <Link
-                      href={item.href}
-                      className="block rounded-md p-2 hover:bg-white/10"
-                    >
-                      <div className="font-medium text-gray-900">
-                        {item.title}
-                      </div>
-                      <p className="text-sm text-gray-700">
-                        {item.description}
-                      </p>
-                    </Link>
+                  <Link
+                    href={item.href}
+                    className="block rounded-md p-2 hover:bg-cyan-50 transition-colors duration-200"
+                  >
+                    <div className="font-medium text-gray-900 group-hover:text-cyan-700">
+                      {item.title}
+                    </div>
+                    <p className="text-sm text-gray-700 group-hover:text-cyan-600">
+                      {item.description}
+                    </p>
+                  </Link>
                   </NavigationMenuLink>
                 </li>
               ))}
