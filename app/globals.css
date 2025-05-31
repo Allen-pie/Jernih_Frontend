@@ -105,3 +105,12 @@
 html {
   scroll-behavior: smooth;
 }
+
+.ql-editor ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+}
+
+.ql-editor li::before {
+  content: none !important;
+}

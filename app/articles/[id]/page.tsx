@@ -82,11 +82,8 @@ const ArticleDetailPage = async ({ params }: Props) => {
             <p className="text-xl text-gray-700 mb-6 font-medium italic">
               {article.excerpt}
             </p>
-            {(article.content ?? "").split('\n\n').map((paragraph, index) => (
-              <p key={index} className="mb-6">
-                {paragraph}
-              </p>
-            ))}
+            <div dangerouslySetInnerHTML={ { __html: article.content } } className="prose ql-editor [&>blockquote]:border-l-4 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-gray-600">
+            </div>
           </div>
           <div className="border-t border-gray-200 pt-10">
             <CommentSection
