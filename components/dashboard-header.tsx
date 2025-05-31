@@ -30,13 +30,15 @@ export function DashboardHeader() {
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-6">
       {!isAuthPage && <SidebarTrigger />}
+      <Link href="/">
         <Image
           src={'/assets/jernihLogo.svg'}
           width={150}
           height={100}
           alt="Jernih Logo"
-          className="transition-opacity duration-300 opacity-100"
+          className="transition-opacity duration-300 opacity-100 cursor-pointer"
         />
+      </Link>
       <div className="ml-auto flex items-center gap-4">
         <Button variant="ghost" size="icon" className="relative">
           <Bell className="h-5 w-5" />
