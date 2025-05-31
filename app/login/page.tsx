@@ -21,9 +21,7 @@ import { supabase } from "@/utils/supabase/client";
 import { useForm } from "react-hook-form";
 import { Eye, EyeClosed } from "lucide-react";
 import Google from "@/components/icons/google";
-import Script from "next/script";
 import WEB_URL from "@/url/web_url";
-import { DashboardHeader } from "@/components/dashboard-header";
 import { TransparentHeader } from "@/components/transparent-header";
 
 const schema = z.object({
@@ -104,7 +102,6 @@ export default function LoginPage() {
 
   return (
     <div>
-      
       <main className="waves bg-cover flex min-h-screen bg-background flex-col xl:flex-row  items-center xl:items-stretch p-2 xl:p-0 ">
         <TransparentHeader/>
         <Card className="w-full max-w-xl py-20 px-20 space-y-0 bg-background mb-0 bottom-0 rounded-md xl:rounded-none">
@@ -158,7 +155,7 @@ export default function LoginPage() {
                   <div className="flex items-center justify-between">
                     <Label htmlFor="password">Kata Sandi</Label>
                     <Link
-                      href="/forgot-password"
+                      href="/reset-password"
                       className="text-sm text-primary hover:underline"
                     >
                       Ubah Kata Sandi
