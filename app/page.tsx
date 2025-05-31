@@ -88,13 +88,40 @@ export default function HomePage() {
           )}
           <div className="hidden md:flex items-center space-x-6">
             <SiteNav />
-            <div className="flex items-center gap-2">
-              <Link href="/login">
-                <Button variant="ghost">Login</Button>
-              </Link>
-              <Link href="/register">
-                <Button>Register</Button>
-              </Link>
+            <div className={`ml-auto flex items-center gap-4 ${session ? "pr-32" : ""}`}>
+              {session ? (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                      <User className="h-5 w-5" />
+                      <span className="sr-only">Profile</span>
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-72">
+                    <div className="grid gap-4">
+                      <Button
+                        className="justify-start"
+                        variant="ghost"
+                        onClick={() => signOut()}
+                      >
+                        <LogOut className="h-4 w-4" />
+                        <h4 className="font-medium leading-none">Log Out</h4>
+                      </Button>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Link href="/login">
+                    <Button variant="ghost">
+                      Login
+                    </Button>
+                  </Link>
+                  <Link href="/register">
+                    <Button>Register</Button>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -391,11 +418,11 @@ export default function HomePage() {
                   "Pantau tren kualitas air dari waktu ke waktu dan ukur dampak dari upaya konservasi yang dilakukan.",
               },
               {
-                icon: <Globe className="h-10 w-10 text-cyan-600" />,
-                title: "Artikel Edukasi",
-                description:
-                  "Jelajahi berbagai artikel informatif tentang pencemaran air, konservasi, dan solusi lingkungan terbaru.",
-              },
+  icon: <Globe className="h-10 w-10 text-cyan-600" />,
+  title: "Artikel Edukasi",
+  description:
+    "Jelajahi berbagai artikel informatif tentang pencemaran air, konservasi, dan solusi lingkungan terbaru.",
+},
               {
                 icon: <MessageSquare className="h-10 w-10 text-cyan-600" />,
                 title: "Formulir Laporan",
