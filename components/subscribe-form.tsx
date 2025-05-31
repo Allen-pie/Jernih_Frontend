@@ -14,9 +14,9 @@ export function SubscribeForm() {
   const handleSubscribe = async () => {
     if (!email || !/\S+@\S+\.\S+/.test(email)) {
       toast({
-        title: "Invalid email",
-        description: "Please enter a valid email address.",
-        variant: "destructive", // optional if you support variants
+        title: "Email tidak valid",
+        description: "Silakan masukkan alamat email yang benar.",
+        variant: "destructive",
       });
       return;
     }
@@ -27,14 +27,14 @@ export function SubscribeForm() {
 
     if (error) {
       toast({
-        title: "Subscription failed",
-        description: "Something went wrong. Try again.",
+        title: "Gagal bergabung",
+        description: "Terjadi kesalahan. Silakan coba lagi.",
         variant: "destructive",
       });
     } else {
       toast({
-        title: "Subscribed!",
-        description: "Thanks for subscribing!",
+        title: "Berhasil bergabung!",
+        description: "Terima kasih telah bergabung bersama kami!",
       });
       setEmail("");
     }
@@ -46,7 +46,7 @@ export function SubscribeForm() {
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Your email address"
+        placeholder="Alamat email Anda"
         className="bg-white/10 border-white/20 text-white placeholder:text-white/60"
         disabled={loading}
       />
@@ -55,7 +55,7 @@ export function SubscribeForm() {
         onClick={handleSubscribe}
         disabled={loading}
       >
-        {loading ? "Subscribing..." : "Subscribe"}
+        {loading ? "Memproses..." : "Bergabung"}
       </Button>
     </div>
   );
