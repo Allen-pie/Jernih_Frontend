@@ -19,7 +19,11 @@ export function DashboardHeader() {
 
   const { setOpen, setOpenMobile } = useSidebar();
   const pathname = usePathname();
-  const isAuthPage = ["/login", "/register"].includes(pathname);
+  const isAuthPage = ["/", "/login", "/register"].includes(pathname);
+  
+  if (isAuthPage ) {
+    return null;
+  }
 
   const closeSidebar = () => {
     setOpen(false);
@@ -29,7 +33,6 @@ export function DashboardHeader() {
 
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background px-6">
-      {!isAuthPage && <SidebarTrigger />}
       <Link href="/">
         <Image
           src={'/assets/jernihLogo.svg'}

@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import {
   Sidebar,
+  SidebarTrigger,
   SidebarHeader,
   SidebarContent,
   SidebarFooter,
@@ -25,6 +26,7 @@ import {
 } from "@/components/ui/sidebar";
 
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 // 1) Your nav items
 const mainNav = [
@@ -37,31 +39,44 @@ const mainNav = [
 
 export function AppSidebar() {
   const pathname = usePathname();
-  // kalo page ini g ada sidebarnya
   const isAuthPage = [
     "/login",
     "/register",
     "/",
     "/verification-sent",
     "/reset-password",
-    '/update-password'
+    "/update-password",
   ].includes(pathname);
 
-  if (isAuthPage) {
-    return null;
-  }
+  // Add state to track sidebar open/closed
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Function to toggle sidebar
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
+
+  if (isAuthPage) return null;
 
   return (
-    <Sidebar collapsible={isAuthPage ? "none" : "icon"}>
-      {/* you can drop a logo or title here if you like */}
+    <Sidebar collapsible={isAuthPage ? "none" : "icon"} open={sidebarOpen}>
       <SidebarHeader />
-
+      {/* Show trigger on top if sidebar is closed */}
+      {!sidebarOpen && (
+        <div className="flex justify-end my-2 mr-2">
+          <SidebarTrigger onClick={toggleSidebar} />
+        </div>
+      )}
+      {/* Show trigger next to label if sidebar is open */}
+      {sidebarOpen && (
+        <div className="flex items-center justify-between px-4 py-2 mb-2 border-b border-gray-300">
+          <SidebarGroupLabel className="text-sm text-gray-500">
+            Navigasi
+          </SidebarGroupLabel>
+          <SidebarTrigger onClick={toggleSidebar} />
+        </div>
+      )}
       <SidebarContent>
         {/* 2) one group for your “main” nav */}
         <SidebarGroup>
-          <SidebarGroupLabel className="px-4 py-2 text-sm text-gray-500 mb-2 border-b border-gray-300">
-            Navigation
-          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {mainNav.map((item) => (
@@ -84,17 +99,10 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="/resources" className="flex items-center gap-2">
-                <HelpCircle className="size-4" />
-                <span>Edukasi & Sumber Daya</span>
-              </Link>
-            </SidebarMenuButton>
+            <SidebarMenuButton asChild></SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
-
-      
     </Sidebar>
   );
 }
