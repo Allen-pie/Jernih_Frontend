@@ -3,6 +3,7 @@ import { ArticleCard } from "@/components/article-card";
 // import { articles } from "@/utils/tempArticleData";
 import { fetchArticles } from "@/utils/supabase/article";
 import Footer  from "@/components/footer";
+import { DashboardHeader } from "@/components/dashboard-header";
 import { Article } from "../interfaces";
 
 export default async function ArticlesPage() {
@@ -10,6 +11,7 @@ export default async function ArticlesPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-white">
+      <DashboardHeader />
       <div className="bg-gradient-to-b from-blue-500 to-blue-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
