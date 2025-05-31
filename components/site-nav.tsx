@@ -25,6 +25,11 @@ const items = [
     description: "Log an issue",
   },
   {
+    title: "Artikel",
+    href: "/articles",
+    description: "Baca artikel edukasi",
+  },
+  {
     title: "Konservasi",
     href: "/conservation",
     description: "Inisiatif kami",
