@@ -58,12 +58,19 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => 
             console.error('User not authenticated: ', userError)
             toast({
                 title: 'Login Diperlukan',
-                description: 'Mohon log in terlebih dahulu untuk komen',
+                description: 'Mohon log in terlebih dahulu untuk menambahkan komentar',
+                variant: 'destructive'
             })
             return
         }
 
         const newPostedComment = await postComment(articleId, user.id, newComment)
+
+        toast({
+            title: 'Komentar Dibuat',
+            description: 'Komentar berhasil dibuat.',
+            variant: 'success'
+        })
 
         setComments((prev) => [...prev, newPostedComment])
         setNewComment('')
@@ -71,7 +78,8 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => 
         console.log('Gagal untuk membuat komen: ', error)
         toast({
             title: 'Komen Gagal',
-            description: 'Gagal membuat komen. Coba lagi nanti.'
+            description: 'Gagal membuat komen. Coba lagi nanti.',
+            variant: 'destructive'
         })
     }
   }
