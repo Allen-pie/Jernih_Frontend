@@ -76,6 +76,11 @@ function getSeverityIcon(severity: Severity) {
   });
 }
 
+const indonesiaBounds: LatLngBoundsExpression = [
+  [-11.0, 95.0], // Southwest (bawah kiri)
+  [6.0, 141.0],  // Northeast (atas kanan)
+];
+
 // Location button component
 function LocationButton({ onClick }: { onClick: () => void }) {
   const map = useMap();
@@ -237,8 +242,7 @@ function UserLocation() {
 
 // fill the full viewport
 const mapStyle: CSSProperties = {
-  width: "100%",
-  height: "100%",
+  height: '100%', width: '100%'
 };
 
 export function PollutionMap(): JSX.Element {
@@ -294,7 +298,7 @@ const heatmapPoints = areas
   .filter((pt): pt is [number, number, number] => pt !== null);
 
   // Default center position (fallback if geolocation fails)
-  const defaultCenter: [number, number] = [3.139, 101.6869]; // Malaysia
+  const defaultCenter: [number, number] = [-2.5, 118]; // Indonesia center
 
   return (
     <div className="relative w-full h-full">
@@ -314,6 +318,8 @@ const heatmapPoints = areas
         scrollWheelZoom={true}
         worldCopyJump={true}
         className="z-0"
+        maxBounds={indonesiaBounds} // ⛔ Blok user zoom keluar
+        maxBoundsViscosity={1.0}    // Prevent keluar dari bounds
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

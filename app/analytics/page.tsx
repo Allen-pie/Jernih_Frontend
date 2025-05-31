@@ -122,6 +122,7 @@ const WaterQualityForm = () => {
       toast({
         title: "Kesalahan Prediksi",
         description: "Tidak dapat memprediksi kelayakan air.",
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
