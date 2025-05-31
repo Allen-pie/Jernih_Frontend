@@ -88,7 +88,7 @@ export default function HomePage() {
           )}
           <div className="hidden md:flex items-center space-x-6">
             <SiteNav />
-            <div className={`ml-auto flex items-center gap-4 ${session ? "pr-32" : ""}`}>
+            <div className={`ml-auto flex items-center gap-4 ${session ? "pr-24" : ""}`}>
               {session ? (
                 <Popover>
                   <PopoverTrigger asChild>
