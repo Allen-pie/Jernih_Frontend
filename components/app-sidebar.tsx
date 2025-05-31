@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import {
   Sidebar,
+  SidebarTrigger,
   SidebarHeader,
   SidebarContent,
   SidebarFooter,
@@ -55,7 +56,10 @@ export function AppSidebar() {
     <Sidebar collapsible={isAuthPage ? "none" : "icon"}>
       {/* you can drop a logo or title here if you like */}
       <SidebarHeader />
-
+      <div className="flex justify-end my-2 mr-2">
+        <SidebarTrigger />
+      </div>
+      
       <SidebarContent>
         {/* 2) one group for your “main” nav */}
         <SidebarGroup>
@@ -85,10 +89,6 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Link href="/resources" className="flex items-center gap-2">
-                <HelpCircle className="size-4" />
-                <span>Edukasi & Sumber Daya</span>
-              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
