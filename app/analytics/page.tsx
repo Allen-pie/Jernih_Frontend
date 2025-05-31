@@ -140,7 +140,7 @@ const WaterQualityForm = () => {
                 Prediksi Kualitas Air
               </h1>
               <Link href="/">
-                <Button variant="outline">Kembali ke Dasbor</Button>
+                <Button variant="outline">Kembali ke Dashboard</Button>
               </Link>
             </div>
             <Card className="max-w-2xl mx-auto p-6 ">

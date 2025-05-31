@@ -70,8 +70,8 @@ const handleSubmit = async (e: React.FormEvent) => {
     });
   } else {
     toast({
-      title: "Report Submitted",
-      description: "Thank you for your contribution.",
+      title: "Laporan Terkirim",
+      description: "Terima kasih atas kontribusi Anda.",
     });
 
     // Reset form
@@ -91,40 +91,42 @@ const handleSubmit = async (e: React.FormEvent) => {
         <main className="flex-1 p-6 md:p-8">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-3xl font-bold tracking-tight text-center">
-              Report Water Pollution
+              Laporkan Pencemaran Air
             </h1>
             <Link href="/">
-              <Button variant="outline">Back to Dashboard</Button>
+              <Button variant="outline">Kembali ke Dashboard</Button>
             </Link>
           </div>
           <Card className="max-w-2xl mx-auto">
             <CardHeader>
-              <CardTitle>Pollution Report</CardTitle>
+              <CardTitle>Laporan Pencemaran</CardTitle>
               <CardDescription>
-                  Help protect our water. Report pollution in your 
-                  area to raise awareness and drive action.
+                Bantu lindungi air kita. Laporkan pencemaran di wilayah Anda untuk meningkatkan kesadaran dan mendorong aksi nyata.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="space-y-2">
-                  <Label htmlFor="location">Location Name*</Label>
+                  <Label htmlFor="location">
+                    Nama Lokasi
+                    <span className="text-red-500">*</span>
+                  </Label>
                   <Input
                     id="location"
-                    placeholder="Enter the name of the water body or area"
+                    placeholder="Masukkan nama badan air atau area"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="pollutionType">Pollution Type</Label>
+                    <Label htmlFor="pollutionType">Jenis Pencemaran</Label>
                     <Select
                       onValueChange={setPollutionType}
                       value={pollutionType}
                     >
                       <SelectTrigger id="pollutionType">
-                        <SelectValue placeholder="Select type" />
+                        <SelectValue placeholder="Pilih jenis" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="chemical">Chemical Discharge</SelectItem>
@@ -136,7 +138,7 @@ const handleSubmit = async (e: React.FormEvent) => {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="severity">Severity (1-10)</Label>
+                    <Label htmlFor="severity">Tingkat Keparahan (1-10)</Label>
                     <Input
                       id="severity"
                       type="number"
@@ -148,29 +150,29 @@ const handleSubmit = async (e: React.FormEvent) => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
+                  <Label htmlFor="description">Deskripsi</Label>
                   <Textarea
                     id="description"
-                    placeholder="Please describe what you observed, including color, smell, and any affected wildlife"
+                    placeholder="Jelaskan apa yang Anda amati, termasuk warna, bau, dan satwa yang terdampak (jika ada)"
                     rows={4}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="contact">Contact Information (optional)</Label>
+                  <Label htmlFor="contact">Informasi Kontak (opsional)</Label>
                   <Input
                     id="contact"
-                    placeholder="Email or phone number"
+                    placeholder="Email atau nomor telepon"
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
                   />
                 </div>
                 <div className="flex justify-end gap-4">
                   <Button variant="outline" type="button">
-                    Cancel
+                    Batal
                   </Button>
-                  <Button type="submit">Submit Report</Button>
+                  <Button type="submit">Kirim Laporan</Button>
                 </div>
               </form>
             </CardContent>
