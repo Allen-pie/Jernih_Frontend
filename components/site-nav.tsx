@@ -18,23 +18,17 @@ import {
 
 const items = [
   { title: "Dashboard", href: "/dashboard", description: "Pusat kendali Anda"},
-  { title: "Kualitas Air", href: "/water-quality", description: "Data real-time"},
+  { title: "Kualitas Air", href: "/analytics", description: "Data real-time"},
   {
     title: "Laporkan Polusi",
-    href: "/report-pollution",
+    href: "/report-form",
     description: "Log an issue",
   },
-  { title: "Komunitas", href: "/communities", description: "Bergabung dengan warga sekitar"},
   {
     title: "Konservasi",
     href: "/conservation",
     description: "Inisiatif kami",
-  },
-  {
-    title: "Edukasi & Sumber Daya",
-    href: "/resources",
-    description: "Pelajari lebih lanjut",
-  },
+  }
 ];
 
 export function SiteNav() {
@@ -54,7 +48,7 @@ export function SiteNav() {
               "transition-colors"
             )}
           >
-            Features
+            Fitur
           </NavigationMenuTrigger>
           {/* 1) Give your panel a width + padding */}
           <NavigationMenuContent
