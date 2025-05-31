@@ -11,7 +11,7 @@ import {
 import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import type { CSSProperties } from "react";
+import type { CSSProperties, JSX } from "react";
 import { supabase } from '@/utils/supabase/client'
 
 // --- 1) Types
@@ -123,6 +123,8 @@ function LocationButton({ onClick }: { onClick: () => void }) {
     return () => {
       map.removeControl(locationButton);
     };
+
+
   }, [map, onClick]);
 
   return null;
@@ -241,6 +243,7 @@ const mapStyle: CSSProperties = {
 
 export function PollutionMap(): JSX.Element {
   const [areas, setAreas] = useState<Area[]>([]);
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -326,26 +329,19 @@ const heatmapPoints = areas
           blur={20}
         />
 
-        {areas
-          .filter(
-            (area) =>
-              typeof area.lat === 'number' &&
-              typeof area.lng === 'number'
-          )
-          .map((area) => (
-            <Marker
-              key={area.id}
-              position={[area.lat, area.lng]}
-              icon={getSeverityIcon(area.severity)}
-            >
-              <Popup>
-                <strong>Prediction ID:</strong> {area.id}
-                <br />
-                <strong>Severity:</strong> {area.severity}
-              </Popup>
-            </Marker>
+        {areas.map((area) => (
+          <Marker
+            key={area.id}
+            position={[area.lat, area.lng]}
+            icon={getSeverityIcon(area.severity)}
+          >
+            <Popup>
+              <strong>Prediction ID:</strong> {area.id}
+              <br />
+              <strong>Severity:</strong> {area.severity}
+            </Popup>
+          </Marker>
         ))}
-
 
         {/* User location component */}
         <UserLocation />
