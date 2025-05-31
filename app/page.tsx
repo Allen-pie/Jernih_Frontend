@@ -392,15 +392,15 @@ export default function HomePage() {
               },
               {
                 icon: <Globe className="h-10 w-10 text-cyan-600" />,
-                title: "Sumber Edukasi",
+                title: "Artikel Edukasi",
                 description:
-                  "Dapatkan materi pembelajaran lengkap tentang konservasi air, pencegahan polusi, dan praktik berkelanjutan.",
+                  "Jelajahi berbagai artikel informatif tentang pencemaran air, konservasi, dan solusi lingkungan terbaru.",
               },
               {
                 icon: <MessageSquare className="h-10 w-10 text-cyan-600" />,
-                title: "Alat Advokasi",
+                title: "Formulir Laporan",
                 description:
-                  "Gunakan sumber daya untuk menghubungi pejabat lokal, membuat petisi, dan memperjuangkan kebijakan perlindungan air yang lebih kuat.",
+                  "Laporkan insiden pencemaran air di lingkungan Anda dengan mudah. Data laporan Anda akan membantu pemantauan dan penanganan lebih cepat.",
               },
             ].map((feature, index) => (
               <Card key={index} className="bg-white shadow-sm border-none">
