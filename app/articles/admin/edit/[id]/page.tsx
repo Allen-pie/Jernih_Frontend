@@ -40,7 +40,7 @@ const EditArticle = ({ params }: Props) =>  {
     const fetchArticle = async() => {
         const { id } = await params;
         const articleId = parseInt(id);
-        const article : ArticleGuest = await fetchArticleById(articleId);
+        const article = await fetchArticleById(articleId) as ArticleGuest;
         
         console.log(article)
         setTitle(article.title!)
