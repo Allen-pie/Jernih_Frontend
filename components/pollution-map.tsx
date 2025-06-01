@@ -15,7 +15,7 @@ import type { CSSProperties, JSX } from "react";
 import { supabase } from '@/utils/supabase/client'
 
 // --- 1) Types
-export type Severity = "Low" | "Medium" | "High";
+export type Severity = "Rendah" | "Sedang" | "Tinggi";
 interface Area {
   id: string;
   lat: number;
@@ -25,9 +25,9 @@ interface Area {
 
 // weight by severity → controls heat intensity
 const severityWeights: Record<Severity, number> = {
-  Low: 0.3,
-  Medium: 0.6,
-  High: 1.0,
+  Rendah: 0.3,
+  Sedang: 0.6,
+  Tinggi: 1.0,
 };
 
 const userIcon = L.divIcon({
@@ -46,33 +46,33 @@ const userIcon = L.divIcon({
 
 // --- 2) Custom SVG Icon for markers
 function getSeverityIcon(severity: Severity) {
-  const colorMap: Record<Severity, string> = {
-    Low: "#00cc66",
-    Medium: "#ffcc00",
-    High: "#ff3333",
-  };
+  let color = "#60a5fa";
+  let label = "R";
+  if (severity === "Sedang") {
+    color = "#fbbf24";
+    label = "S";
+  }
+  if (severity === "Tinggi") {
+    color = "#f87171";
+    label = "T";
+  }
   return L.divIcon({
-    html: `
-      <div style="
-        background-color: ${colorMap[severity]};
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: black;
-        font-weight: bold;
-        font-size: 14px;
-        border: 2px solid white;
-        box-shadow: 0 0 4px rgba(0,0,0,0.4);
-      ">
-        ${severity === "Low" ? "L" : severity === "Medium" ? "M" : "H"}
-      </div>
-    `,
+    html: `<div style="
+      width: 24px;
+      height: 24px;
+      background: ${color};
+      border: 2px solid white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #fff;
+      font-size: 14px;
+    ">${label}</div>`,
     className: "",
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
   });
 }
 
@@ -266,7 +266,11 @@ export function PollutionMap(): JSX.Element {
               id: row.id,
               lat: row.latitude,
               lng: row.longitude,
-              severity: row.severity as Severity,
+              severity:
+                row.severity === "Low" ? "Rendah" :
+                row.severity === "Medium" ? "Sedang" :
+                row.severity === "High" ? "Tinggi" :
+                row.severity, // fallback
             }))
           );
         }
@@ -295,7 +299,7 @@ const heatmapPoints = areas
     }
     return null;
   })
-  .filter((pt): pt is [number, number, number] => pt !== null);
+  .filter(Boolean);
 
   // Default center position (fallback if geolocation fails)
   const defaultCenter: [number, number] = [-2.5, 118]; // Indonesia center
