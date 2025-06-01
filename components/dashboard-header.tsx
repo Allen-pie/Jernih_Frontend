@@ -19,7 +19,7 @@ export function DashboardHeader() {
 
   const { setOpen, setOpenMobile } = useSidebar();
   const pathname = usePathname();
-  const isAuthPage = ["/", "/login", "/register"].includes(pathname);
+  const isAuthPage = ["/", "/login", "/register", "/auth/callback", "/update-password", "/reset-password"].includes(pathname);
   
   if (isAuthPage ) {
     return null;

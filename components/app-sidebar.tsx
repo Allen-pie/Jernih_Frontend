@@ -46,6 +46,7 @@ export function AppSidebar() {
     "/verification-sent",
     "/reset-password",
     "/update-password",
+    "/auth/callback"
   ].includes(pathname);
 
   // Add state to track sidebar open/closed
