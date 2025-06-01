@@ -7,13 +7,13 @@ export default function NotFound() {
       <div className="text-center max-w-md">
         <h1 className="text-6xl font-bold mb-4">404</h1>
         <p className="text-lg text-muted-foreground mb-6">
-          Sorry, we couldn’t find what you’re looking for.
+          Maaf, halaman yang anda cari tidak ditemukan.
         </p>
         <Link
           href="/"
           className="inline-block rounded-md bg-primary px-5 py-2 text-white hover:bg-primary/90"
         >
-          Go back home
+          Kembali ke Beranda
         </Link>
       </div>
     </div>
