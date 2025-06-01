@@ -32,7 +32,7 @@ export async function fetchArticlesGuest() {
   
   const articlesWithComments = await Promise.all(
     articles.map(async (article) => {
-      const commentCount = await countCommentsByArticleId(article.id)
+      const commentCount = await countCommentsByArticleId(article.id!)
       return {
         ...article,
         commentCount
@@ -81,7 +81,7 @@ export async function fetchArticlesAdmin() {
   
   const articlesWithComments = await Promise.all(
     articles.map(async (article) => {
-      const commentCount = await countCommentsByArticleId(article.id)
+      const commentCount = await countCommentsByArticleId(article.id!)
       return {
         ...article,
         commentCount
