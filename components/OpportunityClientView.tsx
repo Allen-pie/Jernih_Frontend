@@ -32,7 +32,6 @@ const OpportunityClientView = ({ opp, imageUrl }: Props) => {
 
   return (
     <Theme>
-      <DashboardHeader />
       <Flex direction="column" align="center" gap="4" px="4" py="6">
         <Card variant="classic" style={{ width: '100%', maxWidth: 720 }}>
           <Flex direction="column" gap="4">
