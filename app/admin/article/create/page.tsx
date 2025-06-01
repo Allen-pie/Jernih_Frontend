@@ -33,16 +33,16 @@ export default function CreateArticlePage() {
 
     if (!file) return;
 
-	const safeFileName = `article-images/${file.name}`
+    const safeFileName = `article-images/${file.name}`
 
     const { data, error } = await supabase.storage
       .from("jernih")
       .upload(safeFileName, file, {
         cacheControl: "3600",
         upsert: false,
-		contentType: file.type,
+        contentType: file.type,
     });
-	
+    
     const { data: db_data, error: db_error } = await supabase
       .from("assets")
       .insert({
@@ -115,9 +115,9 @@ export default function CreateArticlePage() {
           : "Your article has been saved as a draft.",
       })
 
-      router.push("/articles/admin")
+      router.push("/admin/article/all")
     } catch (error) {
-		console.log('Error: ', error)
+        console.log('Error: ', error)
       toast({
         title: "Submission failed",
         description: "There was an error submitting your article. Please try again.",
@@ -142,7 +142,7 @@ export default function CreateArticlePage() {
               </p>
             </div>
             <div className="flex gap-2">
-              <Link href="/articles/admin">
+              <Link href="all">
                 <Button variant="outline">Cancel</Button>
               </Link>
             </div>
@@ -176,7 +176,7 @@ export default function CreateArticlePage() {
                         value={excerpt}
                         onChange={(e) => setExcerpt(e.target.value)}
                         rows={3}
-						required
+                        required
                       />
                     </div>
                     <div className="space-y-2">
@@ -216,15 +216,15 @@ export default function CreateArticlePage() {
                       <p className="text-sm text-muted-foreground">
                         Upload a featured image for your article (optional)
                       </p>
-					  { featuredImage && (
-						<div className="">
-							<img
-								src={URL.createObjectURL(featuredImage) || '@/public/assets/jernihLogo.svg'}
-								alt="Original image"
-								className="max-w-full object-contain p-4"
-							/>
-						</div>
-					  )}
+                      { featuredImage && (
+                        <div className="">
+                            <img
+                                src={URL.createObjectURL(featuredImage) || '@/public/assets/jernihLogo.svg'}
+                                alt="Original image"
+                                className="max-w-full object-contain p-4"
+                            />
+                        </div>
+                      )}
                       {featuredImage && <p className="text-sm text-primary">Selected: {featuredImage.name}</p>}
                     </div>
                   </CardContent>
