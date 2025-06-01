@@ -21,7 +21,7 @@ import { supabase } from "@/utils/supabase/client";
 import { useForm } from "react-hook-form";
 import { Eye, EyeClosed } from "lucide-react";
 import Google from "@/components/icons/google";
-import WEB_URL from "@/url/web_url";
+import URLS from "@/url/web_url";
 import { TransparentHeader } from "@/components/transparent-header";
 
 const schema = z.object({
@@ -54,11 +54,11 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const loginByGoogle = async () => {
+  const EnterByGoogle = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${WEB_URL}/dashboard`,
+        redirectTo: `${URLS.WEB}/auth/callback`,
         queryParams : {
           prompt : 'select_account'
         }
@@ -118,7 +118,7 @@ export default function LoginPage() {
               <Button
                 className="w-full py-[21px] text-sm border"
                 variant={"ghost"}
-                onClick={loginByGoogle}
+                onClick={EnterByGoogle}
               >
                 <Google size={20} />
                 Masuk / Daftar dengan Google

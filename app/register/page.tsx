@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,12 +14,11 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/components/context/auth-context";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/utils/supabase/client";
 import { useForm } from "react-hook-form";
 import { Eye, EyeClosed } from "lucide-react";
-import WEB_URL from "@/url/web_url";
+import URLS from "@/url/web_url";
 import { TransparentHeader } from "@/components/transparent-header";
 import Google from "@/components/icons/google";
 
@@ -62,11 +60,11 @@ export default function RegisterPage() {
     defaultValues,
   });
 
-  const loginByGoogle = async () => {
+  const EnterByGoogle = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${WEB_URL}/dashboard`,
+        redirectTo: `${URLS.WEB}/auth/callback`,
         queryParams: {
           prompt: "select_account",
         },
@@ -88,7 +86,7 @@ export default function RegisterPage() {
         email: value.email,
         password: value.password,
       });
-
+      
       if (reg_error) {
         toast({
           title: "Register failed",
@@ -152,7 +150,7 @@ export default function RegisterPage() {
               <Button
                 className="w-full py-[21px] text-sm border"
                 variant={"ghost"}
-                onClick={loginByGoogle}
+                onClick={EnterByGoogle}
               >
                 <Google size={20} />
                 Masuk / Daftar dengan Google

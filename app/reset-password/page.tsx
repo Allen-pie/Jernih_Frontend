@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/utils/supabase/client";
 import { useForm } from "react-hook-form";
-import WEB_URL from "@/url/web_url";
+import URLS from "@/url/web_url";
 import { ChevronLeft } from "lucide-react";
 
 const schema = z.object({
@@ -65,7 +65,7 @@ export default function ResetPasswordPage() {
       const { data, error } = await supabase.auth.resetPasswordForEmail(
         value.email,
         {
-          redirectTo: `${WEB_URL}/update-password`,
+          redirectTo: `${URLS.WEB}/update-password`,
         }
       );
 
