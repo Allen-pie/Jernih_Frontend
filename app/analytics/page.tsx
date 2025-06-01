@@ -16,6 +16,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastProvider, ToastViewport } from "@/components/ui/toast";
 // Supabase client
 import { supabase } from "@/utils/supabase/client";
+import URLS from "@/url/web_url";
 
 
 const WaterQualityForm = () => {
@@ -78,8 +79,9 @@ const WaterQualityForm = () => {
     };
 
     try {
+
       const response = await axios.post(
-        "http://127.0.0.1:5000/predict",
+        `${URLS.API}/predict`,
         formData,
         { headers: { "Content-Type": "application/json" } }
       );
@@ -117,6 +119,7 @@ const WaterQualityForm = () => {
         ]);
 
       if (error) console.error("Supabase insert error:", error);
+      
     } catch (error) {
       console.error("Error while predicting:", error);
       toast({
