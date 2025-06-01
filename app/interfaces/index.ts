@@ -36,6 +36,22 @@ export interface Comment {
     }
 }
 
+export interface Report {
+    id: string;
+    title : string;
+    location : string;
+    pollution_type : string;
+    severity : string;
+    created_at  : string;
+    description : string;
+    contact ? : string;
+    status : string;
+    latitude ? : string;
+    longitude ? : string;
+    user_name ? : string;
+}
+
+
 export interface Asset {   
     path : string;
 }
