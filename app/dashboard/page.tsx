@@ -59,7 +59,7 @@ export default function Dashboard() {
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
               Laporkan insiden pencemaran air di lingkungan Anda untuk membantu menjaga kebersihan air bersama.
             </p>
-            <Link href="/report-form">
+            <Link href="/report">
               <Button size="lg" className="px-8">
                 Laporkan Pencemaran
               </Button>
