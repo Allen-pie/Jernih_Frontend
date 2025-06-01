@@ -32,7 +32,7 @@ import { useState } from "react";
 const mainNav = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { title: "Kualitas Air", href: "/analytics", icon: BarChart },
-  { title: "Laporkan Pencemaran", href: "/report-form", icon: FileText },
+  { title: "Laporkan Pencemaran", href: "/report", icon: FileText },
   { title: "Artikel", href: "/articles", icon: Newspaper },
   { title: "Konservasi", href: "/conservation", icon: Waves },
 ];

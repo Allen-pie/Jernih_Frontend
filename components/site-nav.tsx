@@ -21,7 +21,7 @@ const items = [
   { title: "Kualitas Air", href: "/analytics", description: "Data real-time"},
   {
     title: "Laporkan Polusi",
-    href: "/report-form",
+    href: "/report",
     description: "Log an issue",
   },
   {

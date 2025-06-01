@@ -14,7 +14,7 @@ const publicRoutes = [
   "/reset-password",
   "/dashboard",
   "/analytics",
-  "/report-form",
+  "/report",
   "/articles",
   "/conservation",
   "",
