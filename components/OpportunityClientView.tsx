@@ -11,6 +11,7 @@ interface Opportunity {
   description: string;
   location: string;
   imageUrl?: string;
+  link:string;
 }
 
 interface Props {

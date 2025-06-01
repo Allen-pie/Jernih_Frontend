@@ -13,24 +13,9 @@ export async function fetchImageUrl(path: string): Promise<string> {
       .getPublicUrl(`${path}`);
 
 
-    return publicUrlData?.publicUrl || '';
+    return publicUrlData?.publicUrl || 'locations/default-image.jpg';
   } catch (error: any) {
     console.error('Error fetching image:', error.message);
-    return '';
-  }
-}
-
-export async function fetchDefaultImageUrl(): Promise<string> {
-  try {
-    const { data: publicUrlData } = supabase
-      .storage
-      .from('jernih') // Bucket name
-      .getPublicUrl('locations/default-image.jpg'); // Path to default image
-
-
-    return publicUrlData?.publicUrl || '';
-  } catch (error: any) {
-    console.error('Error fetching default image:', error.message);
     return '';
   }
 }

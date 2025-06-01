@@ -1,5 +1,5 @@
 import { fetchVolunteerById } from '@/utils/supabase/conservation';
-import { fetchImageUrl, fetchDefaultImageUrl } from '@/utils/supabase/client';
+import { fetchImageUrl} from '@/utils/supabase/client';
 import OpportunityClientView from '@/components/OpportunityClientView';
 
 interface Props {
@@ -13,9 +13,7 @@ const OpportunityDetailPage = async ({ params }: Props) => {
   const opp = await fetchVolunteerById(oppId);
   if (!opp) return null;
 
-  const imageUrl = opp.imageUrl
-    ? await fetchImageUrl(opp.imageUrl)
-    : await fetchDefaultImageUrl();
+  const imageUrl = await fetchImageUrl(opp.imageUrl)
 
   return <OpportunityClientView opp={opp} imageUrl={imageUrl} />;
 };

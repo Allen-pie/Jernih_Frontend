@@ -7,56 +7,31 @@ import { DropdownMenu, Theme } from "@radix-ui/themes";
 import { useRouter } from 'next/navigation';
 import { BrowserRouter } from 'react-router-dom';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { fetchImageUrl, fetchDefaultImageUrl } from "@/utils/supabase/client"
+
 
 const VolunteerOpportunityListing = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [locationFilter, setLocationFilter] = useState<string>("");
-  const [originalOpportunities, setOriginalOpportunities] = useState<any[]>([]); // State to hold original data
+  const [originalOpportunities, setOriginalOpportunities] = useState<any[]>([]); 
   const [filteredOpportunities, setFilteredOpportunities] = useState<any[]>([]);
-  // State to hold image URLs for each asset
-  const [imageUrls, setImageUrls] = useState<{ [key: string]: string }>({});
-  // State to hold the default image URL
-  const [defaultImageUrl, setDefaultImageUrl] = useState<string>("");
   const [locations, setLocations] = useState<string[]>([]); 
   const router = useRouter(); 
   useEffect(() => {
-    const loadOpportunities = async () => {
-      const opportunities = await fetchVolunteerOpportunitiesWithAssets();
-      setOriginalOpportunities(opportunities);
-      setFilteredOpportunities(opportunities);
-      
-      const uniqueLocations = [
-        ...new Set(opportunities.map((opp: any) => opp.location))  // Unique locations
-      ];
-      setLocations(uniqueLocations.slice(0, 5));
+      const loadOpportunities = async () => {
+        const opportunities = await fetchVolunteerOpportunitiesWithAssets();
 
-      // Fetch image URLs for each asset
-      opportunities.forEach(async (opportunity) => {
-        if (opportunity.assets?.length > 0) {
-          const assetUrls = await Promise.all(
-            opportunity.assets.map(async (asset: any) => {
-              const imageUrl = await fetchImageUrl(asset.path);
-              return { [asset.id]: imageUrl };
-            })
-          );
+        // Assume imageUrl is already set inside each opportunity
+        setOriginalOpportunities(opportunities);
+        setFilteredOpportunities(opportunities);
 
-          // Flatten and merge the asset URLs
-          const assetUrlsMap = Object.assign({}, ...assetUrls);
-          setImageUrls((prevUrls) => ({ ...prevUrls, ...assetUrlsMap }));
-        }
-      });
-    };
+        const uniqueLocations = [
+          ...new Set(opportunities.map((opp) => opp.location))
+        ];
+        setLocations(uniqueLocations.slice(0, 5));
+      };
+      loadOpportunities();
+    }, []);
 
-    // Fetch default image URL
-    const loadDefaultImage = async () => {
-      const url = await fetchDefaultImageUrl();
-      setDefaultImageUrl(url);
-    };
-
-    loadOpportunities();
-    loadDefaultImage();
-  }, []);
 
   // Search and filter logic
   const handleSearch = (query: string) => {
@@ -137,7 +112,7 @@ const VolunteerOpportunityListing = () => {
               className="col-span-full bg-white shadow-lg rounded-xl flex p-3"
               onClick={() => router.push(`/conservation/${opportunity.id}`)}
               style={{
-                backgroundImage: `linear-gradient(to right, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%), url(${imageUrls[opportunity.id] || defaultImageUrl})`,
+                backgroundImage: `linear-gradient(to right, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0) 100%), url(${opportunity.imageUrl})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 height: '300px',  // Set a fixed height for the card
