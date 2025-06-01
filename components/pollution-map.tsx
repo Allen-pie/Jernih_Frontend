@@ -10,7 +10,7 @@ import {
 } from "react-leaflet";
 import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
+import L, { LatLngBoundsExpression } from "leaflet";
 import type { CSSProperties, JSX } from "react";
 import { supabase } from '@/utils/supabase/client'
 
