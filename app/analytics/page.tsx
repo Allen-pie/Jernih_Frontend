@@ -25,6 +25,7 @@ const WaterQualityForm = () => {
 
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
+  const [shareLocation, setShareLocation] = useState(true);
 
   // Define state for each input field
   const [ph, setPh] = useState<number | "">("");
@@ -64,7 +65,7 @@ const WaterQualityForm = () => {
     setLoading(true); // Show loading indicator
 
     // Collect data to send in the POST request
-    const formData = {
+    const formData: any = {
       ph,
       hardness,
       solids,
@@ -74,9 +75,13 @@ const WaterQualityForm = () => {
       organic_carbon: organicCarbon,
       trihalomethanes,
       turbidity,
-      latitude,
-      longitude,
+      // latitude dan longitude jangan langsung dimasukkan
     };
+
+    if (shareLocation) {
+      formData.latitude = latitude;
+      formData.longitude = longitude;
+    }
 
     try {
 
@@ -158,6 +163,14 @@ const WaterQualityForm = () => {
                   <Label htmlFor="location">Nama Lokasi</Label>
                   <Input id="location" placeholder="Masukkan nama badan air atau area" />
                 </div>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={shareLocation}
+                      onChange={() => setShareLocation((prev) => !prev)}
+                    />
+                    Bagikan lokasi saya
+                  </label>
                   <div className="space-y-6">
                     {/* pH level */}
                     <div className="grid grid-cols-2 gap-4">
