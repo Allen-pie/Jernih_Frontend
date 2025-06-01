@@ -75,7 +75,7 @@ const WaterQualityForm = () => {
       organic_carbon: organicCarbon,
       trihalomethanes,
       turbidity,
-      // latitude dan longitude jangan langsung dimasukkan
+      // latitude dan longitude hanya jika shareLocation true
     };
 
     if (shareLocation) {
@@ -101,27 +101,31 @@ const WaterQualityForm = () => {
       });
 
       // Save to Supabase
+      const insertData: any = {
+        report_id: null,
+        ph,
+        hardness,
+        solids,
+        chloramines,
+        sulfate,
+        conductivity,
+        organic_carbon: organicCarbon,
+        trihalomethanes,
+        turbidity,
+        probability,
+        prediction: potability_prediction,
+        severity,
+        // latitude & longitude only if shareLocation
+      };
+
+      if (shareLocation) {
+        insertData.latitude = latitude;
+        insertData.longitude = longitude;
+      }
+
       const { error } = await supabase
-        .from("water_quality_predictions") // new table
-        .insert([
-          {
-            report_id: null, // or the actual user report’s UUID
-            ph,
-            hardness,
-            solids,
-            chloramines,
-            sulfate,
-            conductivity,
-            organic_carbon: organicCarbon,
-            trihalomethanes,
-            turbidity,
-            probability,
-            prediction: potability_prediction,
-            severity,
-            latitude,
-            longitude,
-          },
-        ]);
+        .from("water_quality_predictions")
+        .insert([insertData]);
 
       if (error) console.error("Supabase insert error:", error);
       
