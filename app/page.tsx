@@ -72,7 +72,7 @@ export default function HomePage() {
         transition={{ duration: 0.8 }}
         className="w-full fixed top-0 z-50"
       >
-        <div className="container mx-auto px-8 sm:px-16 md:px-28 lg:px-32 py-3 flex justify-between items-center">
+        <div className="container mx-auto px-8 sm:px-16 md:px-48 lg:px-48 py-3 flex justify-between items-center">
           {logoUrl ? (
             <Link href="/">
               <Image
