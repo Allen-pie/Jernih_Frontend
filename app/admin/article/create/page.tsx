@@ -14,9 +14,11 @@ import { Textarea } from "@/components/ui/textarea"
 import { Switch } from "@/components/ui/switch"
 import { toast } from "@/hooks/use-toast"
 import { LoadingOverlay } from "@/components/loading-overlay"
-import { Loader2 } from "lucide-react"
+import { ImageIcon, Loader2, Upload } from "lucide-react"
 import { createArticle } from "@/utils/supabase/article"
 import { supabase } from "@/utils/supabase/client"
+import { ImagePreview } from "@/components/image-preview"
+
 
 export default function CreateArticlePage() {
   const [title, setTitle] = useState("")
@@ -25,7 +27,9 @@ export default function CreateArticlePage() {
   const [featuredImage, setFeaturedImage] = useState<File | null>(null)
   const [isPublished, setIsPublished] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  
+
+  const [dragActive, setDragActive] = useState(false)
+
   const router = useRouter()
 
   const handleImageUpload = async () => {
@@ -72,6 +76,10 @@ export default function CreateArticlePage() {
     if (file) {
       setFeaturedImage(file)
     }
+  }
+  
+  const handleRemoveImage = () => {
+    setFeaturedImage(null);
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -127,6 +135,44 @@ export default function CreateArticlePage() {
       setIsSubmitting(false)
     }
   }
+
+const handleDrag = (e: React.DragEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      if (e.type === "dragenter" || e.type === "dragover") {
+        setDragActive(true)
+      } else if (e.type === "dragleave") {
+        setDragActive(false)
+      }
+    }
+  
+    const handleDrop = (e: React.DragEvent) => {
+      e.preventDefault()
+      e.stopPropagation()
+      setDragActive(false)
+  
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        const file = e.dataTransfer.files[0]
+  
+        // Validate file type
+        if (!file.type.startsWith("image/")) {
+          toast({
+            title: "Invalid file type",
+            description: "Please select an image file.",
+            variant: "destructive",
+          })
+          return
+        }
+  
+      
+        setFeaturedImage(file)
+        toast({
+          title: "Image uploaded",
+          description: "Featured image has been added to your article.",
+        })
+      }
+    }
+  
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -211,7 +257,9 @@ export default function CreateArticlePage() {
                     <CardTitle>Featured Image</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-2">
+
+
+                    {/* <div className="space-y-2">
                       <Input type="file" accept="image/*" onChange={handleImageChange} />
                       <p className="text-sm text-muted-foreground">
                         Upload a featured image for your article (optional)
@@ -226,7 +274,46 @@ export default function CreateArticlePage() {
                         </div>
                       )}
                       {featuredImage && <p className="text-sm text-primary">Selected: {featuredImage.name}</p>}
-                    </div>
+                    </div> */}
+
+                    {featuredImage ? (
+                        <ImagePreview file={featuredImage} onRemove={handleRemoveImage}/>
+                    ) : (
+                        <div
+                        className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+                          dragActive
+                            ? "border-primary bg-primary/5"
+                            : "border-muted-foreground/25 hover:border-muted-foreground/50"
+                        }`}
+                        onDragEnter={handleDrag}
+                        onDragLeave={handleDrag}
+                        onDragOver={handleDrag}
+                        onDrop={handleDrop}
+                      >
+                        <ImageIcon className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
+                        <div className="space-y-2">
+                          <p className="text-sm font-medium">Drop your image here, or click to browse</p>
+                          <p className="text-xs text-muted-foreground">PNG, JPG, GIF up to 5MB</p>
+                        </div>
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleImageChange}
+                          className="hidden"
+                          id="featured-image-input"
+                        />
+                        <Label htmlFor="featured-image-input" className="cursor-pointer">
+                          <Button type="button" variant="outline" className="mt-4" asChild>
+                            <span>
+                              <Upload className="mr-2 h-4 w-4" />
+                              Choose Image
+                            </span>
+                          </Button>
+                        </Label>
+                      </div>
+                    )}
+
+
                   </CardContent>
                 </Card>
 

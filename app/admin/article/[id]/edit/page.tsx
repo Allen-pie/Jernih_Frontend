@@ -37,7 +37,7 @@ const EditArticle = ({ params }: Props) =>  {
     const [isPublished, setIsPublished] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [status, setStatus] = useState("")
-      const [dragActive, setDragActive] = useState(false)
+    const [dragActive, setDragActive] = useState(false)
 
     
     const router = useRouter()
@@ -164,7 +164,7 @@ const EditArticle = ({ params }: Props) =>  {
   }
 
 
-    const handleDrag = (e: React.DragEvent) => {
+const handleDrag = (e: React.DragEvent) => {
     e.preventDefault()
     e.stopPropagation()
     if (e.type === "dragenter" || e.type === "dragover") {
