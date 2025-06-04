@@ -22,7 +22,7 @@ const items = [
   {
     title: "Laporkan Polusi",
     href: "/report",
-    description: "Log an issue",
+    description: "Laporkan masalah pencemaran air",
   },
   {
     title: "Artikel",
