@@ -6,19 +6,21 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function AdminLayout({children} : {children : React.ReactNode}){
-    const {session, user} = useAuth();
+    const {session} = useAuth();
     const router = useRouter();
     const [ready, setReady] = useState<boolean>(false);
-     
+    
     useEffect(() => {
         if (!session) return router.push('/login');
 
         const getProfiles = async (user_id : string) => {
-            const {data : profile_data, error : profile_error} = await supabase.from('profiles').select().eq('id', user_id);
+            const {data : profile_data} = await supabase.from('profiles').select().eq('id', user_id);
             if (profile_data && profile_data[0].role_id == 1) {
                 setReady(true);
             }
-            else return router.push("/auth/error");
+            else {
+                return router.push("/auth/error");
+            }
         }
         
         getProfiles(session.user.id);

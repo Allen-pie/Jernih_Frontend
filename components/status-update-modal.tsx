@@ -105,6 +105,8 @@ export function StatusUpdateDialog({
         })
         .eq("id", reportId);
 
+      if (error) throw error;
+
       onStatusUpdate(selectedStatus, reason);
 
       toast({
@@ -116,6 +118,7 @@ export function StatusUpdateDialog({
       setReason("");
       onClose();
     } catch (error) {
+      console.log(error);
       toast({
         title: "Perubahan gagal",
         variant: "destructive",
