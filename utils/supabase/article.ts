@@ -1,6 +1,6 @@
 import { ArticleGuest, ArticleAdmin } from '@/app/interfaces';
-import {supabase, supabaseUrl} from './client'
-import { AriaAttributes } from 'react';
+import {supabase} from './client'
+// import { AriaAttributes } from 'react';
 import { BUCKET_URLS } from '@/url/bucket_url';
 
 export async function fetchArticlesGuest() {
@@ -19,7 +19,8 @@ export async function fetchArticlesGuest() {
       )
     `)
     .eq('status', 'published')
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .returns<ArticleGuest[]>();
 
   if (error) {
     console.error('Error fetching articles:', error)
@@ -27,7 +28,6 @@ export async function fetchArticlesGuest() {
   }
 
   
-  // @ts-ignore
   const articles = data as ArticleGuest[];
   
   const articlesWithComments = await Promise.all(
@@ -68,15 +68,14 @@ export async function fetchArticlesAdmin() {
       ),
       status
     `)
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: false })
+    .returns<ArticleAdmin[]>();
 
   if (error) {
     console.error('Error fetching articles:', error)
     return [];
   }
 
-  
-  // @ts-ignore
   const articles = data as ArticleAdmin[];
   
   const articlesWithComments = await Promise.all(
@@ -141,7 +140,7 @@ export async function fetchArticleById(id: number | string) {
 }
 
 export const countCommentsByArticleId = async (articleId: number): Promise<number> => {
-  const { data, error, count } = await supabase
+  const { error, count } = await supabase
     .from('comments')
     .select('*', { count: 'exact', head: true })
     .eq('article_id', articleId)

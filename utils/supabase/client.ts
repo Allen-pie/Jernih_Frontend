@@ -14,8 +14,12 @@ export async function fetchImageUrl(path: string): Promise<string> {
 
 
     return publicUrlData?.publicUrl || 'locations/default-image.jpg';
-  } catch (error: any) {
-    console.error('Error fetching image:', error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('Error fetching image:', error.message);
+    } else {
+      console.error('Unknown error fetching image');
+    }
     return '';
   }
 }
