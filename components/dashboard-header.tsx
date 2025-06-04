@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
-import { Bell, User, LogOut } from "lucide-react";
+import { User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
-import { SidebarTrigger } from "@/components/ui/sidebar";
+// import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
   Popover,
   PopoverContent,
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/popover";
 import { useAuth } from "./context/auth-context";
 import { useSidebar } from "@/components/ui/sidebar";
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
 export function DashboardHeader() {
