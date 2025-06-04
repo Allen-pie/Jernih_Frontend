@@ -42,7 +42,7 @@ export default function AuthCallback() {
 
   useEffect(() => {
     if (session) saveProfile();
-  }, [session]);
+  }, [session, saveProfile]);
 
   return (
     <div className="flex items-center justify-center h-screen bg-white dark:bg-gray-900">
