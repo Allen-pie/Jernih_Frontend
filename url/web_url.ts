@@ -7,7 +7,7 @@ const URLS = {
 
 // PRODUCTION
 // const URLS = {
-//     WEB : 'http://localhost:3000',
+//     WEB : 'https://jernih.vercel.app',
 //     API : 'https://jernihbackend-production.up.railway.app'
 // } ;
 
