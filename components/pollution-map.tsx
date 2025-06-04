@@ -12,7 +12,7 @@ import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngBoundsExpression } from "leaflet";
 import type { CSSProperties, JSX } from "react";
-import { supabase } from '@/utils/supabase/client'
+import { supabase } from "@/utils/supabase/client";
 
 // --- 1) Types
 export type Severity = "Rendah" | "Sedang" | "Tinggi";
@@ -78,7 +78,7 @@ function getSeverityIcon(severity: Severity) {
 
 const indonesiaBounds: LatLngBoundsExpression = [
   [-11.0, 95.0], // Southwest (bawah kiri)
-  [6.0, 141.0],  // Northeast (atas kanan)
+  [6.0, 141.0], // Northeast (atas kanan)
 ];
 
 // Location button component
@@ -128,8 +128,6 @@ function LocationButton({ onClick }: { onClick: () => void }) {
     return () => {
       map.removeControl(locationButton);
     };
-
-
   }, [map, onClick]);
 
   return null;
@@ -242,7 +240,8 @@ function UserLocation() {
 
 // fill the full viewport
 const mapStyle: CSSProperties = {
-  height: '100%', width: '100%'
+  height: "100%",
+  width: "100%",
 };
 
 export function PollutionMap(): JSX.Element {
@@ -254,26 +253,53 @@ export function PollutionMap(): JSX.Element {
     async function fetchPredictions() {
       setIsLoading(true);
       try {
-        const { data, error } = await supabase
+
+        const { data: predictions, error: predictionError } = await supabase
           .from("water_quality_predictions")
           .select("id, latitude, longitude, severity");
 
-        if (error) throw error;
+        if (predictionError) throw predictionError;
 
-        if (data) {
-          setAreas(
-            data.map((row) => ({
-              id: row.id,
-              lat: row.latitude,
-              lng: row.longitude,
-              severity:
-                row.severity === "Low" ? "Rendah" :
-                row.severity === "Medium" ? "Sedang" :
-                row.severity === "High" ? "Tinggi" :
-                row.severity, // fallback
-            }))
-          );
-        }
+       
+        const { data: reports, error: reportError } = await supabase
+          .from("pollution_reports")
+          .select("id, latitude, longitude, severity");
+
+        if (reportError) throw reportError;
+
+        
+        const formattedPredictions = (predictions || []).map((row) => ({
+          id: row.id,
+          lat: row.latitude,
+          lng: row.longitude,
+          severity:
+            row.severity === "Low"
+              ? "Rendah"
+              : row.severity === "Medium"
+              ? "Sedang"
+              : row.severity === "High"
+              ? "Tinggi"
+              : row.severity,
+        }));
+
+        console.log('rep', reports);
+        
+        const formattedReports = (reports || []).map((row) => ({
+          id: row.id,
+          lat: row.latitude,
+          lng: row.longitude,
+          severity:
+            row.severity === "low"
+              ? "Rendah"
+              : row.severity === "medium"
+              ? "Sedang"
+              : row.severity === "high"
+              ? "Tinggi"
+              : row.severity,
+        }));
+
+        // Combine both data sources
+        setAreas([...formattedPredictions, ...formattedReports]);
       } catch (error) {
         console.error("Supabase fetch error:", error);
       } finally {
@@ -285,21 +311,21 @@ export function PollutionMap(): JSX.Element {
   }, []);
 
   // build heatmap points [lat, lng, intensity]
-const heatmapPoints = areas
-  .map((area) => {
-    const lat = area.lat;
-    const lng = area.lng;
-    const intensity = severityWeights[area.severity];
-    if (
-      typeof lat === 'number' &&
-      typeof lng === 'number' &&
-      typeof intensity === 'number'
-    ) {
-      return [lat, lng, intensity] as [number, number, number];
-    }
-    return null;
-  })
-  .filter(Boolean);
+  const heatmapPoints = areas
+    .map((area) => {
+      const lat = area.lat;
+      const lng = area.lng;
+      const intensity = severityWeights[area.severity];
+      if (
+        typeof lat === "number" &&
+        typeof lng === "number" &&
+        typeof intensity === "number"
+      ) {
+        return [lat, lng, intensity] as [number, number, number];
+      }
+      return null;
+    })
+    .filter(Boolean);
 
   // Default center position (fallback if geolocation fails)
   const defaultCenter: [number, number] = [-2.5, 118]; // Indonesia center
@@ -324,26 +350,25 @@ const heatmapPoints = areas
         className="z-0"
         maxBounds={indonesiaBounds} // ⛔ Blok user zoom keluar
         // Prevent keluar dari bounds
-          >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution="&copy; OpenStreetMap contributors"
-          />
-          <HeatmapLayer
-            points={heatmapPoints as [number, number, number][]}
-            longitudeExtractor={(pt: [number, number, number]) => pt[1]}
-            latitudeExtractor={(pt: [number, number, number]) => pt[0]}
-            intensityExtractor={(pt: [number, number, number]) => pt[2]}
-            max={1.0}
-            radius={25}
-            blur={20}
-          />
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution="&copy; OpenStreetMap contributors"
+        />
+        <HeatmapLayer
+          points={heatmapPoints as [number, number, number][]}
+          longitudeExtractor={(pt: [number, number, number]) => pt[1]}
+          latitudeExtractor={(pt: [number, number, number]) => pt[0]}
+          intensityExtractor={(pt: [number, number, number]) => pt[2]}
+          max={1.0}
+          radius={25}
+          blur={20}
+        />
 
         {areas
           .filter(
             (area) =>
-              typeof area.lat === 'number' &&
-              typeof area.lng === 'number'
+              typeof area.lat === "number" && typeof area.lng === "number"
           )
           .map((area) => (
             <Marker
@@ -357,7 +382,7 @@ const heatmapPoints = areas
                 <strong>Tingkat Pencemaran:</strong> {area.severity}
               </Popup>
             </Marker>
-        ))}
+          ))}
 
         {/* User location component */}
         <UserLocation />
