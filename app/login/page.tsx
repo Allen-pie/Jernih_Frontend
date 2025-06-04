@@ -55,7 +55,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const EnterByGoogle = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: `${URLS.WEB}/auth/callback`,
@@ -69,7 +69,7 @@ export default function LoginPage() {
   const onSubmit = async (value: LoginData) => {
     try {
       setIsLoading(true);
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         ...value,
       });
       if (error) {
