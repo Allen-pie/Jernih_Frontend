@@ -87,11 +87,11 @@ export default function HomePage() {
           )}
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="relative hidden md:flex items-center space-x-6">
             <SiteNav />
             <div
               className={`ml-auto flex items-center gap-4 ${
-                session ? "pr-24" : ""
+                session ? "pr-56" : ""
               }`}
             >
               {session ? (

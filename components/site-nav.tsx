@@ -58,7 +58,7 @@ export function SiteNav() {
           {/* 1) Give your panel a width + padding */}
           <NavigationMenuContent
             className={cn(
-              "absolute right-0 mt-2 rounded-lg shadow-lg z-50",
+              "absolute right-0 mt-2 rounded-lg shadow-lg z-[100]", // increase z-index
               "bg-white backdrop-blur-lg border border-white/20",
               "w-[320px] md:w-[440px] max-w-[90vw] max-h-[80vh] overflow-auto",
               "p-4 sm:p-6"
