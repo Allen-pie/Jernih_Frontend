@@ -40,14 +40,14 @@ export function AppSidebar() {
     "/login",
     "/register",
     "/",
-    "/verification-sent",
     "/reset-password",
     "/update-password",
-    "/auth/callback"
+    "/auth/callback",
+    '/auth/error',
+    '/admin'
   ].includes(pathname);
 
 
- 
 
   // Add state to track sidebar open/closed
   const [sidebarOpen, setSidebarOpen] = useState(false);
