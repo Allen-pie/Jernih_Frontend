@@ -49,11 +49,15 @@ export default async function ArticlesPage() {
                                         </div>
                                         <div className="flex items-center">
                                             <Calendar className="mr-1 h-4 w-4" />
-                                            {new Date(article.created_at ?? '').toLocaleDateString()}
+                                            {article.created_at ? new Date(article.created_at).toLocaleDateString() : "Unknown"}
                                         </div>
                                         <div className="flex items-center">
                                             <Calendar className="mr-1 h-4 w-4" />
-                                            {article.published_at === "Belum Dipublikasikan"? article.published_at : new Date(article.published_at ?? '').toLocaleDateString()}
+                                            {article.published_at === "Belum Dipublikasikan"
+                                                ? article.published_at
+                                                : article.published_at
+                                                    ? new Date(article.published_at).toLocaleDateString()
+                                                    : "Unknown"}
                                         </div>
                                     </div>
                                     <div className="flex gap-2">
