@@ -21,8 +21,12 @@ export function useLogoImage(path: string) {
 
           setLogoUrl(publicUrlData.publicUrl);
         }
-      } catch (error: any) {
-        console.error("Error fetching logo image:", error.message);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error("Error fetching logo image:", error.message);
+        } else {
+          console.error("Error fetching logo image:", error);
+        }
       }
     };
 
