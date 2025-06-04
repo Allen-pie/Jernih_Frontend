@@ -1,14 +1,10 @@
 "use client"
-
 import type React from "react"
-
-import { useState } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import {useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-// import { Alert, AlertDescription } from "@/components/ui/alert"
-import { AlertTriangle, RefreshCw, Home} from "lucide-react"
+import { AlertTriangle, Home} from "lucide-react"
 
 type ErrorType = "unknown"
 
@@ -28,19 +24,9 @@ interface ErrorConfig {
 }
 
 export default function AuthErrorPage() {
-  const router = useRouter()
   const searchParams = useSearchParams()
-  // const [countdown, setCountdown] = useState(10)
-  const [isRedirecting, setIsRedirecting] = useState(false)
-
   const errorType = (searchParams.get("error") as ErrorType) || "unknown"
   const email = searchParams.get("email")
-  // const returnUrl = searchParams.get("return_url") || "/"
-
-  const handleRetry = () => {
-    setIsRedirecting(true)
-    router.push("/login")
-  }
 
   const errorConfigs: Record<ErrorType, ErrorConfig> = {
     unknown: {
@@ -49,11 +35,8 @@ export default function AuthErrorPage() {
         "Terjadi kesalahan tak terduga saat proses autentikasi.",
       icon: <AlertTriangle className="h-12 w-12 text-gray-500" />,
       actions: [
-        { label: "Coba Lagi", onClick: handleRetry, icon: <RefreshCw className="mr-2 h-4 w-4" /> },
         { label: "Kembali ke Dashboard", href: "/dashboard", variant: "outline" as const, icon: <Home className="mr-2 h-4 w-4" /> },
-      ],
-      alertMessage: "Error details have been logged for our technical team to review.",
-      alertVariant: "destructive",
+      ],  
     },
   }
 
@@ -93,7 +76,6 @@ export default function AuthErrorPage() {
                 key={index}
                 variant={action.variant || "default"}
                 onClick={action.onClick}
-                disabled={isRedirecting }
                 className="w-full"
               >
                 {action.icon}
