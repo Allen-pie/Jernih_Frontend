@@ -190,3 +190,76 @@ export async function createArticle(title: string, excerpt: string, content: str
     console.log('Error saving articles.', error)
   }
 }
+
+export const updateArticle = async (
+  id: number,
+  published_at: string | null,
+  title: string,
+  excerpt: string,
+  content: string,
+  image_id: number | null,
+  status: string
+) => {
+
+  if (image_id === null) {
+    if (published_at === '') {
+      const { error } = await supabase
+        .from("articles")
+        .update({
+          title,
+          excerpt,
+          content,
+          status,
+        })
+        .eq("id", id);
+  
+      if (error) throw error;
+    }
+    else {
+      const { error } = await supabase
+        .from("articles")
+        .update({
+          published_at,
+          title,
+          excerpt,
+          content,
+          status,
+        })
+        .eq("id", id);
+  
+      if (error) throw error;
+    }
+  }
+  else {
+    if (published_at === '') {
+      const { error } = await supabase
+        .from("articles")
+        .update({
+          title,
+          excerpt,
+          content,
+          image_id,
+          status,
+        })
+        .eq("id", id);
+  
+      if (error) throw error;
+    }
+    else {
+      const { error } = await supabase
+        .from("articles")
+        .update({
+          published_at,
+          title,
+          excerpt,
+          content,
+          image_id,
+          status,
+        })
+        .eq("id", id);
+  
+      if (error) throw error;
+    }
+  }
+
+};
