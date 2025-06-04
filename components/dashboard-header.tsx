@@ -18,7 +18,7 @@ export function DashboardHeader() {
   const router = useRouter();
   const { setOpen, setOpenMobile } = useSidebar();
   const pathname = usePathname();
-  const isAuthPage = ["/", "/login", "/register", "/auth/callback", "/update-password", "/reset-password", '/auth/error', '/admin'].includes(pathname);
+  const isAuthPage = ["/", "/login", "/register", "/update-password", "/reset-password", '/admin'].includes(pathname) || pathname.startsWith('/auth');
   
   if (isAuthPage ) {
     return null;

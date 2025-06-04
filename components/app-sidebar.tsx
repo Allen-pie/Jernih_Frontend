@@ -45,8 +45,7 @@ export function AppSidebar() {
     "/auth/callback",
     '/auth/error',
     '/admin'
-  ].includes(pathname);
-
+  ].includes(pathname) || pathname.startsWith('/auth');
 
 
   // Add state to track sidebar open/closed
