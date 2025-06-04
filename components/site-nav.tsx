@@ -11,9 +11,9 @@ import {
   NavigationMenuTrigger,
   NavigationMenuContent,
   NavigationMenuIndicator,
-  NavigationMenuViewport,
+  // NavigationMenuViewport,
   NavigationMenuLink,
-  navigationMenuTriggerStyle,
+  // navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 const items = [
