@@ -58,7 +58,7 @@ const EditArticle = ({ params }: Props) =>  {
 
     useEffect( () => {
         fetchArticle();
-    }, [])
+    }, [fetchArticle])
 
   const handleImageUpload = async () => {
     const file = featuredImage
