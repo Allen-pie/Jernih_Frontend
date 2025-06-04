@@ -37,9 +37,9 @@ const WaterQualityForm = () => {
   const [organicCarbon, setOrganicCarbon] = useState<number | "">("");
   const [trihalomethanes, setTrihalomethanes] = useState<number | "">("");
   const [turbidity, setTurbidity] = useState<number | "">("");
-  const [prediction, setPrediction] = useState<string | null>("");
+  // const [prediction, setPrediction] = useState<string | null>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [severity, setSeverity] = useState<string | null>(null);
+  // const [severity, setSeverity] = useState<string | null>(null);
 
   // Get user's geolocation when component mounts
   React.useEffect(() => {
@@ -54,7 +54,7 @@ const WaterQualityForm = () => {
   // Handle input changes (validation can be added here as well)
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    setter: React.Dispatch<React.SetStateAction<any>>
+    setter: React.Dispatch<React.SetStateAction<number | "">>
   ) => {
     setter(e.target.value ? parseFloat(e.target.value) : "");
   };
@@ -64,8 +64,23 @@ const WaterQualityForm = () => {
     e.preventDefault(); // Prevent default form submit behavior
     setLoading(true); // Show loading indicator
 
+    // Define a type for the form data
+    type WaterQualityFormData = {
+      ph: number | "";
+      hardness: number | "";
+      solids: number | "";
+      chloramines: number | "";
+      sulfate: number | "";
+      conductivity: number | "";
+      organic_carbon: number | "";
+      trihalomethanes: number | "";
+      turbidity: number | "";
+      latitude?: number | null;
+      longitude?: number | null;
+    };
+
     // Collect data to send in the POST request
-    const formData: any = {
+    const formData: WaterQualityFormData = {
       ph,
       hardness,
       solids,
@@ -101,7 +116,25 @@ const WaterQualityForm = () => {
       });
 
       // Save to Supabase
-      const insertData: any = {
+      type InsertData = {
+        report_id: number | null;
+        ph: number | "";
+        hardness: number | "";
+        solids: number | "";
+        chloramines: number | "";
+        sulfate: number | "";
+        conductivity: number | "";
+        organic_carbon: number | "";
+        trihalomethanes: number | "";
+        turbidity: number | "";
+        probability: number;
+        prediction: number;
+        severity: string;
+        latitude?: number | null;
+        longitude?: number | null;
+      };
+
+      const insertData: InsertData = {
         report_id: null,
         ph,
         hardness,
