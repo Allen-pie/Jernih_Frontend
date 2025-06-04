@@ -53,7 +53,7 @@ const EditArticle = ({ params }: Props) =>  {
         setContent(article.content!)
         setImageUrl(article.image_url!)
         setStatus(article.status!)
-        setIsPublished(article.status === 'published' ? true : false)
+        setIsPublished(status === 'published' ? true : false)
     }
 
     useEffect( () => {

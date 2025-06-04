@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Plus, Calendar, User, Eye } from "lucide-react"
+import { Plus, Calendar, User } from "lucide-react"
 import { fetchArticlesAdmin } from "@/utils/supabase/article";
 import { ArticleAdmin } from "@/app/interfaces"
 
@@ -49,11 +49,11 @@ export default async function ArticlesPage() {
                                         </div>
                                         <div className="flex items-center">
                                             <Calendar className="mr-1 h-4 w-4" />
-                                            {new Date(article.created_at).toLocaleDateString()}
+                                            {new Date(article.created_at ?? '').toLocaleDateString()}
                                         </div>
                                         <div className="flex items-center">
                                             <Calendar className="mr-1 h-4 w-4" />
-                                            {article.published_at === "Belum Dipublikasikan"? article.published_at : new Date(article.published_at).toLocaleDateString()}
+                                            {article.published_at === "Belum Dipublikasikan"? article.published_at : new Date(article.published_at ?? '').toLocaleDateString()}
                                         </div>
                                     </div>
                                     <div className="flex gap-2">
