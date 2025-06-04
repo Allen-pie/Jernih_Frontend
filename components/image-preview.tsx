@@ -29,7 +29,7 @@ export function ImagePreview({ file, onRemove, file_url }: ImagePreviewProps) {
         const url = URL.createObjectURL(file)
         setImageUrl(url)
     }
-   },[])
+   },[file_url, file])
 
   const formatFileSize = (bytes: number) => {
     if (bytes === 0) return "0 Bytes"

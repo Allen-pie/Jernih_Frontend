@@ -37,7 +37,7 @@ export interface Comment {
 }
 
 export interface Report {
-    id: string;
+    id: number;
     title : string;
     location : string;
     pollution_type : string;
