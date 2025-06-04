@@ -2,13 +2,13 @@
 
 import type React from "react"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 // import { Alert, AlertDescription } from "@/components/ui/alert"
-import { AlertTriangle, XCircle, Clock, Shield, RefreshCw, Home, LogIn, Mail } from "lucide-react"
+import { AlertTriangle, RefreshCw, Home} from "lucide-react"
 
 type ErrorType = "unknown"
 
@@ -30,12 +30,12 @@ interface ErrorConfig {
 export default function AuthErrorPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [countdown, setCountdown] = useState(10)
+  // const [countdown, setCountdown] = useState(10)
   const [isRedirecting, setIsRedirecting] = useState(false)
 
   const errorType = (searchParams.get("error") as ErrorType) || "unknown"
   const email = searchParams.get("email")
-  const returnUrl = searchParams.get("return_url") || "/"
+  // const returnUrl = searchParams.get("return_url") || "/"
 
   const handleRetry = () => {
     setIsRedirecting(true)
