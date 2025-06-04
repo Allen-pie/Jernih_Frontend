@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/context/auth-context";
 import ClientLayout from "@/components/ClientLayout";
+import '@radix-ui/themes/styles.css'; 
+import { Theme } from '@radix-ui/themes';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,8 +42,10 @@ export default function RootLayout({
             <div className="hidden 2xl:block bg-pink-600 px-2 py-1 rounded">2xl</div>
           </div>
           <ClientLayout>
-            {children}
-            </ClientLayout>
+            <Theme>
+              {children}
+            </Theme>
+          </ClientLayout>
         </AuthProvider>
       </body>
     </html>

@@ -1,51 +1,40 @@
 import {supabase} from './client'
 import { fetchImageUrl } from '@/utils/supabase/client';
-
-export async function fetchVolunteerById(id: number | string) {
-  // First, fetch the main conservation data
-  const { data: conservation, error: conservationError } = await supabase
+export const fetchVolunteerById = async (id: number | string) => {
+  // Fetch a single conservation opportunity by ID
+  const { data: opp, error: oppError } = await supabase
     .from('conservation')
-    .select(`
-      id,
-      created_at,
-      title,
-      location,
-      description,
-      link
-    `)
+    .select('*')
     .eq('id', id)
     .single();
 
-  if (conservationError) {
-    console.error(`Error fetching conservation with id ${id}:`, conservationError);
+  if (oppError) {
+    console.error(`Error fetching conservation opportunity with ID ${id}:`, oppError);
     return null;
   }
 
-  // Now, fetch the asset based on model_id and model_type
-  const { data: asset, error: assetError } = await supabase
+  // Fetch the related image asset
+  const { data: assets, error: assetError } = await supabase
     .from('assets')
-    .select('path')
+    .select('*')
     .eq('model_id', id)
-    .eq('model_type', 'conservation')
-    .single();  // assuming only one image per opportunity
+    .eq('model_type', 'conservation');
 
-  if (assetError) {
-    console.warn(`No asset found for conservation id ${id}:`, assetError);
+  let imageUrl = '';
+
+  if (assets && assets.length > 0) {
+    imageUrl = await fetchImageUrl(assets[0].path);
+  } else {
+    console.warn(`No asset found for conservation ID ${id}:`, assetError);
+    imageUrl = await fetchImageUrl('locations/default-image.jpg');
   }
 
   return {
-    id: conservation.id,
-    title: conservation.title,
-    location: conservation.location,
-    description: conservation.description,
-    imageUrl: asset?.path
-      ? `${asset.path}`
-      : '',
-    link : conservation.link
+    ...opp,
+    imageUrl,
+    assets: assets ?? [],
   };
-
-  
-}
+};
 
 export const fetchVolunteerOpportunitiesWithAssets = async () => {
   // Fetch volunteer opportunities from Supabase (the 'conservation' table)
@@ -61,7 +50,7 @@ export const fetchVolunteerOpportunitiesWithAssets = async () => {
   // For each conservation opportunity, fetch the associated assets (images)
   const opportunitiesWithAssets = await Promise.all(
     opportunities.map(async (opp) => {
-      console.log("Fetching assets for opportunity:", opp.id);
+      // console.log("Fetching assets for opportunity:", opp.id);
 
       const { data: assets, error: assetsError } = await supabase
         .from('assets')
