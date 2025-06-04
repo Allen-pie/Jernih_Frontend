@@ -19,7 +19,7 @@ export default function AdminLayout({children} : {children : React.ReactNode}){
                 setReady(true);
             }
             else {
-                return router.push("/auth/error");
+                return router.push("/auth/error/401");
             }
         }
         
