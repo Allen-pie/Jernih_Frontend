@@ -23,25 +23,46 @@ interface CommentSectionProps {
 export const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => {
   const [comments, setComments] = useState<Comments[]>([])
   const [newComment, setNewComment] = useState('')
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<unknown>(null)
 
   useEffect(() => {
-    const fetchComments = async () => {
-      const fetchedComments = await fetchCommentById(articleId)
-      setComments(fetchedComments)
-    }
+    fetchComments();
 
-    const fetchUser = async () => {
-        const {
-        data: { user },
-        error
-        } = await supabase.auth.getUser()
-        if (!error) setUser(user)
-    }
+    const subscription = supabase
+      .channel('supabase_realtime_messages_publication')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'comments'
+        },
+        (payload) => {
+          console.log('Real-time payload:', payload);
+          fetchComments();
+        }
+      )
+      .subscribe();
 
-    fetchComments()
-    fetchUser()
-  }, [articleId])
+    fetchUser();
+
+    return () => {
+      supabase.removeChannel(subscription);
+    }
+  }, [])
+
+  const fetchComments = async() => {
+    const fetchedComments = await fetchCommentById(articleId)
+    setComments(fetchedComments)
+  }
+
+  const fetchUser = async() => {
+    const {
+      data: { user },
+      error
+    } = await supabase.auth.getUser()
+    if (!error) setUser(user)
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -107,7 +128,7 @@ export const CommentSection: React.FC<CommentSectionProps> = ({ articleId }) => 
                 </span>
                 <span className="mx-2 text-gray-400">•</span>
                 <span className="text-sm text-gray-500">
-                  {new Date(comment.created_at).toLocaleDateString('en-US', {
+                  {new Date(comment.created_at ?? '').toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric',
