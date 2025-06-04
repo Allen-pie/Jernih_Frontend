@@ -5,10 +5,7 @@ import {
   LayoutDashboard,
   BarChart,
   FileText,
-  Users,
   Waves,
-  HelpCircle,
-  Compass,
   Newspaper,
 } from "lucide-react";
 import {

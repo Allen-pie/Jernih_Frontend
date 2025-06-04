@@ -1,21 +1,18 @@
 import { fetchVolunteerById } from '@/utils/supabase/conservation';
-import { fetchImageUrl} from '@/utils/supabase/client';
 import OpportunityClientView from '@/components/OpportunityClientView';
 
 interface Props {
-  params: {
-    id: string;
-  };
+  params: { id: string };
 }
 
-const OpportunityDetailPage = async ({ params }: Props) => {
-  const oppId = parseInt(params.id);
+const OpportunityDetailPage = async ({ params } : Props) => {
+  const { id }  = await params
+  const oppId = parseInt(id);
   const opp = await fetchVolunteerById(oppId);
-  if (!opp) return null;
+  // const safeOpp = JSON.parse(JSON.stringify(opp));
+  if (!opp) return <div>Opportunity not found</div>;
 
-  const imageUrl = await fetchImageUrl(opp.imageUrl)
-
-  return <OpportunityClientView opp={opp} imageUrl={imageUrl} />;
+  return <OpportunityClientView opp={opp} />;
 };
 
 export default OpportunityDetailPage;
