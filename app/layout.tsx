@@ -33,14 +33,14 @@ export default function RootLayout({
       >
         <AuthProvider>
           {/* screen size indicator */}
-           <div className="fixed bottom-2 right-2 z-[9999] text-white text-xs font-mono">
+           {/* <div className="fixed bottom-2 right-2 z-[9999] text-white text-xs font-mono">
             <div className="block sm:hidden bg-red-600 px-2 py-1 rounded">xs</div>
             <div className="hidden sm:block md:hidden bg-yellow-600 px-2 py-1 rounded">sm</div>
             <div className="hidden md:block lg:hidden bg-green-600 px-2 py-1 rounded">md</div>
             <div className="hidden lg:block xl:hidden bg-blue-600 px-2 py-1 rounded">lg</div>
             <div className="hidden xl:block 2xl:hidden bg-purple-600 px-2 py-1 rounded">xl</div>
             <div className="hidden 2xl:block bg-pink-600 px-2 py-1 rounded">2xl</div>
-          </div>
+          </div> */}
           <ClientLayout>
             <Theme>
               {children}
