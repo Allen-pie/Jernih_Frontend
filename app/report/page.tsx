@@ -189,7 +189,7 @@ export default function FormPage() {
           if (bucket_data) {
             const path = bucket_data.path;
 
-            const { data: asset_data, error: asset_error } = await supabase
+            const { error: asset_error } = await supabase
               .from("assets")
               .insert({
                 model_id: report_id,
