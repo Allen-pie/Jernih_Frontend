@@ -1,6 +1,6 @@
 // app/page.tsx
 "use client";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useImage } from "@/hooks/use-image";
 import { useLogoImage } from "@/hooks/use-logo-image";
@@ -10,12 +10,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/components/context/auth-context";
 import { SubscribeForm } from "@/components/subscribe-form";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import {
   BarChart2,
   Clock,
@@ -46,7 +46,7 @@ const staggerContainer = {
 
 export default function HomePage() {
   const { signOut, session } = useAuth();
-  const router = useRouter();
+  // const router = useRouter();
 
   const heroUrl = useImage("landing-page.jpg");
   const logoUrl = useLogoImage("jernih-logo.svg");
@@ -152,7 +152,7 @@ export default function HomePage() {
           </motion.div>
         </div>
         <div className="absolute inset-0 bg-cyan-900/10 z-10"></div>
-        <div className="container mx-auto px-16 relative z-20">
+        <div className="container mx-auto px-32 relative z-20">
           <div className="max-w-2xl">
             <motion.h1
               variants={fadeInUp}
@@ -483,7 +483,7 @@ export default function HomePage() {
               <Card key={index} className="bg-cyan-50 shadow-sm border-none">
                 <CardContent className="p-6">
                   <p className="italic text-gray-700 mb-4">
-                    "{testimonial.quote}"
+                    &quot;{testimonial.quote}&quot;
                   </p>
                   <div>
                     <p className="font-bold text-cyan-800">
