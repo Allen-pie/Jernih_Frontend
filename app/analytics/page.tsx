@@ -190,7 +190,7 @@ const WaterQualityForm = () => {
               <h1 className="text-3xl font-bold tracking-tight">
                 Prediksi Kualitas Air
               </h1>
-              <Link href="/">
+              <Link href="/dashboard">
                 <Button variant="outline">Kembali ke Dashboard</Button>
               </Link>
             </div>

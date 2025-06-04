@@ -352,9 +352,9 @@ const heatmapPoints = areas
               icon={getSeverityIcon(area.severity)}
             >
               <Popup>
-                <strong>Prediction ID:</strong> {area.id}
-                <br />
-                <strong>Severity:</strong> {area.severity}
+                {/* <strong>Prediction ID:</strong> {area.id} */}
+                {/* <br /> */}
+                <strong>Tingkat Pencemaran:</strong> {area.severity}
               </Popup>
             </Marker>
         ))}
