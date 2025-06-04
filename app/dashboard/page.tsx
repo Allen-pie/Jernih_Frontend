@@ -20,7 +20,7 @@ export default function Dashboard() {
             <h1 className="text-3xl font-bold tracking-tight">
               Dashboard Kualitas Air
             </h1>
-            <Link href="/form">
+            <Link href="/report">
               <Button>Laporkan Pencemaran</Button>
             </Link>
           </div>
