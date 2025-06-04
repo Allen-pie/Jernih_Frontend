@@ -60,11 +60,11 @@ export function SiteNav() {
             className={cn(
               "absolute right-0 mt-2 rounded-lg shadow-lg z-[100]", // increase z-index
               "bg-white backdrop-blur-lg border border-white/20",
-              "w-[320px] md:w-[440px] max-w-[90vw] max-h-[80vh] overflow-auto",
+              "w-[220px] md:w-[300px] max-w-[80vw] max-h-[80vh] overflow-auto",
               "p-4 sm:p-6"
             )}
           >
-            <ul className="grid gap-x-8 gap-y-6 md:grid-cols-2">
+            <ul className="grid gap-x-8 gap-y-6 md:grid-cols-1">
               {items.map((item) => (
                 <li key={item.href}>
                   <NavigationMenuLink asChild>
