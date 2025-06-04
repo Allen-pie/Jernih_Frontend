@@ -5,7 +5,11 @@ export const useWaterPrediction = () => {
   const [prediction, setPrediction] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = async (formData: any) => {
+  interface WaterFormData {
+    [key: string]: string | number;
+  }
+
+  const handleSubmit = async (formData: WaterFormData) => {
     setLoading(true);
     try {
       const response = await axios.post('http://127.0.0.1:5000/predict', formData);
