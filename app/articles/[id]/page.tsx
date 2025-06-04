@@ -1,23 +1,42 @@
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from 'react'
 import Link from "next/link"
 import Image from "next/image";
+import { useParams } from 'next/navigation'
 import { CommentSection } from '@/components/comment-section';
 import { fetchArticleById } from '@/utils/supabase/article';
 import { ArrowLeftIcon, CalendarIcon, UserIcon, ClockIcon } from 'lucide-react'
 import { ArticleGuest } from '@/app/interfaces';
 
-interface Props {
-  params: {
-    id: string;
-  };
-}
 
-const ArticleDetailPage = async ({ params }: Props) => {
-  const { id } = await params;
-  const articleId = parseInt(id);
-  const article  = await fetchArticleById(articleId) as ArticleGuest;
+const ArticleDetailPage = () => {
+  const params = useParams();
+  const articleId = parseInt(params?.id as string);
+  const [article, setArticle] = useState<ArticleGuest | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!article) {
+   useEffect(() => {
+    const fetchArticle = async () => {
+      try {
+        const data = await fetchArticleById(articleId);
+        setArticle(data);
+      } catch (error) {
+        console.error('Error fetching article:', error);
+        setArticle(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (!isNaN(articleId)) {
+      fetchArticle();
+    } else {
+      setLoading(false);
+    }
+  }, [articleId]);
+  
+
+  if (!article && !loading) {
     return (
       <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-white">
         <div className="container mx-auto px-4 py-16 text-center">
@@ -39,7 +58,8 @@ const ArticleDetailPage = async ({ params }: Props) => {
     );
   }
 
-  return (
+  if (article){
+    return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-white">
       <div className="relative h-72 md:h-96 overflow-hidden">
         <Image
@@ -94,6 +114,8 @@ const ArticleDetailPage = async ({ params }: Props) => {
       </div>
     </div>
   );
+  }
+  
 };
 
 export default ArticleDetailPage;
