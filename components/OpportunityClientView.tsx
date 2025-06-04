@@ -3,7 +3,7 @@
 import React from 'react';
 import { Card, Text, Flex, Theme, Button , Link} from '@radix-ui/themes';
 import Image from 'next/image';
-import { DashboardHeader } from '@/components/dashboard-header';
+// import { DashboardHeader } from '@/components/dashboard-header';
 
 interface Opportunity {
   id: number;
