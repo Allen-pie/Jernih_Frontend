@@ -1,9 +1,8 @@
 "use client";
 import Link from "next/link";
-import { User, LogOut } from "lucide-react";
+import { User, LogOut , KeyIcon} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
-// import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
   Popover,
   PopoverContent,
@@ -11,15 +10,15 @@ import {
 } from "@/components/ui/popover";
 import { useAuth } from "./context/auth-context";
 import { useSidebar } from "@/components/ui/sidebar";
-// import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export function DashboardHeader() {
   const { signOut, session } = useAuth();
-
+  const router = useRouter();
   const { setOpen, setOpenMobile } = useSidebar();
   const pathname = usePathname();
-  const isAuthPage = ["/", "/login", "/register", "/auth/callback", "/update-password", "/reset-password"].includes(pathname);
+  const isAuthPage = ["/", "/login", "/register", "/auth/callback", "/update-password", "/reset-password", '/auth/error', '/admin'].includes(pathname);
   
   if (isAuthPage ) {
     return null;
@@ -57,11 +56,21 @@ export function DashboardHeader() {
                 <Button
                   className="justify-start"
                   variant="ghost"
+                  onClick={() => router.push('/update-password')}
+                >
+                  <KeyIcon className="h-4 w-4" />
+                  <h4 className="font-medium leading-none">Ubah Kata Sandi</h4>
+                </Button>
+
+                 <Button
+                  className="justify-start"
+                  variant="ghost"
                   onClick={() => signOut()}
                 >
                   <LogOut className="h-4 w-4" />
-                  <h4 className="font-medium leading-none">Log Out</h4>
+                  <h4 className="font-medium leading-none">Keluar</h4>
                 </Button>
+
               </div>
             </PopoverContent>
           </Popover>
