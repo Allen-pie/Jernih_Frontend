@@ -86,7 +86,7 @@ function LocationButton({ onClick }: { onClick: () => void }) {
   const map = useMap();
 
   useEffect(() => {
-    const locationButton = L.control({ position: "bottomright" });
+    const locationButton = new L.Control({ position: "bottomright" });
 
     locationButton.onAdd = () => {
       const div = L.DomUtil.create("div", "leaflet-bar leaflet-control");
@@ -323,21 +323,21 @@ const heatmapPoints = areas
         worldCopyJump={true}
         className="z-0"
         maxBounds={indonesiaBounds} // ⛔ Blok user zoom keluar
-        maxBoundsViscosity={1.0}    // Prevent keluar dari bounds
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution="&copy; OpenStreetMap contributors"
-        />
-        <HeatmapLayer
-          points={heatmapPoints}
-          longitudeExtractor={(pt) => pt[1]}
-          latitudeExtractor={(pt) => pt[0]}
-          intensityExtractor={(pt) => pt[2]}
-          max={1.0}
-          radius={25}
-          blur={20}
-        />
+        // Prevent keluar dari bounds
+          >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="&copy; OpenStreetMap contributors"
+          />
+          <HeatmapLayer
+            points={heatmapPoints as [number, number, number][]}
+            longitudeExtractor={(pt: [number, number, number]) => pt[1]}
+            latitudeExtractor={(pt: [number, number, number]) => pt[0]}
+            intensityExtractor={(pt: [number, number, number]) => pt[2]}
+            max={1.0}
+            radius={25}
+            blur={20}
+          />
 
         {areas
           .filter(
