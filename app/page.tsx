@@ -24,12 +24,13 @@ import {
   User,
   Users,
   LogOut,
-  KeyIcon
 } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
 import { motion } from "framer-motion";
 import Footer from "@/components/footer";
-import { useRouter } from "next/navigation";
+import { Menu, X } from "lucide-react"; // icon hamburger & close
+import { useState } from "react";
+
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -50,8 +51,15 @@ export default function HomePage() {
   const logoUrl = useLogoImage("jernih-logo.svg");
   const childSignUrl = useImage("child_sign.jpg");
   const childWaterUrl = useImage("child_water.png");
-  const router = useRouter();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  // useEffect(() => {
+  //   if (session) {
+  //     router.push("/dashboard");
+  //   }
+  // }, [session, router]);
+
+  // if (session) return null; // prevent UI flicker
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -62,7 +70,8 @@ export default function HomePage() {
         transition={{ duration: 0.8 }}
         className="w-full fixed top-0 z-50"
       >
-        <div className="container mx-auto px-8 sm:px-16 md:px-48 lg:px-48 py-3 flex justify-between items-center">
+        <div className="container mx-auto px-6 sm:px-10 md:px-16 py-3 flex justify-between items-center">
+          {/* Logo */}
           {logoUrl ? (
             <Link href="/">
               <Image
@@ -74,8 +83,10 @@ export default function HomePage() {
               />
             </Link>
           ) : (
-            <div className="w-[150px] h-[100px] bg-white/40 animate-pulse rounded" />
+            <div className="w-[120px] h-[80px] bg-white/40 animate-pulse rounded" />
           )}
+
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center space-x-6">
             <SiteNav />
             <div
@@ -88,27 +99,11 @@ export default function HomePage() {
                   <PopoverTrigger asChild>
                     <Button variant="ghost" size="icon">
                       <User className="h-5 w-5" />
-                      <span className="sr-only">Profile</span>
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-72">
                     <div className="grid gap-4">
-                      <Button
-                        className="justify-start"
-                        variant="ghost"
-                        onClick={() => router.push("/update-password")}
-                      >
-                        <KeyIcon className="h-4 w-4" />
-                        <h4 className="font-medium leading-none">
-                          Ubah Kata Sandi
-                        </h4>
-                      </Button>
-
-                      <Button
-                        className="justify-start"
-                        variant="ghost"
-                        onClick={() => signOut()}
-                      >
+                      <Button className="justify-start" variant="ghost" onClick={() => signOut()}>
                         <LogOut className="h-4 w-4" />
                         <h4 className="font-medium leading-none">Keluar</h4>
                       </Button>
@@ -116,18 +111,52 @@ export default function HomePage() {
                   </PopoverContent>
                 </Popover>
               ) : (
-                <div className="flex items-center gap-2">
+                <>
                   <Link href="/login">
                     <Button variant="ghost">Login</Button>
                   </Link>
                   <Link href="/register">
                     <Button>Register</Button>
                   </Link>
-                </div>
+                </>
               )}
             </div>
           </div>
+
+          {/* Mobile Hamburger Icon */}
+          <div className="md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X /> : <Menu />}
+            </Button>
+          </div>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden px-6 py-4 shadow">
+            <SiteNav />
+            <div className="mt-4 space-y-2">
+              {session ? (
+                <Button className="w-full justify-start" onClick={() => signOut()}>
+                  <LogOut className="h-4 w-4 mr-2" /> Logout
+                </Button>
+              ) : (
+                <>
+                  <Link href="/login">
+                    <Button variant="outline" className="w-full">Login</Button>
+                  </Link>
+                  <Link href="/register">
+                    <Button className="w-full">Register</Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </motion.header>
 
       {/* Hero Section */}

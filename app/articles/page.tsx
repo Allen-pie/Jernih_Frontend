@@ -2,27 +2,55 @@
 
 import React, { useEffect, useState } from "react";
 import { ArticleCard } from "@/components/article-card";
-// import { articles } from "@/utils/tempArticleData";
 import { fetchArticlesGuest } from "@/utils/supabase/article";
-import Footer  from "@/components/footer";
 import { ArticleGuest } from "../interfaces";
+import { supabase } from "@/utils/supabase/client";
 
 export default function ArticlesPage() {
   const [articles, setArticles] = useState<ArticleGuest[]>();
   const [loading, setLoading] = useState<boolean>(true);
-
   
   useEffect(() => {
-    const fetchArticle = async() => {
-      const fetched = await fetchArticlesGuest();
-      setArticles(fetched as ArticleGuest[]);
-      setLoading(false);
+    fetchArticle();
+
+    const subscription = supabase
+      .channel('supabase_realtime_messages_publication')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'articles'
+        },
+        (payload) => {
+          console.log('Real-time payload:', payload);
+          fetchArticle();
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'articles'
+        },
+        (payload) => {
+          console.log('Real-time payload:', payload);
+          fetchArticle();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(subscription);
     }
-
-    fetchArticle(); 
   }, []);
-
-  // const articles : ArticleGuest[] = await fetchArticlesGuest();
+  
+  const fetchArticle = async() => {
+    const fetched = await fetchArticlesGuest();
+    setArticles(fetched as ArticleGuest[]);
+    setLoading(false);
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-white">
@@ -65,7 +93,6 @@ export default function ArticlesPage() {
           </div>
         )}
       </div>
-      <Footer />
     </div>
   );
 }
