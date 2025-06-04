@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,7 +20,6 @@ import WEB_URL from "@/url/web_url";
 export default function VerificationSentPage() {
   const [isResending, setIsResending] = useState(false);
   const { regEmail, regPassword } = useAuth();
-  const router = useRouter();
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "your email";
   const { toast } = useToast();
@@ -29,7 +28,7 @@ export default function VerificationSentPage() {
     setIsResending(true);
 
     try {
-      const { data, error: reg_error } = await supabase.auth.signUp({       
+      const { error: reg_error } = await supabase.auth.signUp({       
         email: regEmail,
         password: regPassword,
         options : {
@@ -51,7 +50,7 @@ export default function VerificationSentPage() {
         title: "Verification email resent",
         description: "Please check your inbox for the verification link.",
       });
-    } catch (error) {
+    } catch {
       toast({
         title: "Failed to resend",
         description:
@@ -97,7 +96,7 @@ export default function VerificationSentPage() {
             </ul>
           </div>
           <p className="text-sm text-muted-foreground">
-            If you don't see the email, please check your spam folder or request
+            If you don&#39;t see the email, please check your spam folder or request
             a new verification link.
           </p>
         </CardContent>
