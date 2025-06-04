@@ -248,7 +248,7 @@ export default function FormPage() {
             <h1 className="text-3xl font-bold tracking-tight text-center">
               Laporkan Pencemaran Air
             </h1>
-            <Link href="/">
+            <Link href="/dashboard">
               <Button variant="outline">Kembali ke Dashboard</Button>
             </Link>
           </div>
