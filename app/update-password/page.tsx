@@ -35,7 +35,7 @@ export default function UpdatePasswordPage() {
     try {
       event.preventDefault();
       setIsLoading(true);
-      const { data, error } = await supabase.auth.updateUser({password})
+      const { error } = await supabase.auth.updateUser({password})
 
       if (error) {
         toast({
@@ -67,18 +67,12 @@ export default function UpdatePasswordPage() {
   };
 
  useEffect(() => {
-    password.length >= 8 
-      ? setIsLengthValid(true)
-      : setIsLengthValid(false);
-    /[A-Z]/.test(password)
-      ? setIsUppercaseValid(true)
-      : setIsUppercaseValid(false);
-    /[a-z]/.test(password)
-      ? setIsLowercaseValid(true)
-      : setIsLowercaseValid(false);
-    /[!@#$%^&*(),.?":{}|<>+\-_=]/.test(password) || /[0-9]/.test(password)
-      ? setHaveNumORSymbol(true)
-      : setHaveNumORSymbol(false);
+    setIsLengthValid(password.length >= 8);
+    setIsUppercaseValid(/[A-Z]/.test(password));
+    setIsLowercaseValid(/[a-z]/.test(password));
+    setHaveNumORSymbol(
+      /[!@#$%^&*(),.?":{}|<>+\-_=]/.test(password) || /[0-9]/.test(password)
+    );
   }, [password]);
 
  const [timer, setTimer] = useState<number>(5);
