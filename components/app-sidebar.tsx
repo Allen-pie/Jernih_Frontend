@@ -27,6 +27,7 @@ import {
 
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { cn } from "@/lib/utils";
 
 // 1) Your nav items
 const mainNav = [
@@ -48,6 +49,9 @@ export function AppSidebar() {
     "/update-password",
     "/auth/callback"
   ].includes(pathname);
+
+
+ 
 
   // Add state to track sidebar open/closed
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -83,13 +87,18 @@ export function AppSidebar() {
               {mainNav.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   {/* 3) asChild → Button styling applied to your Link */}
-                  <SidebarMenuButton asChild>
-                    <Link href={item.href} className="flex items-center gap-2">
+                  <SidebarMenuButton asChild className="mb-2">
+                    <Link href={item.href} className={cn(
+                            "flex items-center gap-2 transition-all duration-300 ease-in-out hover:border hover:rounded-none hover:border-r-8 hover:border-[#00b2e1] hover:border-t-0 hover:border-b-0 hover:border-l-2",
+                            pathname.includes(item.href) && 'border rounded-none border-r-8 border-[#00b2e1] border-t-0 border-b-0 border-l-2',
+                            !sidebarOpen && pathname.includes(item.href) && 'border rounded-none border-r-2 border-[#00b2e1] border-t-0 border-b-0 border-l-2'
+                     )}>
                       <item.icon className="size-4" />
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
+
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
