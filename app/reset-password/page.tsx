@@ -4,7 +4,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -62,7 +61,7 @@ export default function ResetPasswordPage() {
         return;
       }
 
-      const { data, error } = await supabase.auth.resetPasswordForEmail(
+      const { error } = await supabase.auth.resetPasswordForEmail(
         value.email,
         {
           redirectTo: `${URLS.WEB}/update-password`,
