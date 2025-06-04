@@ -56,7 +56,14 @@ const WaterQualityForm = () => {
     e: React.ChangeEvent<HTMLInputElement>,
     setter: React.Dispatch<React.SetStateAction<number | "">>
   ) => {
-    setter(e.target.value ? parseFloat(e.target.value) : "");
+    const value = e.target.value;
+
+    if (value === "") {
+      setter("");
+    } else {
+      const num = parseFloat(value);
+      setter(isNaN(num) ? "" : num);
+    }
   };
 
   // Handle form submission
@@ -81,7 +88,7 @@ const WaterQualityForm = () => {
 
     // Collect data to send in the POST request
     const formData: WaterQualityFormData = {
-      ph,
+      ph ,
       hardness,
       solids,
       chloramines,
@@ -112,7 +119,7 @@ const WaterQualityForm = () => {
       // Show toast with result
       toast({
         title: "Prediksi Kualitas Air",
-        description: `${label} — Tingkat Keparahan: ${severity}`,
+        description: `${label} — Tingkat Kepercayaan: ${severity}`,
       });
 
       // Save to Supabase
@@ -218,6 +225,7 @@ const WaterQualityForm = () => {
                           type="number"
                           min="0"
                           max="14"
+                          step="any"
                           placeholder="Masukkan tingkat pH"
                           value={ph}
                           onChange={(e) => handleChange(e, setPh)}
@@ -232,6 +240,7 @@ const WaterQualityForm = () => {
                           type="number"
                           min="0"
                           max="1000"
+                          step="any"
                           placeholder="Masukkan dalam mg/L"
                           value={hardness}
                           onChange={(e) => handleChange(e, setHardness)}
@@ -250,6 +259,7 @@ const WaterQualityForm = () => {
                           type="number"
                           min="0"
                           max="100000"
+                          step="any"
                           placeholder="Masukkan dalam mg/L"
                           value={solids}
                           onChange={(e) => handleChange(e, setSolids)}
@@ -265,6 +275,7 @@ const WaterQualityForm = () => {
                           type="number"
                           min="0"
                           max="10"
+                          step="any"
                           placeholder="Masukkan dalam mg/L"
                           value={chloramines}
                           onChange={(e) => handleChange(e, setChloramines)}
@@ -281,6 +292,7 @@ const WaterQualityForm = () => {
                           type="number"
                           min="0"
                           max="1000"
+                          step="any"
                           placeholder="Masukkan dalam mg/L"
                           value={sulfate}
                           onChange={(e) => handleChange(e, setSulfate)}
@@ -296,6 +308,7 @@ const WaterQualityForm = () => {
                           type="number"
                           min="0"
                           max="100000"
+                          step="any"
                           placeholder="Masukkan dalam µS/cm"
                           value={conductivity}
                           onChange={(e) => handleChange(e, setConductivity)}
@@ -314,6 +327,7 @@ const WaterQualityForm = () => {
                           type="number"
                           min="0"
                           max="100"
+                          step="any"
                           placeholder="Masukkan dalam mg/L"
                           value={organicCarbon}
                           onChange={(e) => handleChange(e, setOrganicCarbon)}
@@ -329,6 +343,7 @@ const WaterQualityForm = () => {
                           type="number"
                           min="0"
                           max="300"
+                          step="any"
                           placeholder="Masukkan dalam µg/L"
                           value={trihalomethanes}
                           onChange={(e) => handleChange(e, setTrihalomethanes)}
@@ -344,6 +359,7 @@ const WaterQualityForm = () => {
                         type="number"
                         min="0"
                         max="1000"
+                        step="any"
                         placeholder="Masukkan dalam NTU"
                         value={turbidity}
                         onChange={(e) => handleChange(e, setTurbidity)}
