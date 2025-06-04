@@ -15,6 +15,7 @@ export default function Footer() {
                 height={100}
                 alt="Jernih Logo"
                 className="transition-opacity duration-300 opacity-100"
+                priority
               />
             
           </div>

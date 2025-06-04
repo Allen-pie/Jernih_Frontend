@@ -40,6 +40,7 @@ export function DashboardHeader() {
           height={100}
           alt="Jernih Logo"
           className="transition-opacity duration-300 opacity-100 cursor-pointer"
+          priority
         />
       </Link>
       <div className="ml-auto flex items-center gap-4">
