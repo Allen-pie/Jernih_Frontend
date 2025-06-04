@@ -87,7 +87,7 @@ const ArticleDetailPage = async ({ params }: Props) => {
           </div>
           <div className="border-t border-gray-200 pt-10">
             <CommentSection
-              articleId={articleId}
+              articleId={article.id!}
             />
           </div>
         </div>
