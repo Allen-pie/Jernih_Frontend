@@ -234,12 +234,12 @@ const WaterQualityForm = () => {
 
                       {/* Hardness */}
                       <div className="space-y-2">
-                        <Label htmlFor="Hardness">Kesadahan (0-1000 mg/L)</Label>
+                        <Label htmlFor="Hardness">Kesadahan (0-325 mg/L)</Label>
                         <Input
                           id="Hardness"
                           type="number"
                           min="0"
-                          max="1000"
+                          max="325"
                           step="any"
                           placeholder="Masukkan dalam mg/L"
                           value={hardness}
@@ -252,13 +252,13 @@ const WaterQualityForm = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="Solids">
-                          Total Zat Terlarut (0-100.000 mg/L)
+                          Total Zat Terlarut (0-61.500 mg/L)
                         </Label>
                         <Input
                           id="Solids"
                           type="number"
                           min="0"
-                          max="100000"
+                          max="61500"
                           step="any"
                           placeholder="Masukkan dalam mg/L"
                           value={solids}
@@ -268,13 +268,13 @@ const WaterQualityForm = () => {
 
                       <div className="space-y-2">
                         <Label htmlFor="Chloramines">
-                          Kloramin (0-10 mg/L)
+                          Kloramin (0-13 mg/L)
                         </Label>
                         <Input
                           id="Chloramines"
                           type="number"
                           min="0"
-                          max="10"
+                          max="13"
                           step="any"
                           placeholder="Masukkan dalam mg/L"
                           value={chloramines}
@@ -286,12 +286,12 @@ const WaterQualityForm = () => {
                     {/* Sulfate and Conductivity */}
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="Sulfate">Sulfat (0-1000 mg/L)</Label>
+                        <Label htmlFor="Sulfate">Sulfat (0-485 mg/L)</Label>
                         <Input
                           id="Sulfate"
                           type="number"
                           min="0"
-                          max="1000"
+                          max="485"
                           step="any"
                           placeholder="Masukkan dalam mg/L"
                           value={sulfate}
@@ -301,13 +301,13 @@ const WaterQualityForm = () => {
 
                       <div className="space-y-2">
                         <Label htmlFor="Conductivity">
-                          Konduktivitas (0-100.000 µS/cm)
+                          Konduktivitas (0-755 µS/cm)
                         </Label>
                         <Input
                           id="Conductivity"
                           type="number"
                           min="0"
-                          max="100000"
+                          max="755"
                           step="any"
                           placeholder="Masukkan dalam µS/cm"
                           value={conductivity}
@@ -320,13 +320,13 @@ const WaterQualityForm = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="Organic_carbon">
-                          Karbon Organik (0-100 mg/L)
+                          Karbon Organik (0-30 mg/L)
                         </Label>
                         <Input
                           id="Organic_carbon"
                           type="number"
                           min="0"
-                          max="100"
+                          max="30"
                           step="any"
                           placeholder="Masukkan dalam mg/L"
                           value={organicCarbon}
@@ -336,13 +336,13 @@ const WaterQualityForm = () => {
 
                       <div className="space-y-2">
                         <Label htmlFor="Trihalomethanes">
-                          Trihalometana (0-300 µg/L)
+                          Trihalometana (0-125 µg/L)
                         </Label>
                         <Input
                           id="Trihalomethanes"
                           type="number"
                           min="0"
-                          max="300"
+                          max="125"
                           step="any"
                           placeholder="Masukkan dalam µg/L"
                           value={trihalomethanes}
@@ -353,12 +353,12 @@ const WaterQualityForm = () => {
 
                     {/* Turbidity */}
                     <div className="space-y-2">
-                      <Label htmlFor="Turbidity">Kekeruhan (0-1000 NTU)</Label>
+                      <Label htmlFor="Turbidity">Kekeruhan (0-7 NTU)</Label>
                       <Input
                         id="Turbidity"
                         type="number"
                         min="0"
-                        max="1000"
+                        max="7"
                         step="any"
                         placeholder="Masukkan dalam NTU"
                         value={turbidity}
