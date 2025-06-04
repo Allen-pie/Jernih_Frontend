@@ -24,13 +24,14 @@ import {
   User,
   Users,
   LogOut,
+  KeyIcon,
 } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
 import { motion } from "framer-motion";
 import Footer from "@/components/footer";
 import { Menu, X } from "lucide-react"; // icon hamburger & close
 import { useState } from "react";
-
+import { useRouter } from "next/navigation";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -52,6 +53,7 @@ export default function HomePage() {
   const childSignUrl = useImage("child_sign.jpg");
   const childWaterUrl = useImage("child_water.png");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
 
   // useEffect(() => {
   //   if (session) {
@@ -103,7 +105,21 @@ export default function HomePage() {
                   </PopoverTrigger>
                   <PopoverContent className="w-72">
                     <div className="grid gap-4">
-                      <Button className="justify-start" variant="ghost" onClick={() => signOut()}>
+                      <Button
+                        className="justify-start"
+                        variant="ghost"
+                        onClick={() => router.push("/update-password")}
+                      >
+                        <KeyIcon className="h-4 w-4" />
+                        <h4 className="font-medium leading-none">
+                          Ubah Kata Sandi
+                        </h4>
+                      </Button>
+                      <Button
+                        className="justify-start"
+                        variant="ghost"
+                        onClick={() => signOut()}
+                      >
                         <LogOut className="h-4 w-4" />
                         <h4 className="font-medium leading-none">Keluar</h4>
                       </Button>
@@ -141,13 +157,18 @@ export default function HomePage() {
             <SiteNav />
             <div className="mt-4 space-y-2">
               {session ? (
-                <Button className="w-full justify-start" onClick={() => signOut()}>
+                <Button
+                  className="w-full justify-start"
+                  onClick={() => signOut()}
+                >
                   <LogOut className="h-4 w-4 mr-2" /> Logout
                 </Button>
               ) : (
                 <>
                   <Link href="/login">
-                    <Button variant="outline" className="w-full">Login</Button>
+                    <Button variant="outline" className="w-full">
+                      Login
+                    </Button>
                   </Link>
                   <Link href="/register">
                     <Button className="w-full">Register</Button>

@@ -1,5 +1,6 @@
 "use client"
 
+import { use } from "react"
 import type React from "react"
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
@@ -20,13 +21,13 @@ import { fetchArticleById } from "@/utils/supabase/article"
 import { ArticleGuest } from "@/app/interfaces"
 import { ImagePreview } from "@/components/image-preview"
 
+
 interface Props {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>
 }
 
 const EditArticle = ({ params }: Props) =>  {
+    const { id } = use(params);
     const [title, setTitle] = useState("")
     const [excerpt, setExcerpt] = useState("")
     const [content, setContent] = useState("")
@@ -43,7 +44,7 @@ const EditArticle = ({ params }: Props) =>  {
     const router = useRouter()
 
     const fetchArticle = async() => {
-        const { id } = await params;
+        
         const articleId = parseInt(id);
         const article = await fetchArticleById(articleId) as ArticleGuest;
         
@@ -58,7 +59,7 @@ const EditArticle = ({ params }: Props) =>  {
 
     useEffect( () => {
         fetchArticle();
-    }, [fetchArticle])
+    }, [])
 
   const handleImageUpload = async () => {
     const file = featuredImage
@@ -141,7 +142,6 @@ const EditArticle = ({ params }: Props) =>  {
          
         if (isPublished) published_at = new Date().toISOString();
 
-        const { id } = await params;
         const articleId = parseInt(id)
 
         await updateArticle(

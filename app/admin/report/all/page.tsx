@@ -1,5 +1,5 @@
 "use client";
-import { useState, useMemo, useEffect, use } from "react";
+import { useState, useMemo, useEffect} from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,7 +20,7 @@ import {
   Eye,
   Plus,
   MoreHorizontal,
-  ExternalLink
+  ExternalLink,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -39,7 +39,6 @@ import {
 } from "@/components/ui/dialog";
 import { getReportsForAdmin } from "@/utils/supabase/report";
 import { Asset, Report } from "@/app/interfaces";
-import { useDebounce } from "@/hooks/use-debounce";
 import dayjs from "dayjs";
 import { CheckCircle, XCircle, Clock } from "lucide-react";
 import { StatusUpdateDialog } from "@/components/status-update-modal";
@@ -49,9 +48,12 @@ import Image from "next/image";
 import { BUCKET_URLS } from "@/url/bucket_url";
 
 const statusColors: Record<string, string> = {
-  in_review: "bg-blue-100 text-blue-800 border-blue-200 max-w-fit h-5 mt-0.5 gap-1.5",
-  verified: "bg-green-100 text-green-800 border-green-200 max-w-fit h-5 mt-0.5 gap-1.5",
-  rejected: "bg-red-100 text-red-800 border-red-200 max-w-fit h-5 mt-0.5 gap-1.5",
+  in_review:
+    "bg-blue-100 text-blue-800 border-blue-200 max-w-fit h-5 mt-0.5 gap-1.5",
+  verified:
+    "bg-green-100 text-green-800 border-green-200 max-w-fit h-5 mt-0.5 gap-1.5",
+  rejected:
+    "bg-red-100 text-red-800 border-red-200 max-w-fit h-5 mt-0.5 gap-1.5",
 };
 
 const statusIcons: Record<string, React.ReactNode> = {
@@ -94,12 +96,8 @@ interface StatusDialog {
 export default function ReportsPage() {
   const [reports, setReports] = useState<Report[]>([]);
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const debouncedSearch = useDebounce(searchTerm, 300); // delay 300ms
-
   const [statusFilter, setStatusFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
-  const [priorityFilter, setPriorityFilter] = useState("all");
   const [sortBy, setSortBy] = useState("newest");
   const [selectedReportImgs, setSelectedReportImgs] = useState<Asset[]>([]);
   const [loadingImgs, setLoadingImgs] = useState<boolean>(false);
@@ -111,16 +109,23 @@ export default function ReportsPage() {
 
   const openGoogleMaps = (latitude: string, longitude: string) => {
     const url = `https://www.google.com/maps?q=${latitude},${longitude}`;
-    window.open(url, '_blank');
+    window.open(url, "_blank");
   };
 
-  const deleteReport = async (report_id : number) => {
-    const response = await supabase.from('pollution_reports').delete().eq('id', report_id);
-    toast({
-      title : "Laporan berhasil dihapus"
-    })
+  const deleteReport = async (report_id: number) => {
+    const response = await supabase
+      .from("pollution_reports")
+      .delete()
+      .eq("id", report_id);
+
+
+    if(response){
+       toast({
+      title: "Laporan berhasil dihapus",
+    });
+    }
     getReports();
-  }
+  };
 
   const getReportImages = async (report_id: number) => {
     try {
@@ -137,8 +142,9 @@ export default function ReportsPage() {
       }
 
       const images = data as Asset[];
-      setSelectedReportImgs(data);
+      setSelectedReportImgs(images);
     } catch (error) {
+      console.log(error);
       toast({
         title: "Gagal mengambil gambar laporan",
         variant: "destructive",
@@ -159,8 +165,7 @@ export default function ReportsPage() {
 
   const handleStatusUpdate = (
     id: number,
-    new_status: string,
-    reason: string
+    new_status: string
   ) => {
     setReports((prev) =>
       prev.map((report) =>
@@ -197,23 +202,20 @@ export default function ReportsPage() {
     getReports();
   }, []);
 
+  const severityOrder : Record<string, number> = {
+    low: 1,
+    medium: 2,
+    high: 3,
+  };
+
   const filteredAndSortedReports = useMemo(() => {
     const filtered = reports.filter((report: Report) => {
-      const matchesSearch =
-        (report.description ?? "")
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase()) ||
-        (report.location ?? "")
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase());
-
       const matchesStatus =
         statusFilter === "all" || report.status === statusFilter;
       const matchesType =
         typeFilter === "all" || report.pollution_type === typeFilter;
-      // const matchesPriority = priorityFilter === "all" || report.priority === priorityFilter
 
-      return matchesSearch && matchesStatus && matchesType;
+      return matchesStatus && matchesType;
     });
 
     // Sort reports
@@ -227,10 +229,10 @@ export default function ReportsPage() {
           return (
             new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
           );
-        // case "severity-high":
-        //   return b.severity - a.severity
-        // case "severity-low":
-        //   return a.severity - b.severity
+        case "severity-high":
+          return severityOrder[b.severity] - severityOrder[a.severity];
+        case "severity-low":
+          return severityOrder[a.severity] - severityOrder[b.severity]; 
         case "location":
           return a.location.localeCompare(b.location);
         default:
@@ -239,14 +241,7 @@ export default function ReportsPage() {
     });
 
     return filtered;
-  }, [
-    debouncedSearch,
-    statusFilter,
-    typeFilter,
-    priorityFilter,
-    sortBy,
-    reports,
-  ]);
+  }, [statusFilter, typeFilter, sortBy, reports]);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -331,15 +326,15 @@ export default function ReportsPage() {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="newest">Newest First</SelectItem>
-                      <SelectItem value="oldest">Oldest First</SelectItem>
+                      <SelectItem value="newest">Terbaru Dulu</SelectItem>
+                      <SelectItem value="oldest">Terlama Dulu</SelectItem>
                       <SelectItem value="severity-high">
-                        Severity (High to Low)
+                        Tingkat Pencemaran (Tinggi ke Rendah)
                       </SelectItem>
                       <SelectItem value="severity-low">
-                        Severity (Low to High)
+                        Tingkat Pencemaran (Rendah ke Tinggi)
                       </SelectItem>
-                      <SelectItem value="location">Location (A-Z)</SelectItem>
+                      <SelectItem value="location">Lokasi (A-Z)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -397,7 +392,9 @@ export default function ReportsPage() {
                             {report.title}
                           </h3>
 
-                          <Badge className={`${statusColors[report.status]} ml-auto`} >
+                          <Badge
+                            className={`${statusColors[report.status]} ml-auto`}
+                          >
                             {statusIcons[report.status]}
                             {statusLabels[report.status]}
                           </Badge>
@@ -476,14 +473,22 @@ export default function ReportsPage() {
                                         Koordinat
                                       </Label>
                                       <p className="text-sm">
-                                        {report.latitude && report.longitude
-                                          ? (
-                                            <a onClick={() => openGoogleMaps(report.latitude ?? '0', report.longitude ?? '0')} className="underline text-blue-700 font-semibold flex flex-row items-center gap-1 w-fit cursor-pointer">
-                                              Buka
-                                              <ExternalLink className="w-4 h-4"/> 
-                                            </a>
-                                          )
-                                          : "-"}
+                                        {report.latitude && report.longitude ? (
+                                          <a
+                                            onClick={() =>
+                                              openGoogleMaps(
+                                                report.latitude ?? "0",
+                                                report.longitude ?? "0"
+                                              )
+                                            }
+                                            className="underline text-blue-700 font-semibold flex flex-row items-center gap-1 w-fit cursor-pointer"
+                                          >
+                                            Buka
+                                            <ExternalLink className="w-4 h-4" />
+                                          </a>
+                                        ) : (
+                                          "-"
+                                        )}
                                       </p>
                                     </div>
                                     <div>
@@ -546,7 +551,7 @@ export default function ReportsPage() {
                                       Deskripsi
                                     </Label>
                                     <p className="text-sm mt-1">
-                                      {report.description ?? '-'}
+                                      {report.description ?? "-"}
                                     </p>
                                   </div>
 
@@ -558,27 +563,31 @@ export default function ReportsPage() {
                                     </div>
                                   )}
 
-                                  {selectedReportImgs && selectedReportImgs.length > 0 && !loadingImgs && (
-                                    <div>
-                                      <Label className="text-sm font-medium">
-                                        Unggahan Foto
-                                      </Label>
-                                      {selectedReportImgs.map((item, idx) => (
-                                        <div className="mb-4" key={idx}>
-                                          <Image
-                                            src={
-                                              BUCKET_URLS.main + "/" + item.path
-                                            }
-                                            alt=""
-                                            width={0}
-                                            height={0}
-                                            sizes="100vw"
-                                            className="w-full h-auto"
-                                          />
-                                        </div>
-                                      ))}
-                                    </div>
-                                  )}
+                                  {selectedReportImgs &&
+                                    selectedReportImgs.length > 0 &&
+                                    !loadingImgs && (
+                                      <div>
+                                        <Label className="text-sm font-medium">
+                                          Unggahan Foto
+                                        </Label>
+                                        {selectedReportImgs.map((item, idx) => (
+                                          <div className="mb-4" key={idx}>
+                                            <Image
+                                              src={
+                                                BUCKET_URLS.main +
+                                                "/" +
+                                                item.path
+                                              }
+                                              alt=""
+                                              width={0}
+                                              height={0}
+                                              sizes="100vw"
+                                              className="w-full h-auto"
+                                            />
+                                          </div>
+                                        ))}
+                                      </div>
+                                    )}
                                 </div>
                               </DialogContent>
                             </Dialog>
@@ -590,11 +599,10 @@ export default function ReportsPage() {
                                 currentStatus={statusDialog.report!.status}
                                 reportId={statusDialog.report!.id}
                                 reportTitle={statusDialog.report!.title}
-                                onStatusUpdate={(newStatus, reason) =>
+                                onStatusUpdate={(newStatus) =>
                                   handleStatusUpdate(
-                                    statusDialog.report?.id!,
-                                    newStatus,
-                                    reason!
+                                    statusDialog.report?.id ?? 0,
+                                    newStatus
                                   )
                                 }
                               />
@@ -620,7 +628,11 @@ export default function ReportsPage() {
                                   Ubah Status
                                 </DropdownMenuItem>
 
-                                <DropdownMenuItem onClick={() => deleteReport(report.id)}>Hapus</DropdownMenuItem>
+                                <DropdownMenuItem
+                                  onClick={() => deleteReport(report.id)}
+                                >
+                                  Hapus
+                                </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </div>
