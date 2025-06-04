@@ -10,12 +10,10 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-// import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAuth } from "@/components/context/auth-context";
 import { SubscribeForm } from "@/components/subscribe-form";
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
 import {
   BarChart2,
   Clock,
@@ -26,10 +24,12 @@ import {
   User,
   Users,
   LogOut,
+  KeyIcon
 } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
 import { motion } from "framer-motion";
 import Footer from "@/components/footer";
+import { useRouter } from "next/navigation";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
@@ -46,25 +46,15 @@ const staggerContainer = {
 
 export default function HomePage() {
   const { signOut, session } = useAuth();
-  // const router = useRouter();
-
   const heroUrl = useImage("landing-page.jpg");
   const logoUrl = useLogoImage("jernih-logo.svg");
   const childSignUrl = useImage("child_sign.jpg");
   const childWaterUrl = useImage("child_water.png");
+  const router = useRouter();
 
-  // useEffect(() => {
-  //   if (session) {
-  //     router.push("/dashboard");
-  //   }
-  // }, [session, router]);
-
-  // if (session) return null; // prevent UI flicker
 
   return (
     <div className="flex flex-col min-h-screen">
-
-      
       {/* Header/Navigation */}
       <motion.header
         initial={{ opacity: 0 }}
@@ -88,7 +78,11 @@ export default function HomePage() {
           )}
           <div className="hidden md:flex items-center space-x-6">
             <SiteNav />
-            <div className={`ml-auto flex items-center gap-4 ${session ? "pr-24" : ""}`}>
+            <div
+              className={`ml-auto flex items-center gap-4 ${
+                session ? "pr-24" : ""
+              }`}
+            >
               {session ? (
                 <Popover>
                   <PopoverTrigger asChild>
@@ -102,10 +96,21 @@ export default function HomePage() {
                       <Button
                         className="justify-start"
                         variant="ghost"
+                        onClick={() => router.push("/update-password")}
+                      >
+                        <KeyIcon className="h-4 w-4" />
+                        <h4 className="font-medium leading-none">
+                          Ubah Kata Sandi
+                        </h4>
+                      </Button>
+
+                      <Button
+                        className="justify-start"
+                        variant="ghost"
                         onClick={() => signOut()}
                       >
                         <LogOut className="h-4 w-4" />
-                        <h4 className="font-medium leading-none">Log Out</h4>
+                        <h4 className="font-medium leading-none">Keluar</h4>
                       </Button>
                     </div>
                   </PopoverContent>
@@ -113,9 +118,7 @@ export default function HomePage() {
               ) : (
                 <div className="flex items-center gap-2">
                   <Link href="/login">
-                    <Button variant="ghost">
-                      Login
-                    </Button>
+                    <Button variant="ghost">Login</Button>
                   </Link>
                   <Link href="/register">
                     <Button>Register</Button>
@@ -224,12 +227,16 @@ export default function HomePage() {
                 Polusi Air Membunuh Jutaan Jiwa. Saatnya Bertindak.
               </h2>
               <p className="text-gray-700 mb-6 text-lg">
-                Setiap tahun, air yang tercemar menyebabkan lebih dari 3,4 juta kematian — WHO
+                Setiap tahun, air yang tercemar menyebabkan lebih dari 3,4 juta
+                kematian — WHO
               </p>
               <p className="text-gray-600 mb-8">
-                Setiap harinya, jutaan orang di seluruh dunia menghadapi dampak buruk dari polusi air. 
-                Sumber air yang terkontaminasi menjadi penyebab utama penyakit, kerusakan ekosistem, dan hilangnya keanekaragaman hayati. 
-                Anak-anak adalah yang paling rentan — ribuan di antaranya meninggal setiap hari akibat penyakit yang seharusnya dapat dicegah.
+                Setiap harinya, jutaan orang di seluruh dunia menghadapi dampak
+                buruk dari polusi air. Sumber air yang terkontaminasi menjadi
+                penyebab utama penyakit, kerusakan ekosistem, dan hilangnya
+                keanekaragaman hayati. Anak-anak adalah yang paling rentan —
+                ribuan di antaranya meninggal setiap hari akibat penyakit yang
+                seharusnya dapat dicegah.
               </p>
               <Link href="#impact">
                 <Button>Pelajari Lebih Lanjut</Button>
@@ -263,7 +270,8 @@ export default function HomePage() {
                   <span className="text-cyan-600">Monitor</span>
                 </h3>
                 <p className="text-gray-600">
-                  Gunakan aplikasi kami untuk memantau kualitas air di sekitarmu dan identifikasi potensi masalah lebih awal.
+                  Gunakan aplikasi kami untuk memantau kualitas air di sekitarmu
+                  dan identifikasi potensi masalah lebih awal.
                 </p>
               </CardContent>
             </Card>
@@ -278,7 +286,8 @@ export default function HomePage() {
                   <span className="text-cyan-600">Report</span>
                 </h3>
                 <p className="text-gray-600">
-                  Laporkan permasalahan lingkungan dan kualitas air melalui platform kami yang mudah digunakan.
+                  Laporkan permasalahan lingkungan dan kualitas air melalui
+                  platform kami yang mudah digunakan.
                 </p>
               </CardContent>
             </Card>
@@ -293,7 +302,8 @@ export default function HomePage() {
                   <span className="text-cyan-600">Bertindak</span>
                 </h3>
                 <p className="text-gray-600">
-                  Ikut serta dalam aksi bersih-bersih, advokasi kebijakan, dan kampanye kesadaran publik.
+                  Ikut serta dalam aksi bersih-bersih, advokasi kebijakan, dan
+                  kampanye kesadaran publik.
                 </p>
               </CardContent>
             </Card>
@@ -324,8 +334,10 @@ export default function HomePage() {
                 Mendukung Tujuan Pembangunan Berkelanjutan ke-6
               </h2>
               <p className="text-gray-600 mb-8">
-                Misi kami sejalan dengan SDG 6: Menjamin ketersediaan dan pengelolaan air bersih serta sanitasi yang berkelanjutan untuk semua. 
-                Kami berkomitmen meningkatkan kualitas air, efisiensi penggunaan air, dan melindungi ekosistem terkait air.
+                Misi kami sejalan dengan SDG 6: Menjamin ketersediaan dan
+                pengelolaan air bersih serta sanitasi yang berkelanjutan untuk
+                semua. Kami berkomitmen meningkatkan kualitas air, efisiensi
+                penggunaan air, dan melindungi ekosistem terkait air.
               </p>
 
               <div className="space-y-4">
@@ -409,7 +421,7 @@ export default function HomePage() {
                 icon: <Users className="h-10 w-10 text-cyan-600" />,
                 title: "Keterlibatan Komunitas",
                 description:
-                 "Terhubung dengan relawan lokal, selenggarakan kegiatan bersih-bersih, dan kolaborasi dalam proyek pelestarian air.",
+                  "Terhubung dengan relawan lokal, selenggarakan kegiatan bersih-bersih, dan kolaborasi dalam proyek pelestarian air.",
               },
               {
                 icon: <BarChart2 className="h-10 w-10 text-cyan-600" />,
@@ -418,11 +430,11 @@ export default function HomePage() {
                   "Pantau tren kualitas air dari waktu ke waktu dan ukur dampak dari upaya konservasi yang dilakukan.",
               },
               {
-  icon: <Globe className="h-10 w-10 text-cyan-600" />,
-  title: "Artikel Edukasi",
-  description:
-    "Jelajahi berbagai artikel informatif tentang pencemaran air, konservasi, dan solusi lingkungan terbaru.",
-},
+                icon: <Globe className="h-10 w-10 text-cyan-600" />,
+                title: "Artikel Edukasi",
+                description:
+                  "Jelajahi berbagai artikel informatif tentang pencemaran air, konservasi, dan solusi lingkungan terbaru.",
+              },
               {
                 icon: <MessageSquare className="h-10 w-10 text-cyan-600" />,
                 title: "Formulir Laporan",
@@ -506,8 +518,9 @@ export default function HomePage() {
               Bergabunglah dalam Misi Air Bersih
             </h2>
             <p className="mb-8 text-cyan-50">
-            Bersama, kita bisa memastikan akses air bersih untuk semua. 
-            Daftarkan dirimu untuk menerima update, kesempatan menjadi relawan, dan berbagai cara untuk berkontribusi di komunitasmu.
+              Bersama, kita bisa memastikan akses air bersih untuk semua.
+              Daftarkan dirimu untuk menerima update, kesempatan menjadi
+              relawan, dan berbagai cara untuk berkontribusi di komunitasmu.
             </p>
             <SubscribeForm />
           </div>
@@ -515,8 +528,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <Footer/>
-
+      <Footer />
     </div>
   );
 }
