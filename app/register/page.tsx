@@ -61,7 +61,7 @@ export default function RegisterPage() {
   });
 
   const EnterByGoogle = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: `${URLS.WEB}/auth/callback`,
