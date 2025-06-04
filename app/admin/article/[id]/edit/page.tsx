@@ -14,7 +14,7 @@ import { Switch } from "@/components/ui/switch"
 import { toast } from "@/hooks/use-toast"
 import { LoadingOverlay } from "@/components/loading-overlay"
 import { ImageIcon, Loader2, Upload} from "lucide-react"
-import { createArticle } from "@/utils/supabase/article"
+import { updateArticle } from "@/utils/supabase/article"
 import { supabase } from "@/utils/supabase/client"
 import { fetchArticleById } from "@/utils/supabase/article"
 import { ArticleGuest } from "@/app/interfaces"
@@ -36,9 +36,9 @@ const EditArticle = ({ params }: Props) =>  {
 
     const [isPublished, setIsPublished] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
-    const [status, setStatus] = useState("")
+    //const [status, setStatus] = useState("")
     const [dragActive, setDragActive] = useState(false)
-
+    const [isImageChanged, setImageChanged] = useState<boolean>(false);
     
     const router = useRouter()
 
@@ -52,20 +52,20 @@ const EditArticle = ({ params }: Props) =>  {
         setExcerpt(article.excerpt!)
         setContent(article.content!)
         setImageUrl(article.image_url!)
-        setStatus(article.status!)
-        setIsPublished(status === 'published' ? true : false)
+        //setStatus(article.status!)
+        setIsPublished(article.status === 'published')
     }
 
     useEffect( () => {
         fetchArticle();
-    }, [fetchArticle])
+    }, [])
 
   const handleImageUpload = async () => {
     const file = featuredImage
 
     if (!file) return;
 
-    const safeFileName = `article-images/${file.name}`
+    const safeFileName = `article-images/${Date.now()}.png`
 
     const { data, error } = await supabase.storage
       .from("jernih")
@@ -104,6 +104,7 @@ const EditArticle = ({ params }: Props) =>  {
     if (file) {
       setImageUrl("");
       setFeaturedImage(file)
+      setImageChanged(true)
     }
     
   }
@@ -112,10 +113,19 @@ const EditArticle = ({ params }: Props) =>  {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!title.trim() || !content.trim()) {
+    if (!title.trim()) {
       toast({
-        title: "Missing required fields",
-        description: "Please fill in the title and content before submitting.",
+        title: "Field yang diperlukan belum terisi",
+        description: "Harap isi Judul sebelum mengirim.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    if (!content.trim()) {
+      toast({
+        title: "Field yang diperlukan belum terisi",
+        description: "Harap isi Konten sebelum mengirim.",
         variant: "destructive",
       })
       return
@@ -124,38 +134,40 @@ const EditArticle = ({ params }: Props) =>  {
     setIsSubmitting(true)
 
     try {
-        const {
-            data: { user },
-            error: userError,
-        } = await supabase.auth.getUser()
+        let image_id = null;
+        let published_at = null;
+        
+        if (isImageChanged) image_id = await handleImageUpload() 
+         
+        if (isPublished) published_at = new Date().toISOString();
 
-        if (userError || !user) {
-            console.error('User not authenticated: ', userError)
-            toast({
-                title: 'Login Diperlukan',
-                description: 'Mohon log in terlebih dahulu untuk menambahkan komentar',
-                variant: 'destructive'
-            })
-            return
-        }
+        const { id } = await params;
+        const articleId = parseInt(id)
 
-        const image_id = await handleImageUpload()
-
-        await createArticle(title, excerpt, content, user.id, image_id, isPublished ? 'published' : 'draft')
+        await updateArticle(
+          articleId,
+          published_at,
+          title,
+          excerpt,
+          content,
+          image_id ?? null,
+          isPublished ? 'published' : 'draft'
+        );
+      
 
       toast({
-        title: isPublished ? "Article published" : "Article saved",
+        title: isPublished ? "Artikel Diperbarui" : "Artikel Disimpan",
         description: isPublished
-          ? "Your article has been published successfully!"
-          : "Your article has been saved as a draft.",
+          ? "Artikel telah berhasil dipublikasikan!"
+          : "Artikel telah disimpan sebagai draft.",
       })
 
       router.push("/admin/article/all")
     } catch (error) {
         console.log('Error: ', error)
       toast({
-        title: "Submission failed",
-        description: "There was an error submitting your article. Please try again.",
+        title: "Submit gagal",
+        description: "Terjadi kesalahan saat mengirimkan artikel. Silakan coba lagi.",
         variant: "destructive",
       })
     } finally {
@@ -185,8 +197,8 @@ const handleDrag = (e: React.DragEvent) => {
       // Validate file type
       if (!file.type.startsWith("image/")) {
         toast({
-          title: "Invalid file type",
-          description: "Please select an image file.",
+          title: "Jenis file tidak valid",
+          description: "Harap pilih file gambar.",
           variant: "destructive",
         })
         return
@@ -195,8 +207,8 @@ const handleDrag = (e: React.DragEvent) => {
     
       setFeaturedImage(file)
       toast({
-        title: "Image uploaded",
-        description: "Featured image has been added to your article.",
+        title: "Gambar Diunggah",
+        description: "Gambar telah ditambahkan ke artikel.",
       })
     }
   }
@@ -232,11 +244,11 @@ const handleDrag = (e: React.DragEvent) => {
 
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold tracking-tight">EditArticle</h1>
+              <h1 className="text-3xl font-bold tracking-tight">Ubah Artikel</h1>
             </div>
             <div className="flex gap-2">
               <Link href="/admin/article/all">
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline">Batal</Button>
               </Link>
             </div>
           </div>
@@ -247,12 +259,12 @@ const handleDrag = (e: React.DragEvent) => {
               <div className="lg:col-span-2 space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Article Content</CardTitle>
-                    <CardDescription>Editor your article</CardDescription>
+                    <CardTitle>Isi Artikel</CardTitle>
+                    <CardDescription>Ubah Artikel</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="title">Title *</Label>
+                      <Label htmlFor="title">Judul *</Label>
                       <Input
                         id="title"
                         placeholder="Enter article title"
@@ -262,7 +274,7 @@ const handleDrag = (e: React.DragEvent) => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="excerpt">Excerpt *</Label>
+                      <Label htmlFor="excerpt">Kutipan *</Label>
                       <Textarea
                         id="excerpt"
                         placeholder="Brief description of your article (optional)"
@@ -273,8 +285,8 @@ const handleDrag = (e: React.DragEvent) => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label>Content *</Label>
-                      <QuillEditor value={content} onChange={setContent} placeholder="Start writing your article..." />
+                      <Label>Konten *</Label>
+                      <QuillEditor value={content} onChange={setContent} placeholder="Mulai menulis artikel..." />
                     </div>
                   </CardContent>
                 </Card>
@@ -284,24 +296,24 @@ const handleDrag = (e: React.DragEvent) => {
               <div className="space-y-6">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Publish Settings</CardTitle>
+                    <CardTitle>Pengaturan Publikasi</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <Label htmlFor="publish-toggle">Publish immediately</Label>
+                      <Label htmlFor="publish-toggle">Publikasikan Segera</Label>
                       <Switch id="publish-toggle" checked={isPublished} onCheckedChange={setIsPublished} />
                     </div>
                     <p className="text-sm text-muted-foreground">
                       {isPublished
-                        ? "Article will be published and visible to all users"
-                        : "Article will be saved as a draft"}
+                        ? "Artikel akan dipublikasikan dan terlihat oleh semua pengguna"
+                        : "Artikel akan disimpan sebagai draft"}
                     </p>
                   </CardContent>
                 </Card>
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Featured Image</CardTitle>
+                    <CardTitle>Thumbnail</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-2">
                     {renderPreviewImg()}
@@ -321,8 +333,8 @@ const handleDrag = (e: React.DragEvent) => {
                       >
                         <ImageIcon className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
                         <div className="space-y-2">
-                          <p className="text-sm font-medium">Drop your image here, or click to browse</p>
-                          <p className="text-xs text-muted-foreground">PNG, JPG, GIF up to 5MB</p>
+                          <p className="text-sm font-medium">Letakkan gambar Anda di sini, atau klik untuk menjelajah</p>
+                          <p className="text-xs text-muted-foreground">PNG, JPG, GIF hingga 5MB</p>
                         </div>
                         <Input
                           type="file"
@@ -335,7 +347,7 @@ const handleDrag = (e: React.DragEvent) => {
                           <Button type="button" variant="outline" className="mt-4" asChild>
                             <span>
                               <Upload className="mr-2 h-4 w-4" />
-                              Choose Image
+                              Pilih Gambar
                             </span>
                           </Button>
                         </Label>
@@ -353,9 +365,9 @@ const handleDrag = (e: React.DragEvent) => {
                         {isPublished ? "Publishing..." : "Saving..."}
                       </>
                     ) : isPublished ? (
-                      "Publish Article"
+                      "Publikasikan Artikel"
                     ) : (
-                      "Save Article"
+                      "Simpan Artikel"
                     )}
                   </Button>
                 </div>
