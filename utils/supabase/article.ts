@@ -19,7 +19,7 @@ export async function fetchArticlesGuest() {
       )
     `)
     .eq('status', 'published')
-    .order('created_at', { ascending: false })
+    .order('published_at', { ascending: false })
     .returns<ArticleGuest[]>();
 
   if (error) {
