@@ -9,11 +9,20 @@ import { BrowserRouter } from 'react-router-dom';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 
 
+interface VolunteerOpportunity {
+  id: string;
+  title: string;
+  description: string;
+  location: string;
+  created_at: string;
+  imageUrl?: string;
+}
+
 const VolunteerOpportunityListing = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [locationFilter, setLocationFilter] = useState<string>("");
-  const [originalOpportunities, setOriginalOpportunities] = useState<any[]>([]); 
-  const [filteredOpportunities, setFilteredOpportunities] = useState<any[]>([]);
+  const [originalOpportunities, setOriginalOpportunities] = useState<VolunteerOpportunity[]>([]); 
+  const [filteredOpportunities, setFilteredOpportunities] = useState<VolunteerOpportunity[]>([]);
   const [locations, setLocations] = useState<string[]>([]); 
   const router = useRouter(); 
   useEffect(() => {
@@ -106,7 +115,7 @@ const VolunteerOpportunityListing = () => {
       {/* Volunteer Opportunity Listings in Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredOpportunities.length > 0 ? (
-          filteredOpportunities.map((opportunity: any) => (
+          filteredOpportunities.map((opportunity: VolunteerOpportunity) => (
             <Card
               key={opportunity.id}
               className="col-span-full bg-white shadow-lg rounded-xl flex p-3"
