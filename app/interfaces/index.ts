@@ -49,9 +49,14 @@ export interface Report {
     latitude ? : string;
     longitude ? : string;
     user_name ? : string;
+    rejected_reason ? : string;
 }
 
 
 export interface Asset {   
-    path : string;
+    id ? : number;
+    path ?: string;
+    model_id ? : number;
+    model_type ? : string;
+    created_at ? : string;
 }
