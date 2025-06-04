@@ -66,9 +66,11 @@ export default async function ArticlesPage() {
                                                 Edit
                                             </Button>
                                         </Link>
-                                        <Button variant="outline" size="sm">
-                                            View
-                                        </Button>
+                                        <Link href={`/articles/${article.id}`}>
+                                            <Button variant="outline" size="sm">
+                                                View
+                                            </Button>
+                                        </Link>
                                     </div>
                                 </div>
                                 </CardContent>
