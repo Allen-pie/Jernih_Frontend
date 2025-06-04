@@ -43,7 +43,7 @@ const ArticleDetailPage = async ({ params }: Props) => {
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-50 to-white">
       <div className="relative h-72 md:h-96 overflow-hidden">
         <Image
-          src={article.image_url}
+          src={article.image_url ?? ""}
           alt={article.title ?? ""}
           fill
           className="w-full h-full object-cover"
@@ -82,12 +82,12 @@ const ArticleDetailPage = async ({ params }: Props) => {
             <p className="text-xl text-gray-700 mb-6 font-medium italic">
               {article.excerpt}
             </p>
-            <div dangerouslySetInnerHTML={ { __html: article.content } } className="prose ql-editor [&>blockquote]:border-l-4 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-gray-600">
+            <div dangerouslySetInnerHTML={ { __html: article.content ?? "" } } className="prose ql-editor [&>blockquote]:border-l-4 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-gray-600">
             </div>
           </div>
           <div className="border-t border-gray-200 pt-10">
             <CommentSection
-              articleId={article.id}
+              articleId={articleId}
             />
           </div>
         </div>
