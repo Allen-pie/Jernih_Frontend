@@ -205,7 +205,7 @@ export default function HomePage() {
           </motion.div>
         </div>
         <div className="absolute inset-0 bg-cyan-900/10 z-10"></div>
-        <div className="container mx-auto px-32 relative z-20">
+        <div className="container mx-auto px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 max-w-screen-lg relative z-20">
           <div className="max-w-2xl">
             <motion.h1
               variants={fadeInUp}
