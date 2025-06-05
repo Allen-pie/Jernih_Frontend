@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -5,9 +7,22 @@ import { Badge } from "@/components/ui/badge"
 import { Plus, Calendar, User } from "lucide-react"
 import { fetchArticlesAdmin } from "@/utils/supabase/article";
 import { ArticleAdmin } from "@/app/interfaces"
+import { useEffect, useState } from "react";
 
-export default async function ArticlesPage() {
-    const articles : ArticleAdmin[] = await fetchArticlesAdmin();
+export default  function ArticlesPage() {
+    const [articles, setArticles] = useState<ArticleAdmin[]>([]);
+
+   useEffect(() => {
+        const fetchArticles = async () => {     
+            try {
+                const articles = await fetchArticlesAdmin();
+                setArticles(articles);
+            } catch (error) {
+                console.error("Error fetching articles:", error);
+            }
+        }
+        fetchArticles();
+    }, []);
 
     return (
         <div className="flex min-h-screen flex-col">
@@ -15,15 +30,15 @@ export default async function ArticlesPage() {
                 <main className="flex-1 p-6 md:p-8">
                     <div className="flex items-center justify-between mb-6">
                         <div>
-                            <h1 className="text-3xl font-bold tracking-tight">Articles</h1>
+                            <h1 className="text-3xl font-bold tracking-tight">Artikel</h1>
                             <p className="text-muted-foreground mt-1">
-                                Manage and create educational content about water conservation
+                                Kelola dan buat konten edukasi tentang konservasi air
                             </p>
                         </div>
                         <Link href="create">
                             <Button>
                                 <Plus className="mr-2 h-4 w-4" />
-                                Create Article
+                                Buat Artikel
                             </Button>
                         </Link>
                     </div>
@@ -63,14 +78,12 @@ export default async function ArticlesPage() {
                                     <div className="flex gap-2">
                                         <Link href={`${article.id}/edit`}>
                                             <Button variant="outline" size="sm">
-                                                Edit
+                                                Ubah
                                             </Button>
                                         </Link>
-                                        <Link href={`/articles/${article.id}`}>
-                                            <Button variant="outline" size="sm">
-                                                View
-                                            </Button>
-                                        </Link>
+                                        <Button variant="outline" size="sm">
+                                            Lihat
+                                        </Button>
                                     </div>
                                 </div>
                                 </CardContent>
