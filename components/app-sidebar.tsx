@@ -6,6 +6,8 @@ import {
   FileText,
   Waves,
   Newspaper,
+  Archive,
+  Layers
 } from "lucide-react";
 import {
   Sidebar,
@@ -24,6 +26,7 @@ import {
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "./context/auth-context";
 
 // 1) Your nav items
 const mainNav = [
@@ -34,8 +37,19 @@ const mainNav = [
   { title: "Konservasi", href: "/conservation", icon: Waves },
 ];
 
+const adminNav = [
+  { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { title: "Kualitas Air", href: "/analytics", icon: BarChart },
+  { title: "Laporkan Pencemaran", href: "/report", icon: FileText },
+  { title: "Kelola Laporan", href: "/admin/report/all", icon: Layers },
+  { title: "Artikel", href: "/articles", icon: Newspaper },
+  { title: "Kelola Artikel", href: "/admin/article/all", icon: Archive },
+  { title: "Konservasi", href: "/conservation", icon: Waves },
+];
+
 export function AppSidebar() {
   const pathname = usePathname();
+  const {session} = useAuth();
   const isAuthPage = [
     "/login",
     "/register",
@@ -79,7 +93,10 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {mainNav.map((item) => (
+
+              {session && (session.user.email == 'pieterallen123@gmail.com' || session.user.email == 'kevin.smith@gmail.com' ) ? 
+              (
+                 adminNav.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   {/* 3) asChild → Button styling applied to your Link */}
                   <SidebarMenuButton asChild className="mb-2">
@@ -94,7 +111,34 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
 
-              ))}
+              ))
+              ) : 
+              (
+                 mainNav.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  {/* 3) asChild → Button styling applied to your Link */}
+                  <SidebarMenuButton asChild className="mb-2">
+                    <Link href={item.href} className={cn(
+                            "flex items-center gap-2 transition-all duration-300 ease-in-out hover:border hover:rounded-none hover:border-r-8 hover:border-[#00b2e1] hover:border-t-0 hover:border-b-0 hover:border-l-2",
+                            pathname.includes(item.href) && 'border rounded-none border-r-8 border-[#00b2e1] border-t-0 border-b-0 border-l-2',
+                            !sidebarOpen && pathname.includes(item.href) && 'border rounded-none border-r-2 border-[#00b2e1] border-t-0 border-b-0 border-l-2'
+                     )}>
+                      <item.icon className="size-4" />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+
+              ))
+              )
+
+              }
+
+             
+
+              
+
+
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
