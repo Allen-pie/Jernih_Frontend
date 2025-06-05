@@ -166,7 +166,7 @@ export default function HomePage() {
               ) : (
                 <>
                   <Link href="/login">
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" className="w-full mb-3">
                       Login
                     </Button>
                   </Link>
